@@ -15,7 +15,7 @@ function Task(props) {
       <div className="task-title">{title}</div>
       <div className="assignment" data-working-on={workingOnToday}>
         <div className="assigned-to">{assignedTo}</div>
-        <div className="hoursWorked">{hoursWorked}</div>
+        <div className="hours-worked">{hoursWorked}</div>
       </div>
     </div>
   );
