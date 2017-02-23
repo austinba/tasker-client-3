@@ -1,0 +1,19 @@
+.task-container {
+  border: 1px #4A7EBB solid;
+  height: 80px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.task-title {
+  color: #376092;
+  font-size: 18px;
+  padding-left: 7px;
+  padding-top: 7px;
+}
+.assigned-to-me .task-title {
+  color: #8EB4E3;
+}
+.completed .task-title {
+  color: #7F7F7F;
+  text-decoration: line-through;
+}
