@@ -21,12 +21,21 @@
   height: 18px;
   white-space: nowrap; /* IE */
 }
+.task-title:hover {
+  color: #5582C0;
+}
 .assigned-to-me .task-title {
   color: #8EB4E3;
 }
+.assigned-to-me .task-title:hover {
+  color: white;
+}
 .completed .task-title {
-  color: #7F7F7F;
+  color: #4e4e4e;
   text-decoration: line-through;
+}
+.completed .task-title:hover {
+  color: #7F7F7F;
 }
 
 /* Assignment Circle */
@@ -42,7 +51,7 @@
   border-radius: 30px;
   text-align: center;
   border: 1px solid #404040;
-  color: #7F7F7F;
+  color: #575757;
 }
 .assigned-to-me .assignment {
   color: #95B3D7;
@@ -83,7 +92,7 @@
 .completed .task-icon-rect {
   fill: #14374E;
 }
-.task-icon .task-icon-rect{
+.task-icon .task-icon-rect, .task-title{
   transition: 200ms;
   transition-timing-function: ease-in-out;
   -webkit-transition: 200ms;
