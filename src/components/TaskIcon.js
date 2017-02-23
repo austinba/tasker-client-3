@@ -3,7 +3,7 @@ import React from 'react';
 const rectStyle = {stroke: 'none'};
 
 function TaskIcon({iconFormat}) {
-  // in the rare case all the squares are invisible, make them all visible instead
+  // in the 1 in billion chance all the squares are invisible, make them all visible
   if(iconFormat.reduce( (memo, val) => memo+val, 0) === 0) {
     iconFormat = iconFormat.map( () => true );
   }

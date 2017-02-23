@@ -5,12 +5,21 @@
   margin-left: 50px;
   margin-right: 50px;
 }
+.task-container.completed {
+  height: 40px;
+}
+
+/* Task Title */
 .task-title {
   color: #376092;
-  display: inline-block;
+  display: block;
   font-size: 18px;
   padding-left: 13px;
   padding-top: 10px;
+  margin-right: 90px;
+  overflow-x: hidden;
+  height: 18px;
+  white-space: nowrap; /* IE */
 }
 .assigned-to-me .task-title {
   color: #8EB4E3;
@@ -18,6 +27,11 @@
 .completed .task-title {
   color: #7F7F7F;
   text-decoration: line-through;
+}
+
+/* Assignment Circle */
+.completed.assignment {
+  display: hidden;
 }
 .assignment {
   position: absolute;
@@ -27,9 +41,22 @@
   height: 60px;
   border-radius: 30px;
   text-align: center;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #404040;
+  border: 1px solid #404040;
+  color: #7F7F7F;
+}
+.assigned-to-me .assignment {
+  color: #95B3D7;
+  border-color: #376092;
+}
+.working-on .assignment {
+  background-color: #12181D;
+  border-color: #1B2D43;
+  color: #5F7389;
+}
+.working-on.assigned-to-me .assignment {
+  background-color: #213242;
+  border-color: #376092;
+  color: #95B3D7
 }
 .assigned-to {
   text-align: center;
@@ -39,6 +66,9 @@
 .hours-worked {
   font-size: 14px;
 }
+
+
+/*Task Icon*/
 .task-icon {
   position: absolute;
   left: 13px;
@@ -52,4 +82,13 @@
 }
 .completed .task-icon-rect {
   fill: #14374E;
+}
+.task-icon .task-icon-rect{
+  transition: 200ms;
+  transition-timing-function: ease-in-out;
+  -webkit-transition: 200ms;
+  -webkit-transition-timing-function: ease-in-out;
+}
+.task-icon:hover .task-icon-rect {
+  fill: #FFFFFF
 }
