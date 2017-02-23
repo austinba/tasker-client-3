@@ -6,8 +6,8 @@
   margin-right: 50px;
 }
 .task-title {
-  display: inline-block;
   color: #376092;
+  display: inline-block;
   font-size: 18px;
   padding-left: 13px;
   padding-top: 10px;
@@ -43,4 +43,13 @@
   position: absolute;
   left: 13px;
   bottom: 10px;
+}
+.task-icon-rect {
+  fill: #14374E;
+}
+.assigned-to-me .task-icon-rect {
+  fill: #8EA5AE;
+}
+.completed .task-icon-rect {
+  fill: #14374E;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const rectStyle = {fill: 'grey', stroke: 'none'};
+const rectStyle = {stroke: 'none'};
 
 function TaskIcon({iconFormat}) {
   // in the rare case all the squares are invisible, make them all visible instead
@@ -12,7 +12,8 @@ function TaskIcon({iconFormat}) {
     const x = (index % 3) * 11;
     const y = Math.floor(index / 3) * 11;
     return (
-      <rect x={x}  y={y}  width="8" height="8" style={rectStyle} />
+      <rect x={x}  y={y}  width="8" height="8" style={rectStyle}
+        className="task-icon-rect"/>
     );
   });
   return (
