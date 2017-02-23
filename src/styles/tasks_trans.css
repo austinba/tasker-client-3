@@ -1,6 +1,6 @@
 .task-container {
   position: relative;
-  border: 1px #4A7EBB solid;
+  border: 1px rgba(101, 173, 256, 0.73) /*#4A7EBB*/ solid;
   height: 80px;
   margin-left: 50px;
   margin-right: 50px;
@@ -16,7 +16,7 @@
 
 /* Task Title */
 .task-title {
-  color: #376092;
+  color: rgba(96, 168, 256, 0.57) /*#376092*/;
   display: block;
   font-size: 18px;
   padding-left: 13px;
@@ -27,20 +27,20 @@
   white-space: nowrap; /* IE */
 }
 .task-title:hover {
-  color: #5582C0;
+  color: rgba(113, 173, 256, 0.75) /*#5582C0*/;
 }
 .assigned-to-me .task-title {
-  color: #8EB4E3;
+  color: rgba(160, 202, 255, 0.89) /*#8EB4E3*/;
 }
 .assigned-to-me .task-title:hover {
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 1) /*#FFFFFF*/;
 }
 .completed .task-title {
-  color: #4e4e4e;
+  color: rgba(252, 252, 252, 0.31) /*#4e4e4e*/;
   text-decoration: line-through;
 }
 .completed .task-title:hover {
-  color: #7F7F7F;
+  color: rgba(254, 254, 254, 0.5) /*#7F7F7F*/;
 }
 
 /* Assignment Circle */
@@ -55,22 +55,22 @@
   height: 60px;
   border-radius: 30px;
   text-align: center;
-  border: 1px solid #404040;
-  color: #575757;
+  border: 1px solid rgba(256, 256, 256, 0.25) /*#404040*/;
+  color: rgba(256, 256, 256, 0.34) /*#575757*/;
 }
 .assigned-to-me .assignment {
-  color: #95B3D7;
-  border-color: #376092;
+  color: rgba(177, 213, 256, 0.84) /*#95B3D7*/;
+  border-color: rgba(96, 168, 256, 0.57) /*#376092*/;
 }
 .working-on .assignment {
-  background-color: #12181D;
-  border-color: #1B2D43;
-  color: #5F7389;
+  background-color: rgba(164, 218, 264, 0.11) /*#12181D*/;
+  border-color: rgba(104, 173, 258, 0.26) /*#1B2D43*/;
+  color: rgba(176, 213, 254, 0.54) /*#5F7389*/;
 }
 .working-on.assigned-to-me .assignment {
-  background-color: #213242;
-  border-color: #376092;
-  color: #95B3D7;
+  background-color: rgba(127, 192, 254, 0.26) /*#213242*/;
+  border-color: rgba(96, 168, 256, 0.57) /*#376092*/;
+  color: rgba(177, 213, 256, 0.84) /*#95B3D7*/;
 }
 .assigned-to {
   text-align: center;
@@ -90,13 +90,13 @@
   cursor: pointer;
 }
 .task-icon-rect {
-  fill: #14374E;
+  fill: rgba(65, 177, 252, 0.31) /*#14374E*/;
 }
 .assigned-to-me .task-icon-rect {
-  fill: #8EA5AE;
+  fill: rgba(209, 243, 256, 0.68) /*#8EA5AE*/;
 }
 .completed .task-icon-rect {
-  fill: #14374E;
+  fill: rgba(65, 177, 252, 0.31) /*#14374E*/;
 }
 .task-icon .task-icon-rect, .task-title{
   transition: 200ms;
@@ -105,5 +105,5 @@
   -webkit-transition-timing-function: ease-in-out;
 }
 .task-icon:hover .task-icon-rect {
-  fill: #FFFFFF;
+  fill: rgba(255, 255, 255, 1) /*#FFFFFF*/;
 }

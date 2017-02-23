@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/tasks.css'
+import '../styles/tasks_trans.css'
 import TaskIcon from './TaskIcon';
 
 function Task(props) {
