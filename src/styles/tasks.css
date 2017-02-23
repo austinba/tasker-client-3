@@ -39,3 +39,8 @@
 .hours-worked {
   font-size: 14px;
 }
+.task-icon {
+  position: absolute;
+  left: 13px;
+  bottom: 10px;
+}

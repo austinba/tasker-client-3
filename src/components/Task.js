@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/tasks.css'
+import TaskIcon from './TaskIcon';
 
 function Task(props) {
   const { title, assignedTo, workingOnToday, hoursWorked,
@@ -12,6 +13,7 @@ function Task(props) {
 
   return (
     <div className={containerClasses.join(' ')}>
+      <TaskIcon iconFormat={iconFormat} />
       <div className="task-title">{title}</div>
       <div className="assignment" data-working-on={workingOnToday}>
         <div className="assigned-to">{assignedTo}</div>
