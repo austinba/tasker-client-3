@@ -8,12 +8,21 @@ const Task = props => {
   const task = props.tasks[taskID];
 
   return (
-    <div className="task-container">
+    <div className="box task-container">
       <div className="main-task-box">
         <ISBox level={task.importanceSeverity} dateDue={task.dateDue} />
         <div className="task-description">
           {task.description}
         </div>
+      </div>
+      <div className="box task-actions">
+        Add comment...
+        <span className="right">
+          Delete&nbsp;&nbsp;-&nbsp;&nbsp;Edit&nbsp;&nbsp;-&nbsp;&nbsp;Mark&nbsp;complete
+        </span>
+      </div>
+      <div className="box task-comments">
+        These are some comments
       </div>
     </div>
   );

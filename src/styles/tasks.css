@@ -1,5 +1,14 @@
-.task-container {
+.box {
   border: 1px solid rgb(79, 129, 189);
+  border-radius: 2px;
+  margin: -1px;
+}
+
+.task-actions, .task-comments {
+  padding: 6px 10px;
+  font-size: 14px;
+}
+.task-container {
   width: calc(100% - 20px);
   margin: 15px auto;
   color: white;
@@ -7,15 +16,13 @@
 
 .main-task-box {
   display: flex;
-  border-bottom: 1px solid rgb(79, 129, 189);
-
 }
 
 .task-description {
   display: inline-block;
   flex: flex-grow;
   float: right;
-  margin: 15px 25px 15px 0;
+  margin: 15px 25px 15px 10px;
   line-height: 1.4em;
   font-size: 16px;
 }
@@ -27,22 +34,19 @@
   position: relative;
   display: inline-block;
   flex: none;
-  margin: 15px 20px;
+  margin: 15px 10px;
   width: 70px;
   height: 70px;
-  border: 1px solid rgb(79, 129, 189);
 }
 
 .IS-sub-box {
   position: absolute;
   right: 0;
   bottom: 0;
-  margin: -1px;
   width: 50%;
   height: 50%;
-  border: 1px solid rgb(79, 129, 189);
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 35px;
 }
 
@@ -52,4 +56,8 @@
 
 .IS-sub-box.important {
   bottom: auto;
+}
+
+.right {
+  float: right;
 }
