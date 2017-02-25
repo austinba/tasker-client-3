@@ -57,7 +57,7 @@ export const tasks = {
     assignedTo: 'Austin Baltes',
     completed: 'no',
     dateDue: new Date(2017, 3, 10),
-    importanceSeverity: 1,
+    importanceSeverity: 3,
     lastDateWorkedOn: Date.now(),
     departmentGoal: 'Goal #1',
     comments: [

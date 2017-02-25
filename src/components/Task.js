@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ISBox from './ISBox';
 import '../styles/tasks.css';
 
 const Task = props => {
@@ -9,6 +10,7 @@ const Task = props => {
   return (
     <div className="task-container">
       <div className="main-task-box">
+        <ISBox level={task.importanceSeverity} dueDate={task.dueDate} />
         <div className="task-description">
           {task.description}
         </div>

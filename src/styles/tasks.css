@@ -1,18 +1,52 @@
 .task-container {
   border: 1px solid rgb(79, 129, 189);
-  width: 100%;
-  margin-bottom: 15px;
+  width: calc(100% - 20px);
+  margin: 15px auto;
   color: white;
 }
 
 .main-task-box {
+  display: flex;
   border-bottom: 1px solid rgb(79, 129, 189);
 
 }
 
 .task-description {
-  padding: 20px 15px;
+  display: inline-block;
+  flex: flex-grow;
+  float: right;
+  margin: 15px 25px 15px 0;
+  line-height: 1.4em;
+  font-size: 16px;
 }
 
 .comments-task-box {
+}
+
+.IS-box {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  margin: 15px 20px;
+  width: 70px;
+  height: 70px;
+  border: 1px solid rgb(79, 129, 189);
+}
+
+.IS-sub-box {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: -1px;
+  width: 50%;
+  height: 50%;
+  border: 1px solid rgb(79, 129, 189);
+}
+
+.IS-sub-box.severe {
+  right: auto;
+}
+
+.IS-sub-box.important {
+  bottom: auto;
 }
