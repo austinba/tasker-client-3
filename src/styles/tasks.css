@@ -23,7 +23,8 @@
 }
 
 .task-description {
-  display: inline-block;
+  display: flex;
+  width: 100%;
   flex: flex-grow;
   float: right;
   margin: 15px 35px 15px 10px;
@@ -43,6 +44,9 @@
   height: 70px;
 }
 
+.IS-box.edit-task {
+  border: 7px solid rgba(79, 129, 189, 0.3);
+}
 .IS-sub-box {
   position: absolute;
   right: 0;
@@ -53,6 +57,18 @@
   font-size: 16px;
   line-height: 35px;
   background: rgba(0, 0, 0, 0.25);
+}
+.edit-task .IS-sub-box {
+  line-height: 28px;
+  background-color: rgba(0, 255, 255, 0.2);
+}
+.edit-task .IS-sub-box.unselected {
+  line-height: 28px;
+  background-color: rgba(0, 255, 255, 0.06);
+}
+.edit-task .IS-sub-box.unselected:hover {
+  line-height: 28px;
+  background-color: rgba(0, 255, 255, 0.2);
 }
 
 .IS-sub-box.severe {
@@ -78,4 +94,17 @@
 }
 .corner-working-on-marker:hover {
   fill: rgba(79, 129, 189, 0.15) !important;
+}
+
+.edit-task-description {
+  box-sizing: content-box;
+  padding: 0;
+  flex: flex-grow;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: inherit;
+  border: 7px solid rgba(79, 129, 189, 0.3);
 }

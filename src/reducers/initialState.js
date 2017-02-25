@@ -47,11 +47,14 @@ export const tasks = {
     importanceSeverity: 1,
     lastDateWorkedOn: hoursAgo(6),
     departmentGoal: 'Goal #1',
+    edit: {
+      newDescription: 'Make sure website is ready for deployment by March 10th. We need this to be in docker containers for our dev-ops team.'
+    },
     comments: [
       {
         commentID: 3,
         from: 'Wilson',
-        date: daysAgo(1),
+        date: daysAgo(2),
         comment: `Wanted to give you a status update. Everything is on schedule except the graphic design. The designers need to update the logos to match the rebranding campaign we just had. If they aren't ready, we'll just use the old logos.`
       }
     ]

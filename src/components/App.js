@@ -13,6 +13,7 @@ const App = props => {
       <path d="M1,1 L29,1 M1,10 L29,10 M1,19 L29,19" />
     </svg>
   );
+  
   return (
     <div className="main-container">
       {menuIcon}
