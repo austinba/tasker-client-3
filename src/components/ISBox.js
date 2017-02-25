@@ -6,9 +6,13 @@ const ISBox = props => {
   if(props.level === 1 || props.level === 3) subBoxClasses.push('severe');
   if(props.level === 1 || props.level === 2) subBoxClasses.push('important');
 
+  console.log(props.dateDue);
+  const daysRemaining = Math.round((props.dateDue - Date.now()) / (24*60*60*1000));
+
   return (
     <div className="IS-box">
       <div className={subBoxClasses.join(' ')}>
+      {daysRemaining}
       </div>
     </div>
   );

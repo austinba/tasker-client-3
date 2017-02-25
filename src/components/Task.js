@@ -10,7 +10,7 @@ const Task = props => {
   return (
     <div className="task-container">
       <div className="main-task-box">
-        <ISBox level={task.importanceSeverity} dueDate={task.dueDate} />
+        <ISBox level={task.importanceSeverity} dateDue={task.dateDue} />
         <div className="task-description">
           {task.description}
         </div>
