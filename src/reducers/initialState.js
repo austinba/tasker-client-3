@@ -1,7 +1,5 @@
 function minutesAgo(minutes) {
-  const date = Date.now();
-  date.setTime(this.getTime() - (minutes*60*1000))
-  return date;
+  return new Date(Date.now() - (minutes*60*1000))
 }
 function hoursAgo(hours) {
   return minutesAgo(hours * 60);
@@ -10,9 +8,9 @@ function daysAgo(days) {
   return hoursAgo(days * 24);
 }
 
-export const tasks = [
-  {
-    taskId: 1,
+export const tasks = {
+  '1': {
+    taskID: 1,
     project: 'Ecommerce',
     description: 'Create the design of the shopping website and check in with me. I think it will take about 3 back-and-forths before ready',
     assignedTo: 'Austin Baltes',
@@ -34,7 +32,7 @@ export const tasks = [
       }
     ]
   },
-  {
+  '2': {
     taskID: 2,
     project: 'Dragonfly',
     description: 'Make sure website is ready for deployment by March 10th',
@@ -52,7 +50,7 @@ export const tasks = [
       }
     ]
   },
-  {
+  '3': {
     taskID: 3,
     project: 'Dragonfly',
     description: `We need to create tests for our logging system. Deployment of our Dragonfly system is scheduled on March 10th, so we absolutely have to have this done by then`,
@@ -85,7 +83,7 @@ export const tasks = [
       }
     ]
   }
-];
+};
 
 export const notifications = [
   {

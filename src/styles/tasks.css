@@ -1,0 +1,18 @@
+.task-container {
+  border: 1px solid rgb(79, 129, 189);
+  width: 100%;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.main-task-box {
+  border-bottom: 1px solid rgb(79, 129, 189);
+
+}
+
+.task-description {
+  padding: 20px 15px;
+}
+
+.comments-task-box {
+}
