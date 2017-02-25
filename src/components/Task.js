@@ -17,6 +17,11 @@ const Task = props => {
     cornerClasses.push('filled');
   }
 
+  const addComment = !task.addComment ? '' :
+    <div className="box task-comment">
+      <textarea className='add-comment-text' value={task.addComment.comment} />
+    </div>
+
   const commentBoxes = _.map(comment => (
     <div className="box task-comment" key={comment.commentID}>
       {comment.from}: {comment.comment} - {prettyTimeElapsed(comment.date)} ago
@@ -24,7 +29,7 @@ const Task = props => {
   ))(comments);
 
   const taskDescription = !task.edit ? task.description :
-    <textarea className='edit-task-description'>{task.edit.newDescription}</textarea>;
+    <textarea className='edit-task-description' value={task.edit.newDescription} />;
 
   return (
     <div className="box task-container">
@@ -38,11 +43,32 @@ const Task = props => {
         </div>
       </div>
       <div className="box task-actions">
-        <a href="#">Add comment...</a>
+        { (!task.edit && !task.addComment) &&
+          <a href="#">Add comment...</a>
+        }
+        { (task.edit) &&
+          <span>&nbsp;</span>
+        }
+        { (task.addComment) &&
+          <span><a href="#" className="primary-link">Send Comment</a> &nbsp;- &nbsp;<a href="#">Cancel</a></span>
+        }
         <span className="right">
-          <a href="#">Delete</a>&nbsp;&nbsp;-&nbsp;&nbsp;<a href="#">Edit</a>&nbsp;&nbsp;-&nbsp;&nbsp;<a href="#">Mark&nbsp;complete</a>
+          { (task.edit) &&
+            <span>
+              <a href="#">Cancel</a>&nbsp; -
+              &nbsp; <a href="#" className="primary-link">Save</a>
+            </span>
+          }
+          { (!task.edit && !task.addComment) &&
+            <span>
+              <a href="#">Delete</a>&nbsp; -
+                &nbsp; <a href="#">Edit</a>&nbsp; -
+                &nbsp; <a href="#">Mark&nbsp;complete</a>
+            </span>
+          }
         </span>
       </div>
+      {addComment}
       {commentBoxes}
     </div>
   );

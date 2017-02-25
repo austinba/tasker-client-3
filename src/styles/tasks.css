@@ -8,6 +8,10 @@
   padding: 8px 10px;
   font-size: 14px;
 }
+
+.task-comment {
+  display: flex;
+}
 .task-container {
   width: calc(100% - 20px);
   margin: 15px auto;
@@ -70,6 +74,9 @@
   line-height: 28px;
   background-color: rgba(0, 255, 255, 0.2);
 }
+.primary-link {
+  font-weight: 400;
+}
 
 .IS-sub-box.severe {
   right: auto;
@@ -96,7 +103,7 @@
   fill: rgba(79, 129, 189, 0.15) !important;
 }
 
-.edit-task-description {
+.edit-task-description, .add-comment-text {
   box-sizing: content-box;
   padding: 0;
   flex: flex-grow;

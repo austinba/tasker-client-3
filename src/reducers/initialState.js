@@ -69,6 +69,9 @@ export const tasks = {
     importanceSeverity: 3,
     lastDateWorkedOn: daysAgo(5),
     departmentGoal: 'Goal #1',
+    addComment: {
+      comment: 'Aaron said he can do the tests; would you mind reassigning to him?'
+    },
     comments: [
       {
         commentID: 4,
