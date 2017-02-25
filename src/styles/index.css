@@ -14,6 +14,7 @@ html {
   margin: 0;
   box-sizing: border-box;
   min-height: 100%;
+  color: white;
 }
 * {
   box-sizing: inherit;
@@ -39,4 +40,29 @@ body {
   min-height: 100%;
   width: 100%;
   max-width: 800px;
+}
+
+.menu-icon {
+  margin: 10px;
+}
+.menu-icon path {
+  stroke: white;
+  stroke-width: 3px;
+}
+.menu-icon:hover path {
+  stroke: rgb(95, 168, 246);
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+a:hover {
+  color: rgb(95, 168, 246);
+}
+.sort-actions {
+  margin: 20px 10px 15px 10px;
+  font-weight: 400;
+  font-size: 15px
 }

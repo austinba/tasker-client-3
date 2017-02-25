@@ -8,8 +8,20 @@ const App = props => {
     <Task taskID={task.taskID} key={task.taskID} />
   )(props.tasks);
 
+  const menuIcon = (
+    <svg width="30" height="20" xmlns="http://www.w3.org/2000/svg" className="menu-icon">
+      <path d="M1,1 L29,1 M1,10 L29,10 M1,19 L29,19" />
+    </svg>
+  );
   return (
     <div className="main-container">
+      {menuIcon}
+      <div className="sort-actions">
+        Sort by:
+        &nbsp; <a href="#">Importance Severity</a>
+        &nbsp; -&nbsp; <a href="#">KPI</a>
+        &nbsp; -&nbsp; <a href="#">Project</a>
+      </div>
       {taskComponents}
     </div>
   );

@@ -19,6 +19,9 @@ export const tasks = {
     importanceSeverity: 1,
     lastDateWorkedOn: hoursAgo(1),
     departmentGoal: 'Goal #1',
+    addingComment: {
+      comment: `Okay, I'll be right there!`
+    },
     comments: [
       {
         commentID: 1,
