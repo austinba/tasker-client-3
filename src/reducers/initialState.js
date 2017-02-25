@@ -21,11 +21,13 @@ export const tasks = {
     departmentGoal: 'Goal #1',
     comments: [
       {
+        commentID: 1,
         from: 'Jiangbo Cheng',
         date: minutesAgo(10),
         comment: `Just swing by the office right now if you're free`
       },
       {
+        commentID: 2,
         from: 'Austin Baltes',
         date: hoursAgo(1),
         comment: `Okay, just made the first design, when do you think you'll be ready to take a look?`
@@ -44,6 +46,7 @@ export const tasks = {
     departmentGoal: 'Goal #1',
     comments: [
       {
+        commentID: 3,
         from: 'Wilson',
         date: daysAgo(1),
         comment: `Wanted to give you a status update. Everything is on schedule except the graphic design. The designers need to update the logos to match the rebranding campaign we just had. If they aren't ready, we'll just use the old logos.`
@@ -62,21 +65,25 @@ export const tasks = {
     departmentGoal: 'Goal #1',
     comments: [
       {
+        commentID: 4,
         from: 'Austin Baltes',
         date: daysAgo(1),
         comment: `Hey, just letting you know. I’m focusing on the shopping site right now, but this is well on it’s way. Wilson is doing a code review and after any modifications, we’ll be able to push the tests`
       },
       {
+        commentID: 5,
         from: 'Jiangbo Cheng',
         date: hoursAgo(26),
         comment: `Hey haven’t heard from you in a while, what is happening with this?`
       },
       {
+        commentID: 6,
         from: 'Austin Baltes',
         date: daysAgo(8),
         comment: `Okay, thanks for letting me know`
       },
       {
+        commentID: 7,
         from: 'Jiangbo Cheng',
         date: daysAgo(9),
         comment: `Heads up. Wilson will be the senior developer on this project now, so you can start to work with him`

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import ISBox from './ISBox';
 import _ from 'lodash/fp';
 import '../styles/tasks.css';
-import 'material-design-icons/iconfont/material-icons.css';
 
 const Task = props => {
   const { taskID } = props;
@@ -18,7 +17,7 @@ const Task = props => {
   }
 
   const commentBoxes = _.map(comment => (
-    <div className="box task-comment">
+    <div className="box task-comment" key={comment.commentID}>
       {comment.from}: {comment.comment} - 1 hr ago
     </div>
   ))(comments);
