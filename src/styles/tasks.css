@@ -73,3 +73,6 @@
   stroke: rgb(79, 129, 189);
   fill: transparent;
 }
+.corner-working-on-marker.filled {
+  fill: rgba(79, 129, 189, 0.3);
+}

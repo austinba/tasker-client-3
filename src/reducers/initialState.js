@@ -17,7 +17,7 @@ export const tasks = {
     completed: 'no',
     dateDue: new Date(2017, 2, 2),
     importanceSeverity: 1,
-    lastDateWorkedOn: Date.now(),
+    lastDateWorkedOn: hoursAgo(1),
     departmentGoal: 'Goal #1',
     comments: [
       {
@@ -40,7 +40,7 @@ export const tasks = {
     completed: 'pending',
     dateDue: new Date(2017, 2, 10),
     importanceSeverity: 1,
-    lastDateWorkedOn: Date.now(),
+    lastDateWorkedOn: hoursAgo(6),
     departmentGoal: 'Goal #1',
     comments: [
       {
@@ -58,7 +58,7 @@ export const tasks = {
     completed: 'no',
     dateDue: new Date(2017, 2, 10),
     importanceSeverity: 3,
-    lastDateWorkedOn: Date.now(),
+    lastDateWorkedOn: daysAgo(5),
     departmentGoal: 'Goal #1',
     comments: [
       {

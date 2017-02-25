@@ -5,6 +5,8 @@ import App from './components/App';
 import configureStore from './store'
 import './styles/reset.css';
 import './styles/index.css';
+import 'material-design-icons/iconfont/material-icons.css';
+
 
 const store = configureStore();
 

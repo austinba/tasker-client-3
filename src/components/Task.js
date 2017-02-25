@@ -3,11 +3,19 @@ import { connect } from 'react-redux';
 import ISBox from './ISBox';
 import _ from 'lodash/fp';
 import '../styles/tasks.css';
+import 'material-design-icons/iconfont/material-icons.css';
 
 const Task = props => {
   const { taskID } = props;
   const task = props.tasks[taskID];
   const comments = task.comments;
+  const cornerClasses = ['corner-working-on-marker'];
+
+  //TODO: update with something in time zone (or another thought out way)
+  if(task.lastDateWorkedOn &&
+     Math.floor(Date.now()/86400000) === Math.floor(task.lastDateWorkedOn/86400000)) {
+    cornerClasses.push('filled');
+  }
 
   const commentBoxes = _.map(comment => (
     <div className="box task-comment">
@@ -18,7 +26,7 @@ const Task = props => {
   return (
     <div className="box task-container">
       <div className="main-task-box">
-        <svg width="50" height="50" className="corner-working-on-marker">
+        <svg width="50" height="50" className={cornerClasses.join(' ')}>
           <path d="M 0,0 L 50,50 L 50,0 Z" />
         </svg>
         <ISBox level={task.importanceSeverity} dateDue={task.dateDue} />
