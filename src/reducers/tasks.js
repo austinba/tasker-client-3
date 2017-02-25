@@ -1,7 +1,7 @@
-import initialState from './initialState';
+import { tasks } from './initialState';
 
-function mainReducer(state = initialState) {
+function taskReducer(state = tasks) {
   return state;
 }
 
-export default mainReducer;
+export default taskReducer;

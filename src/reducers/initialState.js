@@ -1,128 +1,146 @@
-const initialState = {
-  taskDetails: {
-    '2': {
-      title: 'Create Backend',
-      assignedTo: 'AB', // eventually this will be a userID
-      workingOnToday: true,
-      hoursWorked: 2,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 1,
-      isCompleted: false,
-      expanded: true
-    },
-    '3': {
-      title: 'Create Frontend',
-      assignedTo: 'AB',
-      workingOnToday: true,
-      hoursWorked: 1,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 1,
-      isCompleted: false,
-      expanded: true,
-    },
-    '4': {
-      title: 'Create Authentication System',
-      assignedTo: 'MJ',
-      workingOnToday: true,
-      hoursWorked: 14,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 2,
-      isCompleted: false
-    },
-    '5': {
-      title: 'Implement ORM',
-      assignedTo: 'TS',
-      workingOnToday: true,
-      hoursWorked: 3,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 2,
-      isCompleted: false
-    },
-    '6': {
-      title: 'Insert Endpoints',
-      assignedTo: 'TS',
-      workingOnToday: false,
-      hoursWorked: 0,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 2,
-      isCompleted: false
-    },
-    '7': {
-      title: 'Configure Redux',
-      assignedTo: 'AB',
-      workingOnToday: false,
-      hoursWorked: 3,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 3,
-      isCompleted: false,
-      expanded: false
-    },
-    '8': {
-      title: 'Build Mockup',
-      assignedTo: 'NT',
-      workingOnToday: false,
-      hoursWorked: 8,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 3,
-      isCompleted: true
-    },
-    '9': {
-      title: 'Design Page Graphics',
-      assignedTo: 'NT',
-      workingOnToday: false,
-      hoursWorked: 19,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 8,
-      isCompleted: true
-    },
-    '10': {
-      title: 'HTML and CSS Work',
-      assignedTo: 'TS',
-      workingOnToday: false,
-      hoursWorked: 14,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 8,
-      isCompleted: true
-    },
-    '11': {
-      title: 'Interactive Elements',
-      assignedTo: 'AB',
-      workingOnToday: false,
-      hoursWorked: 4,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 8,
-      isCompleted: true
-    },
-    '12': {
-      title: 'Writing Reducers',
-      assignedTo: 'SF',
-      workingOnToday: true,
-      hoursWorked: 21,
-      iconFormat: [...Array(9)].map(() => (Math.random() >= 0.5)),
-      parentID: 7,
-      isCompleted: false
-    }
+function minutesAgo(minutes) {
+  const date = Date.now();
+  date.setTime(this.getTime() - (minutes*60*1000))
+  return date;
+}
+function hoursAgo(hours) {
+  return minutesAgo(hours * 60);
+}
+function daysAgo(days) {
+  return hoursAgo(days * 24);
+}
+
+export const tasks = [
+  {
+    taskId: 1,
+    project: 'Ecommerce',
+    description: 'Create the design of the shopping website and check in with me. I think it will take about 3 back-and-forths before ready',
+    assignedTo: 'Austin Baltes',
+    completed: 'no',
+    dateDue: new Date(2017, 3, 2),
+    importanceSeverity: 1,
+    lastDateWorkedOn: Date.now(),
+    departmentGoal: 'Goal #1',
+    comments: [
+      {
+        from: 'Jiangbo Cheng',
+        date: minutesAgo(10),
+        comment: `Just swing by the office right now if you're free`
+      },
+      {
+        from: 'Austin Baltes',
+        date: hoursAgo(1),
+        comment: `Okay, just made the first design, when do you think you'll be ready to take a look?`
+      }
+    ]
   },
-  taskHierarchy: [
-    { taskID: 2, children: [
-      { taskID: 4 },
-      { taskID: 5 },
-      { taskID: 6 }
-    ]},
-    { taskID: 3, children: [
-      { taskID: 7, children: [
-        { taskID: 9 },
-        { taskID: 10 },
-        { taskID: 11 }
-      ]},
-      { taskID: 8, children: [
-        { taskID: 9 },
-        { taskID: 10 },
-        { taskID: 11 }
-      ]}
-    ]}
-  ]
+  {
+    taskID: 2,
+    project: 'Dragonfly',
+    description: 'Make sure website is ready for deployment by March 10th',
+    assignedTo: 'Wilson',
+    completed: 'pending',
+    dateDue: new Date(2017, 3, 10),
+    importanceSeverity: 1,
+    lastDateWorkedOn: Date.now(),
+    departmentGoal: 'Goal #1',
+    comments: [
+      {
+        from: 'Wilson',
+        date: daysAgo(1),
+        comment: `Wanted to give you a status update. Everything is on schedule except the graphic design. The designers need to update the logos to match the rebranding campaign we just had. If they aren't ready, we'll just use the old logos.`
+      }
+    ]
+  },
+  {
+    taskID: 3,
+    project: 'Dragonfly',
+    description: `We need to create tests for our logging system. Deployment of our Dragonfly system is scheduled on March 10th, so we absolutely have to have this done by then`,
+    assignedTo: 'Austin Baltes',
+    completed: 'no',
+    dateDue: new Date(2017, 3, 10),
+    importanceSeverity: 1,
+    lastDateWorkedOn: Date.now(),
+    departmentGoal: 'Goal #1',
+    comments: [
+      {
+        from: 'Austin Baltes',
+        date: daysAgo(1),
+        comment: `Hey, just letting you know. I’m focusing on the shopping site right now, but this is well on it’s way. Wilson is doing a code review and after any modifications, we’ll be able to push the tests`
+      },
+      {
+        from: 'Jiangbo Cheng',
+        date: hoursAgo(26),
+        comment: `Hey haven’t heard from you in a while, what is happening with this?`
+      },
+      {
+        from: 'Austin Baltes',
+        date: daysAgo(8),
+        comment: `Okay, thanks for letting me know`
+      },
+      {
+        from: 'Jiangbo Cheng',
+        date: daysAgo(9),
+        comment: `Heads up. Wilson will be the senior developer on this project now, so you can start to work with him`
+      }
+    ]
+  }
+];
+
+export const notifications = [
+  {
+    type: 'confirm-completion',
+    date: hoursAgo(5),
+    data: {
+      taskID: 2,
+      description: `Make sure website is ready for deployment by March 10th`,
+      assignedTo: 'Wilson'
+    }
+  }
+];
+
+export const statistics = {
+  last30daysKPIHours: {
+    'KPI #1': 113,
+    'KPI #2': 18,
+    'KPI #3': 261,
+    'non-KPI': 60,
+    'unassigned': 52
+  },
+  todayKPIHoursForecasted: {
+    'KPI #1': 14,
+    'KPI #2': 4,
+    'KPI #3': 0,
+    'non-KPI': 2,
+    'unassigned': 2
+  },
+  last30daysProjectHours: {
+    'Dragonfly': 360,
+    'Ecommerce': 182,
+    'unassigned': 18
+  },
+  todayProjectHoursForecasted: {
+    'KPI #1': 14,
+    'KPI #2': 4,
+    'KPI #3': 0,
+    'non-KPI': 2,
+    'unassigned': 2
+  }
 };
 
+export const users = [
+  'Austin Baltes',
+  'Wilson',
+  'Jiangbo Cheng'
+];
 
-export default initialState;
+export const projects = [
+  'Ecommerce',
+  'Dragonfly'
+];
+
+export const departmentGoals = [
+  { name: 'KPI #1' },
+  { name: 'KPI #2' },
+  { name: 'KPI #3' }
+];
