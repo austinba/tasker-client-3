@@ -4,8 +4,8 @@
   margin: -1px;
 }
 
-.task-actions, .task-comments {
-  padding: 6px 10px;
+.task-actions, .task-comment {
+  padding: 8px 10px;
   font-size: 14px;
 }
 .task-container {
@@ -15,14 +15,18 @@
 }
 
 .main-task-box {
+  position: relative;
   display: flex;
+}
+.task-actions, .main-task-box {
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .task-description {
   display: inline-block;
   flex: flex-grow;
   float: right;
-  margin: 15px 25px 15px 10px;
+  margin: 15px 35px 15px 10px;
   line-height: 1.4em;
   font-size: 16px;
 }
@@ -48,6 +52,7 @@
   text-align: center;
   font-size: 16px;
   line-height: 35px;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .IS-sub-box.severe {
@@ -60,4 +65,11 @@
 
 .right {
   float: right;
+}
+
+.corner-working-on-marker {
+  position: absolute;
+  right: 0;
+  stroke: rgb(79, 129, 189);
+  fill: transparent;
 }

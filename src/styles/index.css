@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 html {
-  background: #292929; /* For browsers that do not support gradients */
+  /*background: #292929; */
+  /*background-color: darkred;*/
+  /*https://uigradients.com/#*/
+  background: #4b6cb7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #4b6cb7 , #182848); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #4b6cb7 , #182848); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #136a8a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #136a8a , #267871); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #136a8a , #267871); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -16,8 +25,9 @@ body {
   padding: 0 !important;
   font-family: sans-serif;
   min-height: 100%;
-  color: grey;
   overflow: hidden;
+  line-height: 1.4em;
+  min-height: 100vh;
 }
 
 .main-container {
