@@ -66,3 +66,46 @@ a:hover {
   font-weight: 400;
   font-size: 15px
 }
+.primary-link {
+  font-weight: 400;
+}
+.right {
+  float: right;
+}
+.menu {
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: black;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+.menu-item, .menu-item-text {
+  padding: 5px 7px;
+  line-height: 1.3em;
+  font-size: 16px;
+  white-space: nowrap;
+}
+.menu-item-text {
+  font-weight: 400;
+}
+.menu-item {
+  font-weight: 200;
+  cursor: pointer;
+}
+.menu-item:hover {
+  background-color: rgba(0, 80, 255, 0.2);
+}
+.menu-click-handler {
+  z-index: -1;
+  background-color: transparent;
+  width: 200vh;
+  height: 200vh;
+  left: -100vh;
+  top: -100vh;
+  position: absolute;
+}

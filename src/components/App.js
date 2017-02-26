@@ -13,7 +13,7 @@ const App = props => {
       <path d="M1,1 L29,1 M1,10 L29,10 M1,19 L29,19" />
     </svg>
   );
-  
+
   return (
     <div className="main-container">
       {menuIcon}
@@ -22,6 +22,9 @@ const App = props => {
         &nbsp; <a href="#">Importance Severity</a>
         &nbsp; -&nbsp; <a href="#">KPI</a>
         &nbsp; -&nbsp; <a href="#">Project</a>
+      <div className="right">
+        <a href="#">Add Task</a>
+      </div>
       </div>
       {taskComponents}
     </div>

@@ -48,7 +48,8 @@ export const tasks = {
     lastDateWorkedOn: hoursAgo(6),
     departmentGoal: 'Goal #1',
     edit: {
-      newDescription: 'Make sure website is ready for deployment by March 10th. We need this to be in docker containers for our dev-ops team.'
+      newDescription: 'Make sure website is ready for deployment by March 10th. We need this to be in docker containers for our dev-ops team.',
+      menuOpen: true
     },
     comments: [
       {

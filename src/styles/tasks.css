@@ -74,9 +74,6 @@
   line-height: 28px;
   background-color: rgba(0, 255, 255, 0.2);
 }
-.primary-link {
-  font-weight: 400;
-}
 
 .IS-sub-box.severe {
   right: auto;
@@ -86,9 +83,6 @@
   bottom: auto;
 }
 
-.right {
-  float: right;
-}
 
 .corner-working-on-marker {
   position: absolute;
