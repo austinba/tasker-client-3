@@ -110,3 +110,7 @@
   background: inherit;
   border: 7px solid rgba(79, 129, 189, 0.3);
 }
+
+.task-goal {
+  font-size: 14px;
+}

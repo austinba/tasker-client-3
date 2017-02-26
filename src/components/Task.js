@@ -58,7 +58,10 @@ const Task = props => {
         {/* Importance/Severity Box - Also shows days remaining */}
         <div className="IS-KPI-container">
           <ISBox level={task.importanceSeverity} dateDue={task.dateDue} editing={task.edit}/>
-          {task.departmentGoal}
+          <p className="task-goal">
+            {!task.edit && task.departmentGoal}
+            { task.edit && <a className="xs-right">{task.departmentGoal}<i className="fa fa-caret-down" /></a>}
+          </p>
         </div>
 
         {/* Task Description */}

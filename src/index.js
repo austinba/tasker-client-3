@@ -5,6 +5,7 @@ import App from './components/App';
 import configureStore from './store'
 import './styles/reset.css';
 import './styles/index.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 
 const store = configureStore();

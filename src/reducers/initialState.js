@@ -9,6 +9,12 @@ function daysAgo(days) {
 }
 
 export const tasks = {
+  'adding-task': {
+    taskID: 'adding-task',
+    importanceSeverity: 4,
+    comments: [],
+    edit: {}
+  },
   '1': {
     taskID: 1,
     project: 'Ecommerce',
@@ -99,6 +105,13 @@ export const tasks = {
         comment: `Heads up. Wilson will be the senior developer on this project now, so you can start to work with him`
       }
     ]
+  }
+};
+
+export const taskView = {
+  addingTask: {
+    description: undefined,
+    assignedTo: undefined
   }
 };
 

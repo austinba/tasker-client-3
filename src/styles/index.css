@@ -103,7 +103,9 @@ a:hover {
   top: -100vh;
   position: absolute;
 }
-
+.xs-right {
+  float: right;
+}
 /*https://scotch.io/tutorials/default-sizes-for-twitter-bootstraps-media-queries*/
 /* xs: 480, sm: 768, md: 992, lg: 1200, */
 @media (min-width: 480px) {
