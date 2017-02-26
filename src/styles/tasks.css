@@ -31,19 +31,20 @@
   width: 100%;
   flex: flex-grow;
   float: right;
-  margin: 15px 35px 15px 10px;
+  margin: 15px 40px 15px 10px;
   line-height: 1.4em;
   font-size: 16px;
 }
 
-.comments-task-box {
+.IS-KPI-container {
+  margin: 15px 10px;
+  text-align: center;
 }
 
 .IS-box {
   position: relative;
   display: inline-block;
   flex: none;
-  margin: 15px 10px;
   width: 70px;
   height: 70px;
 }

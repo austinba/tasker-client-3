@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 html {
-  /*background: #292929; */
-  /*background-color: darkred;*/
   /*https://uigradients.com/#*/
   background: #4b6cb7; /* fallback for old browsers */
   background: -webkit-linear-gradient(to left, #4b6cb7 , #182848); /* Chrome 10-25, Safari 5.1-6 */
@@ -13,8 +11,8 @@ html {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  min-height: 100%;
   color: white;
+  min-height: 100%;
 }
 * {
   box-sizing: inherit;
@@ -25,10 +23,8 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   font-family: sans-serif;
-  min-height: 100%;
-  overflow: hidden;
   line-height: 1.4em;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .main-container {
@@ -69,11 +65,9 @@ a:hover {
 .primary-link {
   font-weight: 400;
 }
-.right {
-  float: right;
-}
+
 .menu {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.2);
   z-index: 1;
   position: absolute;
@@ -108,4 +102,12 @@ a:hover {
   left: -100vh;
   top: -100vh;
   position: absolute;
+}
+
+/*https://scotch.io/tutorials/default-sizes-for-twitter-bootstraps-media-queries*/
+/* xs: 480, sm: 768, md: 992, lg: 1200, */
+@media (min-width: 480px) {
+  .sm-right {
+    float: right;
+  }
 }

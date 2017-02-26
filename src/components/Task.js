@@ -49,24 +49,35 @@ const Task = props => {
   return (
     <div className="box task-container">
       <div className="main-task-box">
+
+        {/* Corner Graphic: Indicates if the user is working on this today */}
         <svg width="50" height="50" className={'corner-working-on-marker' + (isWorkingOn ? ' filled' : '')}>
           <path d="M 0,0 L 50,50 L 50,0 Z" />
         </svg>
-        <ISBox level={task.importanceSeverity} dateDue={task.dateDue} editing={task.edit}/>
-        <div className="task-description">
-          {taskDescription}
+
+        {/* Importance/Severity Box - Also shows days remaining */}
+        <div className="IS-KPI-container">
+          <ISBox level={task.importanceSeverity} dateDue={task.dateDue} editing={task.edit}/>
+          {task.departmentGoal}
         </div>
+
+        {/* Task Description */}
+        <div className="task-description">{taskDescription}</div>
       </div>
+
+      {/* Task Actions - These change depending on the status */}
       <div className="box task-actions">
-        { (!task.edit && !task.addComment) &&
-          <a href="#">Add comment...</a>
+
+        {/* Left-hand side options */}
+        { (!task.edit && !task.addComment) && <a href="#">Add comment...</a> }
+        { (task.edit)                      && <span>&nbsp;</span> }
+        { (task.addComment)                &&
+          <span>
+            <a href="#" className="primary-link">Send Comment</a> &nbsp;- &nbsp;<a href="#">Cancel</a>
+          </span>
         }
-        { (task.edit) &&
-          <span>&nbsp;</span>
-        }
-        { (task.addComment) &&
-          <span><a href="#" className="primary-link">Send Comment</a> &nbsp;- &nbsp;<a href="#">Cancel</a></span>
-        }
+
+        {/* Right-hand side options */}
         <span className="right">
           { (task.edit) &&
             <span>
@@ -83,8 +94,14 @@ const Task = props => {
           }
         </span>
       </div>
+
+      {/* Add Comment - Box Visible After User Selects "Add Comment" */}
       <AddComment addComment={task.addComment} />
+
+      {/* View all - Visible if more than 3 comments */}
       {viewAllLink}
+
+      {/* Comments - Up to 3 of the most recent comments */}
       <CommentBoxes comments={comments} />
     </div>
   );

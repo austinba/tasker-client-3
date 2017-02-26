@@ -22,7 +22,7 @@ const App = props => {
         &nbsp; <a href="#">Importance Severity</a>
         &nbsp; -&nbsp; <a href="#">KPI</a>
         &nbsp; -&nbsp; <a href="#">Project</a>
-      <div className="right">
+      <div className="sm-right">
         <a href="#">Add Task</a>
       </div>
       </div>
