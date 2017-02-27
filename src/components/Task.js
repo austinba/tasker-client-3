@@ -53,12 +53,13 @@ const Task = props => {
   return (
     <div className="box task-container">
       <div className="main-task-box">
+        { (task.edit && task.edit.saving) && <i className="fa fa-spinner fa-pulse fa-3x fa-fw" style={{position: 'absolute', left: 'calc(50% - 25px)', top: 'calc(50% - 25px)'}}></i>}
 
         {/* Corner Graphic: Indicates if the user is working on this today */}
         <svg width="50" height="50" className={'corner-working-on-marker' + (isWorkingOn ? ' filled' : '')}>
           <path d="M 0,0 L 50,50 L 50,0 Z" />
         </svg>
-        { task.lastDateWorkedOnPendingUpdate && <i className="fa fa-spinner fa-pulse fa-fw corner-working-on-marker-update-indicator" style={{top: 6, right:3 }}></i>}
+        { (typeof task.lastDateWorkedOnPendingUpdate !== 'undefined')  && <i className="fa fa-spinner fa-pulse fa-fw corner-working-on-marker-update-indicator"></i>}
 
         {/* Importance/Severity Box - Also shows days remaining */}
         <div className="IS-KPI-container">

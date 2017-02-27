@@ -32,26 +32,32 @@ const updateFieldPath = R.curry((fieldPath, task, action) => R.assocPath(fieldPa
 
 const taskReducers = {
   EDIT_TASK: R.assoc('edit', {}),
-  EDIT_TASK_SAVE_SUCCESS: R.compose(R.omit('edit'), R.converge(R.merge, [R.identity, R.prop('edit')])),
+  EDIT_TASK_SAVE_PENDING: R.assocPath(['edit', 'saving'], true),
+  EDIT_TASK_SAVE_SUCCESS:
+    R.compose(
+      R.omit('edit'),
+      R.converge(
+        R.merge, [R.identity, R.prop('edit')]
+      )),
   EDIT_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
   EDIT_TASK_CANCEL: R.omit('edit'),
   EDIT_TASK_DESC_UPDATE: updateField('description'),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),
   IS_LEVEL_CHOOSE: updateField('level'),
-  TOGGLE_WORKING_TODAY_PENDING: updateField('lastUpdateWorkedOnPendingUpdate'),
+  TOGGLE_WORKING_TODAY_PENDING: updateField('lastDateWorkedOnPendingUpdate'),
   TOGGLE_WORKING_TODAY_SUCCESS:
     R.compose(
-      R.omit('lastUpdateWorkedOnPendingUpdate'),
+      R.omit('lastDateWorkedOnPendingUpdate'),
       R.omit('error'),
       R.converge(
         R.assoc, [ R.always('lastDateWorkedOn'),
-                   R.prop('lastUpdateWorkedOnPendingUpdate'),
+                   R.prop('lastDateWorkedOnPendingUpdate'),
                    R.identity,
                  ])),
   TOGGLE_WORKING_TODAY_FAILURE:
     R.compose(
-      R.omit('lastUpdateWorkedOnPendingUpdate'),
+      R.omit('lastDateWorkedOnPendingUpdate'),
       R.assoc('error', 'Failed updating working-on status...')),
   ADD_COMMENT: R.assoc('addComment', {comment: ''}),
   ADD_COMMENT_UPDATE: updateFieldPath(['addComment', 'comment']),
