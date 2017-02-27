@@ -32,6 +32,7 @@ const updateFieldPath = R.curry((fieldPath, task, action) => R.assocPath(fieldPa
 
 const taskReducers = {
   EDIT_TASK: R.assoc('edit', {}),
+  EDIT_TASK_CANCEL: R.omit('edit'),
   EDIT_TASK_SAVE_PENDING: R.assocPath(['edit', 'saving'], true),
   EDIT_TASK_SAVE_SUCCESS:
     R.compose(
@@ -40,7 +41,6 @@ const taskReducers = {
         R.merge, [R.identity, R.prop('edit')]
       )),
   EDIT_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
-  EDIT_TASK_CANCEL: R.omit('edit'),
   EDIT_TASK_DESC_UPDATE: updateField('description'),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),
@@ -81,6 +81,7 @@ const taskReducers = {
 function taskReducer(state = tasks, action) {
   const taskID = action.taskID;
   if(taskID) {
+    console.log(taskID, 'calling', action)
     const taskReducer = taskReducers[action.type] || (task => task);
     return R.assoc(taskID, taskReducer(state[taskID]), state); // update this task with the task Reducer
   }
