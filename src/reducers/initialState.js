@@ -24,10 +24,9 @@ export const tasks = {
     dateDue: new Date(2017, 2, 2),
     importanceSeverity: 1,
     lastDateWorkedOn: hoursAgo(1),
-    departmentGoal: 'Goal #1',
-    addingComment: {
-      comment: `Okay, I'll be right there!`
-    },
+    lastDateWorkedOnPendingUpdate: hoursAgo(0),
+    goal: 'Goal #2',
+    error: 'Failed updating working-on status',
     comments: [
       {
         commentID: 1,
@@ -49,13 +48,14 @@ export const tasks = {
     description: 'Make sure website is ready for deployment by March 10th',
     assignedTo: 'Wilson',
     completed: 'pending',
-    dateDue: new Date(2017, 2, 10),
+    dateDue: new Date(2017, 2, 1),
     importanceSeverity: 1,
     lastDateWorkedOn: hoursAgo(6),
-    departmentGoal: 'Goal #1',
+    goal: 'Goal #1',
     edit: {
       newDescription: 'Make sure website is ready for deployment by March 10th. We need this to be in docker containers for our dev-ops team.',
-      menuOpen: true
+      menuOpen: true,
+      error: 'Saving Failed...'
     },
     comments: [
       {
@@ -75,7 +75,6 @@ export const tasks = {
     dateDue: new Date(2017, 2, 10),
     importanceSeverity: 3,
     lastDateWorkedOn: daysAgo(5),
-    departmentGoal: 'Goal #1',
     addComment: {
       comment: 'Aaron said he can do the tests; would you mind reassigning to him?'
     },
@@ -109,10 +108,7 @@ export const tasks = {
 };
 
 export const taskView = {
-  addingTask: {
-    description: undefined,
-    assignedTo: undefined
-  }
+  sortBy: 'goal'
 };
 
 export const notifications = [
@@ -167,7 +163,7 @@ export const projects = [
   'Dragonfly'
 ];
 
-export const departmentGoals = [
+export const goals = [
   { name: 'KPI #1' },
   { name: 'KPI #2' },
   { name: 'KPI #3' }

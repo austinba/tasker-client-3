@@ -113,3 +113,27 @@ a:hover {
     float: right;
   }
 }
+
+/* Date Picker */
+.text-center {
+  text-align: center;
+}
+.date-picker-popover table {
+  table-layout: fixed;
+  font-size: 14px;
+}
+.popover-title .pull-left, .popover-title .pull-right {
+  margin: 0 25px;
+}
+.date-picker-popover tr {
+  display: block;
+  width: 280px;
+}
+.date-picker-popover td {
+  display: inline-block;
+  text-align: center;
+  width: 35px;
+  height: 23px;
+  padding: 2px;
+  line-height: 1em;
+}

@@ -31,6 +31,7 @@ const Task = props => {
   const { taskID } = props;
   const task = props.tasks[taskID];
   const comments = task.comments;
+  const goal = task.goal || 'No Goal';
   let isWorkingOn = false;
 
   //TODO: update with something in time zone (or another thought out way)
@@ -54,19 +55,22 @@ const Task = props => {
         <svg width="50" height="50" className={'corner-working-on-marker' + (isWorkingOn ? ' filled' : '')}>
           <path d="M 0,0 L 50,50 L 50,0 Z" />
         </svg>
+        { task.lastDateWorkedOnPendingUpdate && <i className="fa fa-spinner fa-pulse fa-fw corner-working-on-marker-update-indicator" style={{top: 6, right:3 }}></i>}
 
         {/* Importance/Severity Box - Also shows days remaining */}
         <div className="IS-KPI-container">
           <ISBox level={task.importanceSeverity} dateDue={task.dateDue} editing={task.edit}/>
           <p className="task-goal">
-            {!task.edit && task.departmentGoal}
-            { task.edit && <a className="xs-right">{task.departmentGoal}<i className="fa fa-caret-down" /></a>}
+            {!task.edit && goal}
+            { task.edit && <a className="xs-right">{goal} <i className="fa fa-caret-down" /></a>}
           </p>
         </div>
 
         {/* Task Description */}
         <div className="task-description">{taskDescription}</div>
+
       </div>
+      { task.error && <div className="task-error"> {task.error} <a href="#"> (click here to report)</a></div> }
 
       {/* Task Actions - These change depending on the status */}
       <div className="box task-actions">
@@ -81,11 +85,12 @@ const Task = props => {
         }
 
         {/* Right-hand side options */}
-        <span className="right">
+        <span className="xs-right">
           { (task.edit) &&
             <span>
               <a href="#">Cancel</a>&nbsp; -
               &nbsp; <a href="#" className="primary-link">Save</a>
+            { task.edit.error && <span className="task-error"> &nbsp;- &nbsp;{task.edit.error} <a href="#">(click here to report)</a></span> }
             </span>
           }
           { (!task.edit && !task.addComment) &&

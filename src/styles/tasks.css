@@ -22,15 +22,22 @@
   position: relative;
   display: flex;
 }
-.task-actions, .main-task-box {
+.task-actions, .main-task-box, .task-error {
   background: rgba(255, 255, 255, 0.04);
 }
-
+.task-error {
+  color: #DD7777;
+  padding: 0 10px 15px 10px;
+}
+.task-error a {
+  color: #CCC;
+  font-weight: 400;
+  font-style: italic;
+}
 .task-description {
   display: flex;
+  flex: 0 1 auto;
   width: 100%;
-  flex: flex-grow;
-  float: right;
   margin: 15px 40px 15px 10px;
   line-height: 1.4em;
   font-size: 16px;
@@ -84,7 +91,11 @@
   bottom: auto;
 }
 
-
+.corner-working-on-marker-update-indicator {
+  position: absolute;
+  right: 4px;
+  top: 6px;
+}
 .corner-working-on-marker {
   position: absolute;
   right: 0;

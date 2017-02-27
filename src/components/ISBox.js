@@ -3,6 +3,8 @@ import _ from 'lodash/fp';
 _.map = _.map.convert({ 'cap': false }); // fixes lodash issue of not passing in key
 import { Menu, MenuItem, MenuItemText } from './common/Menu';
 import '../styles/tasks.css';
+import DatePicker from 'react-bootstrap-date-picker';
+
 
 const subBoxClassesByLevel = {
   '1': ['box', 'IS-sub-box', 'important', 'severe'],
@@ -36,8 +38,17 @@ const ISBox = props => {
     if(props.editing.menuOpen) {
       menu = (!props.editing || !props.editing.menuOpen) ? '' :
         <Menu>
-          <MenuItemText text="Due Date: March 1, 2017" />
+          <MenuItemText text={'Due Date: ' + (props.dateDue || new Date()).toLocaleDateString()} />
           <MenuItem text="Edit Date" />
+          {/*}
+          <DatePicker
+            value={props.dateDue.toISOString()}
+            autoFocus={true}
+            calendarPlacement="bottom"
+            showTodayButton={true}
+            onBlur={()=>console.log('blur')}
+            />
+            */}
           <MenuItem text="Cancel" />
         </Menu>
     }
