@@ -32,17 +32,19 @@ const AddComment = R.pipe(
   ),
   R.defaultTo(<div />)
 );
+
 class Task extends React.Component {
   componentWillMount () {
     const taskID = this.props.taskID;
-    this.boundActions = R.map(action => action.bind(null, taskID))(this.props.unboundActions)
+    this.boundActions = R.map(action => action.bind(null, taskID), this.props.unboundActions)
   }
   render() {
     const props = this.props;
-    const actions = this.boundActions;
     const { taskID } = props;
     const task = props.tasks[taskID];
-    const comments = task.comments;
+
+    const actions = this.boundActions;
+    const comments = task.comments || [];
     const goal = task.goal || 'No Goal';
     let isWorkingOn = false;
 
@@ -54,7 +56,7 @@ class Task extends React.Component {
 
 
     const taskDescription = !task.edit ? task.description :
-      <textarea className='edit-task-description' value={task.edit.newDescription} />;
+      <textarea className='edit-task-description' value={task.edit.description || ''} onChange={actions.editDescription} />;
 
     return (
       <div className="box task-container">
@@ -69,7 +71,7 @@ class Task extends React.Component {
 
           {/* Importance/Severity Box - Also shows days remaining */}
           <div className="IS-KPI-container">
-            <ISBox level={task.importanceSeverity} dateDue={task.dateDue} editing={task.edit}/>
+            <ISBox level={task.importanceSeverity} dateDue={task.dateDue} editing={task.edit} selectLevel={actions.selectLevel}/>
             <p className="task-goal">
               {!task.edit && goal}
               { task.edit && <a className="xs-right">{goal} <i className="fa fa-caret-down" /></a>}

@@ -1,37 +1,42 @@
 import { tasks } from './initialState';
 import R from 'ramda';
 
-// Single task action types
-const EDIT_TASK = 'EDIT_TASK';
-const EDIT_TASK_DESC_UPDATE = 'EDIT_TASK_DESC_UPDATE';
-const EDIT_TASK_SAVE_SUCCESS = 'EDIT_TASK_SAVE_SUCCESS';
-const EDIT_TASK_SAVE_FAILURE = 'EDIT_TASK_SAVE_FAILURE';
-const EDIT_TASK_CANCEL = 'EDIT_TASK_CANCEL';
-const GOAL_SELECT_OPEN = 'GOAL_SELECT_OPEN';
-const GOAL_SELECT_CHOOSE = 'GOAL_SELECT_CHOOSE';
-const IS_LEVEL_CHOOSE = 'IS_LEVEL_CHOOSE';
-const UNTOGGLE_WORKING_TODAY_PENDING = 'UNTOGGLE_WORKING_TODAY_PENDING';
-const UNTOGGLE_WORKING_TODAY_SUCCESS = 'UNTOGGLE_WORKING_TODAY_SUCCESS';
-const UNTOGGLE_WORKING_TODAY_FAILURE = 'UNTOGGLE_WORKING_TODAY_FAILURE';
-const ADD_COMMENT = 'ADD_COMMENT';
-const ADD_COMMENT_SAVE_SUBMIT = 'ADD_COMMENT_SAVE_SUBMIT';
-const ADD_COMMENT_SAVE_SUCCESS = 'ADD_COMMENT_SAVE_SUCCESS';
-const ADD_COMMENT_SAVE_FAILURE = 'ADD_COMMENT_SAVE_FAILURE';
-const REMOVE_ERROR = 'REMOVE_ERROR';
-const VIEW_MORE_COMMENTS = 'VIEW_MORE_COMMENTS';
-
-// "tasks" action types
-const ADD_TASK = 'ADD_TASK';
-const ADD_TASK_SAVE_PENDING = 'ADD_TASK_SAVE_PENDING';
-const ADD_TASK_SAVE_SUCCESS = 'ADD_TASK_SAVE_SUCCESS';
-const ADD_TASK_SAVE_FAILURE = 'ADD_TASK_SAVE_FAILURE';
+// // Single task action types
+// const EDIT_TASK = 'EDIT_TASK';
+// const EDIT_TASK_DESC_UPDATE = 'EDIT_TASK_DESC_UPDATE';
+// const EDIT_TASK_SAVE_SUCCESS = 'EDIT_TASK_SAVE_SUCCESS';
+// const EDIT_TASK_SAVE_FAILURE = 'EDIT_TASK_SAVE_FAILURE';
+// const EDIT_TASK_CANCEL = 'EDIT_TASK_CANCEL';
+// const GOAL_SELECT_OPEN = 'GOAL_SELECT_OPEN';
+// const GOAL_SELECT_CHOOSE = 'GOAL_SELECT_CHOOSE';
+// const IS_LEVEL_CHOOSE = 'IS_LEVEL_CHOOSE';
+// const UNTOGGLE_WORKING_TODAY_PENDING = 'UNTOGGLE_WORKING_TODAY_PENDING';
+// const UNTOGGLE_WORKING_TODAY_SUCCESS = 'UNTOGGLE_WORKING_TODAY_SUCCESS';
+// const UNTOGGLE_WORKING_TODAY_FAILURE = 'UNTOGGLE_WORKING_TODAY_FAILURE';
+// const ADD_COMMENT = 'ADD_COMMENT';
+// const ADD_COMMENT_SAVE_SUBMIT = 'ADD_COMMENT_SAVE_SUBMIT';
+// const ADD_COMMENT_SAVE_SUCCESS = 'ADD_COMMENT_SAVE_SUCCESS';
+// const ADD_COMMENT_SAVE_FAILURE = 'ADD_COMMENT_SAVE_FAILURE';
+// const REMOVE_ERROR = 'REMOVE_ERROR';
+// const VIEW_MORE_COMMENTS = 'VIEW_MORE_COMMENTS';
+//
+// // "tasks" action types
+// const ADD_TASK = 'ADD_TASK';
+// const ADD_TASK_SAVE_PENDING = 'ADD_TASK_SAVE_PENDING';
+// const ADD_TASK_SAVE_SUCCESS = 'ADD_TASK_SAVE_SUCCESS';
+// const ADD_TASK_SAVE_FAILURE = 'ADD_TASK_SAVE_FAILURE';
 
 
 const updateField = R.curry((field, task, action) => R.assoc(field, R.prop('value', action), task));
 const updateFieldPath = R.curry((fieldPath, task, action) => R.assocPath(fieldPath, R.prop('value', action), task));
 
 const taskReducers = {
-  EDIT_TASK: R.assoc('edit', {}),
+  EDIT_TASK: R.converge(
+    R.assoc,
+    [ R.always('edit'),
+      R.pick(['description', 'assignedTo', 'project', 'dueDate', 'importanceSeverity']),
+      R.identity
+    ]),
   EDIT_TASK_CANCEL: R.omit('edit'),
   EDIT_TASK_SAVE_PENDING: R.assocPath(['edit', 'saving'], true),
   EDIT_TASK_SAVE_SUCCESS:
@@ -41,10 +46,10 @@ const taskReducers = {
         R.merge, [R.identity, R.prop('edit')]
       )),
   EDIT_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
-  EDIT_TASK_DESC_UPDATE: updateField('description'),
+  EDIT_TASK_DESCRIPTION: updateFieldPath(['edit', 'description']),
+  SELECT_IS_LEVEL: state => action => R.assoc('importanceSeverity', action.level, state),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),
-  IS_LEVEL_CHOOSE: updateField('level'),
   TOGGLE_WORKING_TODAY_PENDING: updateField('lastDateWorkedOnPendingUpdate'),
   TOGGLE_WORKING_TODAY_SUCCESS:
     R.compose(
@@ -77,15 +82,26 @@ const taskReducers = {
 }
 
 
+const tasksReducers = {
+  EDIT_TASK_CANCEL: state => action => (action.taskID === 'adding-task') ? R.omit('adding-task', state) : state
+};
 
 function taskReducer(state = tasks, action) {
   const taskID = action.taskID;
+  let newState = state;
+
   if(taskID) {
-    console.log(taskID, 'calling', action)
-    const taskReducer = taskReducers[action.type] || (task => task);
-    return R.assoc(taskID, taskReducer(state[taskID]), state); // update this task with the task Reducer
+    const taskReducer = taskReducers[action.type] || R.identity;
+    const taskReducerStateApplied = taskReducer(newState[taskID]);
+    console.log(action)
+    const taskReducerResult = !taskReducerStateApplied.call ? taskReducerStateApplied : taskReducerStateApplied(action);
+    newState = R.assoc(taskID, taskReducerResult, newState); // update this task with the task Reducer
   }
-  return state;
+
+  const tasksReducer = tasksReducers[action.type] || R.identity;
+  const tasksReducerStateApplied = tasksReducer(newState);
+  newState = !tasksReducerStateApplied.call ? tasksReducerStateApplied : tasksReducerStateApplied(action)
+  return newState;
 }
 
 export default taskReducer;
