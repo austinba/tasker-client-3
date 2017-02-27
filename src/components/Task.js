@@ -6,8 +6,11 @@ import {prettyTimeElapsed} from '../utilities';
 import '../styles/tasks.css';
 
 const CommentBoxes = R.pipe(
-  R.prop('comments'),
-  R.take(3),
+  R.ifElse(
+    R.prop('expand'),
+    R.prop('comments'),
+    R.compose(R.take(3), R.prop('comments'))
+  ),
   R.map(comment => (
     <div className="box task-comment" key={comment.commentID}>
       {comment.from}: {comment.comment} - {prettyTimeElapsed(comment.date)} ago
@@ -41,7 +44,7 @@ const Task = props => {
   }
 
   const commentCount = comments.length;
-  const viewAllLink = !(commentCount > 3) ? '' :
+  const viewAllLink = !(commentCount > 3 && !task.expandComments) ? '' :
     <div className="box task-comment"><a href="#" className="primary-link">View {commentCount - 3} more comment{commentCount > 4 ? 's' : ''}</a></div>;
 
   const taskDescription = !task.edit ? task.description :
@@ -90,7 +93,6 @@ const Task = props => {
             <span>
               <a href="#">Cancel</a>&nbsp; -
               &nbsp; <a href="#" className="primary-link">Save</a>
-            { task.edit.error && <span className="task-error"> &nbsp;- &nbsp;{task.edit.error} <a href="#">(click here to report)</a></span> }
             </span>
           }
           { (!task.edit && !task.addComment) &&
@@ -110,7 +112,7 @@ const Task = props => {
       {viewAllLink}
 
       {/* Comments - Up to 3 of the most recent comments */}
-      <CommentBoxes comments={comments} />
+      <CommentBoxes comments={comments} expand={task.expandComments} />
     </div>
   );
 };

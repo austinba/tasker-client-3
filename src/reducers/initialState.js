@@ -54,8 +54,7 @@ export const tasks = {
     goal: 'Goal #1',
     edit: {
       newDescription: 'Make sure website is ready for deployment by March 10th. We need this to be in docker containers for our dev-ops team.',
-      menuOpen: true,
-      error: 'Saving Failed...'
+      menuOpen: true
     },
     comments: [
       {
@@ -75,8 +74,9 @@ export const tasks = {
     dateDue: new Date(2017, 2, 10),
     importanceSeverity: 3,
     lastDateWorkedOn: daysAgo(5),
+    expandComments: true,
     addComment: {
-      comment: 'Aaron said he can do the tests; would you mind reassigning to him?'
+      comment: 'Aaron said he can do the tests. Would you mind reassigning to him?'
     },
     comments: [
       {
@@ -102,6 +102,55 @@ export const tasks = {
         from: 'Jiangbo Cheng',
         date: daysAgo(9),
         comment: `Heads up. Wilson will be the senior developer on this project now, so you can start to work with him`
+      }
+    ]
+  },
+  '4': {
+    taskID: 4,
+    description: `We need to create a poster for the hackathon next month -- can you take care of this? Also, let me give the okay on your idea before you have the poster made.`,
+    assignedTo: 'Austin Baltes',
+    completed: 'no',
+    dateDue: new Date(2017, 3, 2),
+    importanceSeverity: 3,
+    lastDateWorkedOn: daysAgo(2),
+    expandComments: false,
+
+    comments: [
+      {
+        commentID: 13,
+        from: 'Jiangbo Cheng',
+        date: daysAgo(65),
+        comment: `Don't worry, we have plenty of time. Just let me know when you have something...`
+      },
+      {
+        commentID: 12,
+        from: 'Austin Baltes',
+        date: daysAgo(66),
+        comment: `Okay, turns out Travis' team is doing that already. We'll have to come up with something else`
+      },
+      {
+        commentID: 11,
+        from: 'Austin Baltes',
+        date: daysAgo(67),
+        comment: `Jim thought on modeling it off the new Resident Evil movie poster. I think it'd be pretty cool for the event.`
+      },
+      {
+        commentID: 10,
+        from: 'Jiangbo Cheng',
+        date: hoursAgo(68),
+        comment: `We did that last year. Any other ideas?`
+      },
+      {
+        commentID: 9,
+        from: 'Austin Baltes',
+        date: hoursAgo(70),
+        comment: `I was talking to Sam, she's thinking a space / asteroids theme. What do you think?`
+      },
+      {
+        commentID: 8,
+        from: 'Jiangbo Cheng',
+        date: daysAgo(3),
+        comment: `Any ideas so far?`
       }
     ]
   }

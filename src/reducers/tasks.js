@@ -17,8 +17,8 @@ const ADD_COMMENT = 'ADD_COMMENT';
 const ADD_COMMENT_SAVE_SUBMIT = 'ADD_COMMENT_SAVE_SUBMIT';
 const ADD_COMMENT_SAVE_SUCCESS = 'ADD_COMMENT_SAVE_SUCCESS';
 const ADD_COMMENT_SAVE_FAILURE = 'ADD_COMMENT_SAVE_FAILURE';
+const REMOVE_ERROR = 'REMOVE_ERROR';
 const VIEW_MORE_COMMENTS = 'VIEW_MORE_COMMENTS';
-const REPORT_ERROR = 'REPORT_ERROR';
 
 // "tasks" action types
 const ADD_TASK = 'ADD_TASK';
@@ -33,7 +33,7 @@ const updateFieldPath = R.curry((fieldPath, task, action) => R.assocPath(fieldPa
 const taskReducers = {
   EDIT_TASK: R.assoc('edit', {}),
   EDIT_TASK_SAVE_SUCCESS: R.compose(R.omit('edit'), R.converge(R.merge, [R.identity, R.prop('edit')])),
-  EDIT_TASK_SAVE_FAILURE: R.assocPath(['edit', 'error'], 'Failed trying to save'),
+  EDIT_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
   EDIT_TASK_CANCEL: R.omit('edit'),
   EDIT_TASK_DESC_UPDATE: updateField('description'),
   GOAL_SELECT_OPEN: (task => task),
@@ -45,7 +45,7 @@ const taskReducers = {
       R.omit('lastUpdateWorkedOnPendingUpdate'),
       R.omit('error'),
       R.converge(
-        R.assoc, [ () => 'lastDateWorkedOn',
+        R.assoc, [ R.always('lastDateWorkedOn'),
                    R.prop('lastUpdateWorkedOnPendingUpdate'),
                    R.identity,
                  ])),
@@ -56,10 +56,18 @@ const taskReducers = {
   ADD_COMMENT: R.assoc('addComment', {comment: ''}),
   ADD_COMMENT_UPDATE: updateFieldPath(['addComment', 'comment']),
   ADD_COMMENT_SAVE_SUBMIT: R.assocPath(['addComment', 'saving'], true),
-  ADD_COMMENT_SAVE_SUCCESS: (task => task),
-  ADD_COMMENT_SAVE_FAILURE: (task => task),
-  VIEW_MORE_COMMENTS: (task => task),
-  REPORT_ERROR: (task => task)
+  ADD_COMMENT_SAVE_SUCCESS: R.compose(
+    R.omit('addComment'),
+    R.converge(
+      R.assoc,
+      [ R.always('comment'),
+        R.path(['addComment', 'comment']),
+        R.identity
+      ]
+    )),
+  REMOVE_ERROR: R.omit('error'),
+  ADD_COMMENT_SAVE_FAILURE: R.assoc('error', 'Failed to save comment'),
+  VIEW_MORE_COMMENTS: R.assoc('expandComments', true)
 }
 
 
