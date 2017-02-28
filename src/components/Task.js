@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ISBox from './ISBox';
+import ShowIf from './common/ShowIf';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { prettyTimeElapsed, isDateToday, bindAll, dash } from '../utilities';
@@ -15,8 +16,6 @@ const getEditField =
                                               [ R.prop(prop),
                                                 R.path(['edit', prop])
                                               ]));
-
-const ShowIf = ({show, children}) => <span>{show ? children : ''}</span>;
 
 const TaskDescription = props => {
   if(props.editing) {

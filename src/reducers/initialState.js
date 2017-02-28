@@ -157,6 +157,10 @@ export const tasks = {
   }
 };
 
+export const view = {
+  menuOpen: false
+}
+
 export const taskView = {
   sortBy: 'goal'
 };

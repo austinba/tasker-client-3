@@ -33,3 +33,4 @@ export const isDateToday = R.eqBy(date => (new Date(date)).toDateString(), Date.
 export const bindAll = id => R.map(fn => fn.bind(null, id));
 
 export const dash = <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>;
+export const bar  = <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>;
