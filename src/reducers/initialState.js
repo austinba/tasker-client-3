@@ -11,7 +11,7 @@ function daysAgo(days) {
 export const tasks = {
   'adding-task': {
     taskID: 'adding-task',
-    importanceSeverity: 4,
+    level: 4,
     comments: [],
     edit: {}
   },
@@ -22,9 +22,9 @@ export const tasks = {
     assignedTo: 'Austin Baltes',
     completed: 'no',
     dateDue: new Date(2017, 2, 2),
-    importanceSeverity: 1,
-    lastDateWorkedOn: hoursAgo(1),
-    lastDateWorkedOnPendingUpdate: hoursAgo(0),
+    level: 1,
+    workedOn: hoursAgo(1),
+    workedOnEditing: hoursAgo(0),
     goal: 'Goal #2',
     error: 'Failed updating working-on status',
     comments: [
@@ -49,8 +49,8 @@ export const tasks = {
     assignedTo: 'Wilson',
     completed: 'pending',
     dateDue: new Date(2017, 2, 1),
-    importanceSeverity: 1,
-    lastDateWorkedOn: hoursAgo(6),
+    level: 1,
+    workedOn: hoursAgo(6),
     goal: 'Goal #1',
     edit: {
       description: 'Make sure website is ready for deployment by March 10th. We need this to be in docker containers for our dev-ops team.',
@@ -73,8 +73,8 @@ export const tasks = {
     assignedTo: 'Austin Baltes',
     completed: 'no',
     dateDue: new Date(2017, 2, 10),
-    importanceSeverity: 3,
-    lastDateWorkedOn: daysAgo(5),
+    level: 3,
+    workedOn: daysAgo(5),
     expandComments: true,
     addComment: {
       comment: 'Aaron said he can do the tests. Would you mind reassigning to him?'
@@ -112,8 +112,8 @@ export const tasks = {
     assignedTo: 'Austin Baltes',
     completed: 'no',
     dateDue: new Date(2017, 3, 2),
-    importanceSeverity: 3,
-    lastDateWorkedOn: daysAgo(2),
+    level: 3,
+    workedOn: daysAgo(2),
     expandComments: false,
 
     comments: [

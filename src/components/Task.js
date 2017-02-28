@@ -33,28 +33,24 @@ const AddComment = R.pipe(
   R.defaultTo(<div />)
 );
 
+const bindToID    = id => R.map(fn => fn.bind(null, id));
+const isDateToday = date => date.toDateString() === Date.now().toDateString();
+
 class Task extends React.Component {
   componentWillMount () {
-    const taskID = this.props.taskID;
-    this.boundActions = R.map(action => action.bind(null, taskID), this.props.unboundActions)
+    const { taskID, unboundActions } = this.props;
+    this.boundActions = bindToID(taskID)(unboundActions);
   }
   render() {
-    const props = this.props;
-    const { taskID } = props;
-    const task = props.tasks[taskID];
+    const { taskID, tasks, workedOn } = this.props;
+    const comments  = this.props.comments || [];
+    const goal      = this.props.goal     || 'No Goal';
+    const workingOn = !workedOn ? false : isDateToday(workedOn);
+    const actions   = this.boundActions;
+    const task      = tasks[taskID];
 
-    const actions = this.boundActions;
-    const comments = task.comments || [];
-    const goal = task.goal || 'No Goal';
-    let isWorkingOn = false;
 
-    //TODO: update with something in time zone (or another thought out way)
-    if(task.lastDateWorkedOn &&
-      Math.floor(Date.now()/86400000) === Math.floor(task.lastDateWorkedOn/86400000)) {
-      isWorkingOn = true;
-    }
-
-    const importanceSeverity = !(task.edit && task.edit.importanceSeverity) ? task.importanceSeverity : task.edit.importanceSeverity;
+    const level = !(task.edit && task.edit.level) ? task.level : task.edit.level;
     const taskDescription = !task.edit ? task.description :
       <textarea className='edit-task-description' value={task.edit.description || ''} onChange={actions.editDescription} />;
 
@@ -64,14 +60,14 @@ class Task extends React.Component {
           { (task.edit && task.edit.saving) && <i className="fa fa-spinner fa-pulse fa-3x fa-fw" style={{position: 'absolute', left: 'calc(50% - 25px)', top: 'calc(50% - 25px)'}}></i>}
 
           {/* Corner Graphic: Indicates if the user is working on this today */}
-          <svg width="50" height="50" className={'corner-working-on-marker' + (isWorkingOn ? ' filled' : '')}>
+          <svg width="50" height="50" className={'corner-working-on-marker' + (workingOn ? ' filled' : '')}>
             <path d="M 0,0 L 50,50 L 50,0 Z" />
           </svg>
-          { (typeof task.lastDateWorkedOnPendingUpdate !== 'undefined')  && <i className="fa fa-spinner fa-pulse fa-fw corner-working-on-marker-update-indicator"></i>}
+          { (typeof task.workedOnEditing !== 'undefined')  && <i className="fa fa-spinner fa-pulse fa-fw corner-working-on-marker-update-indicator"></i>}
 
           {/* Importance/Severity Box - Also shows days remaining */}
           <div className="IS-KPI-container">
-            <ISBox level={importanceSeverity} dateDue={task.dateDue} editing={task.edit} selectLevel={actions.selectLevel}/>
+            <ISBox level={level} dateDue={task.dateDue} editing={task.edit} selectLevel={actions.selectLevel}/>
             <p className="task-goal">
               {!task.edit && goal}
               { task.edit && <a className="xs-right">{goal} <i className="fa fa-caret-down" /></a>}
