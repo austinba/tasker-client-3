@@ -87,7 +87,8 @@ const taskReducers = {
 
 
 const tasksReducers = {
-  EDIT_TASK_CANCEL: state => action => (action.taskID === 'adding-task') ? R.omit('adding-task', state) : state
+  EDIT_TASK_CANCEL: state => action => (action.taskID === 'adding-task') ? R.omit('adding-task', state) : state,
+  ADD_TASK: R.assoc('adding-task', {taskID: 'adding-task', edit: {}})
 };
 
 function taskReducer(state = tasks, action) {

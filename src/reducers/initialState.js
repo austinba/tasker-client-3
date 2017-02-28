@@ -11,8 +11,6 @@ function daysAgo(days) {
 export const tasks = {
   'adding-task': {
     taskID: 'adding-task',
-    level: 4,
-    comments: [],
     edit: {}
   },
   '1': {

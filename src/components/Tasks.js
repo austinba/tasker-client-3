@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import R from 'ramda';
+import ShowIf from './common/ShowIf';
 import Task from './Task';
+import * as tasksActions from '../actions/tasks'
 import { dash } from '../utilities';
 
 const sortByGoal = R.sortWith([
@@ -54,7 +57,11 @@ const Tasks = props => {
         <a href="#">Goal</a>
         {dash}
         <a href="#">Project</a>
-        <div className="sm-right"><a href="#">Add Task</a></div>
+        <div className="sm-right">
+          <ShowIf show={!props.tasks['adding-task']}>
+            <a href="#" onClick={props.actions.addTask}>Add Task</a>
+          </ShowIf>
+        </div>
       </div>
       <SortedTasks tasks={props.tasks} />
     </div>
@@ -66,4 +73,8 @@ const mapStateToProps = state => ({
   taskView: state.taskView
 });
 
-export default connect(mapStateToProps)(Tasks);
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(tasksActions, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tasks);
