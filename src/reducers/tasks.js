@@ -34,7 +34,7 @@ const taskReducers = {
   EDIT_TASK: R.converge(
     R.assoc,
     [ R.always('edit'),
-      R.pick(['description', 'assignedTo', 'project', 'dueDate', 'importanceSeverity']),
+      R.pick(['description', 'assignedTo', 'project', 'dueDate', 'level']),
       R.identity
     ]),
   EDIT_TASK_CANCEL: R.omit('edit'),
@@ -47,22 +47,22 @@ const taskReducers = {
       )),
   EDIT_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
   EDIT_TASK_DESCRIPTION: updateFieldPath(['edit', 'description']),
-  EDIT_IS_LEVEL: state => action => R.assocPath(['edit', 'importanceSeverity'], action.level, state),
+  EDIT_IS_LEVEL: state => action => R.assocPath(['edit', 'level'], action.level, state),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),
-  TOGGLE_WORKING_TODAY_PENDING: updateField('lastDateWorkedOnPendingUpdate'),
+  TOGGLE_WORKING_TODAY_PENDING: updateField('workedOnEditing'),
   TOGGLE_WORKING_TODAY_SUCCESS:
     R.compose(
-      R.omit('lastDateWorkedOnPendingUpdate'),
+      R.omit('workedOnEditing'),
       R.omit('error'),
       R.converge(
-        R.assoc, [ R.always('lastDateWorkedOn'),
-                   R.prop('lastDateWorkedOnPendingUpdate'),
+        R.assoc, [ R.always('workedOn'),
+                   R.prop('workedOnEditing'),
                    R.identity,
                  ])),
   TOGGLE_WORKING_TODAY_FAILURE:
     R.compose(
-      R.omit('lastDateWorkedOnPendingUpdate'),
+      R.omit('workedOnEditing'),
       R.assoc('error', 'Failed updating working-on status...')),
   ADD_COMMENT: R.assoc('addComment', {comment: ''}),
   ADD_COMMENT_UPDATE: updateFieldPath(['addComment', 'comment']),

@@ -33,8 +33,14 @@ const AddComment = R.pipe(
   R.defaultTo(<div />)
 );
 
-const bindToID    = id => R.map(fn => fn.bind(null, id));
-const isDateToday = date => date.toDateString() === Date.now().toDateString();
+const isDateToday = R.eqBy(date => (new Date(date)).toDateString(), Date.now());
+const bindToID = id => R.map(fn => fn.bind(null, id));
+const editValIfExists =
+  (defaultVal, prop) => R.compose( R.defaultTo(defaultVal),
+                                   R.converge(R.defaultTo, [ R.prop(prop), R.path(['edit', prop])])
+                                 );
+
+
 
 class Task extends React.Component {
   componentWillMount () {
@@ -42,15 +48,18 @@ class Task extends React.Component {
     this.boundActions = bindToID(taskID)(unboundActions);
   }
   render() {
-    const { taskID, tasks, workedOn } = this.props;
-    const comments  = this.props.comments || [];
-    const goal      = this.props.goal     || 'No Goal';
-    const workingOn = !workedOn ? false : isDateToday(workedOn);
+    const { tasks, taskID } = this.props;
+    const task              = tasks[taskID];
+    const { workedOn }      = task;
+
+    const comments  = R.defaultTo([], this.props.comments);
+    const goal      = R.defaultTo('No Goal', this.props.goal);
+    const workingOn = isDateToday(workedOn);
     const actions   = this.boundActions;
-    const task      = tasks[taskID];
+    const level     = editValIfExists(4, 'level')(task);
 
 
-    const level = !(task.edit && task.edit.level) ? task.level : task.edit.level;
+    !(task.edit && task.edit.level) ? task.level : task.edit.level;
     const taskDescription = !task.edit ? task.description :
       <textarea className='edit-task-description' value={task.edit.description || ''} onChange={actions.editDescription} />;
 
