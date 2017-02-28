@@ -1,4 +1,5 @@
 import R from 'ramda';
+import React from 'react';
 
 const timeSpans = [
   ['centuries', 'century', time => time/100/365.25/24/60/60/1000],
@@ -30,3 +31,5 @@ export const isDateToday = R.eqBy(date => (new Date(date)).toDateString(), Date.
 
 /** bindAll(id, objectOfFunctions) */
 export const bindAll = id => R.map(fn => fn.bind(null, id));
+
+export const dash = <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>;

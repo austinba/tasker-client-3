@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import R from 'ramda';
 import Task from './Task';
+import { dash } from '../utilities';
 
 const sortByGoal = R.sortWith([
   R.descend(R.propEq('taskID', 'adding-task')),
@@ -47,17 +48,18 @@ const Tasks = props => {
     <div>
       <div className="sort-actions">
         Sort by:
-        &nbsp; <a href="#">Importance Severity</a>
-        &nbsp; -&nbsp; <a href="#">Goal</a>
-        &nbsp; -&nbsp; <a href="#">Project</a>
+        &nbsp;&nbsp;
+        <a href="#">Importance Severity</a>
+        {dash}
+        <a href="#">Goal</a>
+        {dash}
+        <a href="#">Project</a>
         <div className="sm-right"><a href="#">Add Task</a></div>
       </div>
       <SortedTasks tasks={props.tasks} />
     </div>
   );
 };
-// <Tasks tasks={props.tasks} sortBy={props.taskView.sortBy}/>
-// <Task taskID="4" />
 
 const mapStateToProps = state => ({
   tasks: state.tasks,

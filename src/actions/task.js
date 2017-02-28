@@ -8,7 +8,8 @@ export const cancelTaskEdit = (taskID, event) => {
   return { type: 'EDIT_TASK_CANCEL', taskID };
 };
 
-export const expandComments = taskID => { type: 'VIEW_MORE_COMMENTS', taskID };
+export const expandComments = taskID =>
+  ({ type: 'VIEW_MORE_COMMENTS', taskID });
 
 export const submitTaskEdits = taskID => dispatch => {
   dispatch({ type: 'EDIT_TASK_SAVE_PENDING', taskID });
@@ -24,8 +25,6 @@ export const selectLevel = (taskID, level) => {
 export const editDescription = (taskID, event) =>
   ({ type: 'EDIT_TASK_DESCRIPTION', value: event.target.value, taskID });
 
-// export const startGoalSelect; // TODO: determine how to deal with this....
-// export const goalSelected; // TODO: determine how to deal with this....
 export const toggleWorkingToday = (taskID, isWorking) => {
   const now = isWorking ? new Date() : '';
   return dispatch => {
@@ -33,3 +32,6 @@ export const toggleWorkingToday = (taskID, isWorking) => {
     setTimeout(() => dispatch({action: 'TOGGLE_WORKING_TODAY_SUCCESS'}));
   };
 }
+
+// export const startGoalSelect; // TODO: determine how to deal with this....
+// export const goalSelected; // TODO: determine how to deal with this....
