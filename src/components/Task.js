@@ -3,10 +3,31 @@ import { connect } from 'react-redux';
 import ISBox from './ISBox';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
-import { prettyTimeElapsed } from '../utilities';
+import { prettyTimeElapsed, isDateToday, bindAll} from '../utilities';
 import '../styles/tasks.css';
-
 import * as taskActions from '../actions/task';
+
+/** getEditField(defaultValue, property, object)
+    defaluts to task[prop] is task.edit[prop] doesn't exist  */
+const getEditField =
+  (defaultVal, prop) => R.compose( R.defaultTo(defaultVal),
+                                   R.converge(R.defaultTo,
+                                              [ R.prop(prop),
+                                                R.path(['edit', prop])
+                                              ]));
+
+const ShowIf = ({show, children}) => <span>{show ? children : ''}</span>;
+
+const TaskDescription = props => {
+  if(props.editing) {
+    return <textarea className='edit-task-description'
+                     value={props.value}
+                     onChange={props.onChange} />;
+  }
+  return <div>{props.value}</div>
+}
+
+
 
 const CommentBoxes = R.pipe(
   R.ifElse(
@@ -26,41 +47,18 @@ const AddComment = R.pipe(
   R.path(['addComment', 'comment']),
   R.unless(R.not,
     comment =>
-      <div className="box task-comment">
-        <textarea className='add-comment-text' value={comment} />
-      </div>
+    <div className="box task-comment">
+      <textarea className='add-comment-text' value={comment} />
+    </div>
   ),
   R.defaultTo(<div />)
 );
-
-/** isDateToday(date) */
-const isDateToday = R.eqBy(date => (new Date(date)).toDateString(), Date.now());
-
-/** bindAllToID(id, objectOfFunctions) */
-const bindAllToID = id => R.map(fn => fn.bind(null, id));
-
-/** editValIfExists(defaultValue, property, object) */
-const editValIfExists =
-  (defaultVal, prop) => R.compose( R.defaultTo(defaultVal),
-                                   R.converge(R.defaultTo, [ R.prop(prop), R.path(['edit', prop])])
-                                 );
-
-
-const ShowIf = ({show, children}) => <span>{show ? children : ''}</span>;
-const TaskDescription = props => {
-  if(props.editing) {
-    return <textarea className='edit-task-description'
-                     value={props.value}
-                     onChange={props.onChange} />;
-  }
-  return <div>{props.value}</div>
-}
 
 
 class Task extends React.Component {
   componentWillMount () {
     const { taskID, unboundActions } = this.props;
-    this.boundActions = bindAllToID(taskID)(unboundActions);
+    this.boundActions = bindAll(taskID)(unboundActions);
   }
   render() {
     const { tasks, taskID } = this.props;
@@ -72,8 +70,8 @@ class Task extends React.Component {
     const goal        = R.defaultTo('No Goal', this.props.goal);
     const workingOn   = isDateToday(workedOn);
     const actions     = this.boundActions;
-    const level       = editValIfExists(4 , 'level')(task);
-    const description = editValIfExists('', 'description')(task);
+    const level       = getEditField(4 , 'level')(task);
+    const description = getEditField('', 'description')(task);
 
     return (
       <div className="box task-container">

@@ -30,21 +30,21 @@ const sortByProject = R.sortWith([
   R.ascend(R.prop('goal'))
 ]);
 
-const taskComponents = (sortBy) =>
+
+const mapTasks = sortBy =>
   R.pipe(
-    R.prop('tasks'),
     R.values,
     sortBy,
-    R.map(task => (<Task taskID={task.taskID} key={task.taskID} />)),
-    result => <div>{result}</div>
+    R.map(task => (<Task taskID={task.taskID} key={'task-' + task.taskID} />))
   );
 
-const Tasks = props => {
+const SortedTasks = ({tasks}) => {
+  return <div>{mapTasks(sortByProject)(tasks)}</div>;
+};
 
-  const Tasks = taskComponents(sortByGoal);
+const Tasks = props => {
   return (
     <div>
-
       <div className="sort-actions">
         Sort by:
         &nbsp; <a href="#">Importance Severity</a>
@@ -52,10 +52,12 @@ const Tasks = props => {
         &nbsp; -&nbsp; <a href="#">Project</a>
         <div className="sm-right"><a href="#">Add Task</a></div>
       </div>
-      <Tasks tasks={props.tasks} sortBy={props.taskView.sortBy}/>
+      <SortedTasks tasks={props.tasks} />
     </div>
   );
 };
+// <Tasks tasks={props.tasks} sortBy={props.taskView.sortBy}/>
+// <Task taskID="4" />
 
 const mapStateToProps = state => ({
   tasks: state.tasks,

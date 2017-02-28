@@ -1,3 +1,5 @@
+import R from 'ramda';
+
 const timeSpans = [
   ['centuries', 'century', time => time/100/365.25/24/60/60/1000],
   ['decades'  , 'decade' , time => time/10/365.25/24/60/60/1000],
@@ -22,3 +24,9 @@ export function prettyTimeElapsed(date){
   }
   return 'just now';
 }
+
+/** isDateToday(date) */
+export const isDateToday = R.eqBy(date => (new Date(date)).toDateString(), Date.now());
+
+/** bindAll(id, objectOfFunctions) */
+export const bindAll = id => R.map(fn => fn.bind(null, id));

@@ -27,8 +27,13 @@ import R from 'ramda';
 // const ADD_TASK_SAVE_FAILURE = 'ADD_TASK_SAVE_FAILURE';
 
 
-const updateField = R.curry((field, task, action) => R.assoc(field, R.prop('value', action), task));
-const updateFieldPath = R.curry((fieldPath, task, action) => R.assocPath(fieldPath, R.prop('value', action), task));
+/* Updates state[field] with action.value */
+const updateField = R.curry((field, task, action) =>
+  R.assoc(field, R.prop('value', action), task));
+
+  /* Updates state[fieldPath...] with action.value */
+const updateFieldPath = R.curry((fieldPath, task, action) =>
+  R.assocPath(fieldPath, R.prop('value', action), task));
 
 const taskReducers = {
   EDIT_TASK: R.converge(

@@ -98,7 +98,7 @@
 .working-on-spinner {
   position: absolute;
   right: 3px;
-  top: 6px;
+  top: 8px;
   z-index: -1;
 }
 .corner-working-on-marker {
