@@ -14,7 +14,7 @@ export const submitTaskEdits = taskID => dispatch => {
     , 1000)
   };
 export const selectLevel = (taskID, level) => {
-  return ({ type: 'SELECT_IS_LEVEL', level, taskID })
+  return ({ type: 'EDIT_IS_LEVEL', level, taskID })
 };
 export const editDescription = (taskID, event) => ({ type: 'EDIT_TASK_DESCRIPTION', value: event.target.value, taskID });
 

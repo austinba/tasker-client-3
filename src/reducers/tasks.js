@@ -47,7 +47,7 @@ const taskReducers = {
       )),
   EDIT_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
   EDIT_TASK_DESCRIPTION: updateFieldPath(['edit', 'description']),
-  SELECT_IS_LEVEL: state => action => R.assoc('importanceSeverity', action.level, state),
+  EDIT_IS_LEVEL: state => action => R.assocPath(['edit', 'importanceSeverity'], action.level, state),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),
   TOGGLE_WORKING_TODAY_PENDING: updateField('lastDateWorkedOnPendingUpdate'),
@@ -93,7 +93,6 @@ function taskReducer(state = tasks, action) {
   if(taskID) {
     const taskReducer = taskReducers[action.type] || R.identity;
     const taskReducerStateApplied = taskReducer(newState[taskID]);
-    console.log(action)
     const taskReducerResult = !taskReducerStateApplied.call ? taskReducerStateApplied : taskReducerStateApplied(action);
     newState = R.assoc(taskID, taskReducerResult, newState); // update this task with the task Reducer
   }

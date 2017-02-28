@@ -22,12 +22,17 @@ const ISBoxContainer = props => {
 }
 
 const ISBox = props => {
-    const daysRemaining = props.dateDue ? Math.round((props.dateDue - Date.now()) / (24*60*60*1000)) : 0;
+    const daysRemaining = props.dateDue ?
+                          Math.round(
+                            (props.dateDue - Date.now()) / (24*60*60*1000)) :
+                          0;
     // If Not Editing
     if(!props.editing) {
       return (
         <ISBoxContainer>
-          <div className={subBoxClassesByLevel[props.level].join(' ')}>{daysRemaining}</div>
+          <div className={subBoxClassesByLevel[props.level].join(' ')}>
+            {daysRemaining}
+          </div>
         </ISBoxContainer>
       );
     }
@@ -37,17 +42,25 @@ const ISBox = props => {
     if(props.editing.menuOpen) {
       menu = (!props.editing || !props.editing.menuOpen) ? '' :
         <Menu>
-          <MenuItemText text={'Due Date: ' + (props.dateDue || new Date()).toLocaleDateString()} />
+          <MenuItemText
+            text={ 'Due Date: ' +
+                   (props.dateDue || new Date()).toLocaleDateString()} />
           <MenuItem text="Edit Date" />
           <MenuItem text="Cancel" />
         </Menu>
     }
     const selectLevel = props.selectLevel;
     const subBoxes = _.map((classes, level) => {
+
       if (level === props.level.toString()) {
-        return <div className={classes.join(' ')} key={level}>{menu}{daysRemaining}</div>;
+        return <div className={classes.join(' ')} key={level}>
+                 {menu}{daysRemaining}
+               </div>;
       }
-      return <div className={classes.join(' ') + ' unselected'} key={level} onClick={selectLevel.bind(null, level)} />;
+      return <div className={classes.join(' ') + ' unselected'}
+                  onClick={selectLevel.bind(null, level)}
+                  key={level} />;
+
     })(subBoxClassesByLevel);
     return (
       <ISBoxContainer editing>

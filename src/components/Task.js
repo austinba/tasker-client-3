@@ -54,7 +54,7 @@ class Task extends React.Component {
       isWorkingOn = true;
     }
 
-
+    const importanceSeverity = !(task.edit && task.edit.importanceSeverity) ? task.importanceSeverity : task.edit.importanceSeverity;
     const taskDescription = !task.edit ? task.description :
       <textarea className='edit-task-description' value={task.edit.description || ''} onChange={actions.editDescription} />;
 
@@ -71,7 +71,7 @@ class Task extends React.Component {
 
           {/* Importance/Severity Box - Also shows days remaining */}
           <div className="IS-KPI-container">
-            <ISBox level={task.importanceSeverity} dateDue={task.dateDue} editing={task.edit} selectLevel={actions.selectLevel}/>
+            <ISBox level={importanceSeverity} dateDue={task.dateDue} editing={task.edit} selectLevel={actions.selectLevel}/>
             <p className="task-goal">
               {!task.edit && goal}
               { task.edit && <a className="xs-right">{goal} <i className="fa fa-caret-down" /></a>}
