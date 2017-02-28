@@ -33,71 +33,96 @@ const AddComment = R.pipe(
   R.defaultTo(<div />)
 );
 
+/** isDateToday(date) */
 const isDateToday = R.eqBy(date => (new Date(date)).toDateString(), Date.now());
-const bindToID = id => R.map(fn => fn.bind(null, id));
+
+/** bindAllToID(id, objectOfFunctions) */
+const bindAllToID = id => R.map(fn => fn.bind(null, id));
+
+/** editValIfExists(defaultValue, property, object) */
 const editValIfExists =
   (defaultVal, prop) => R.compose( R.defaultTo(defaultVal),
                                    R.converge(R.defaultTo, [ R.prop(prop), R.path(['edit', prop])])
                                  );
 
 
+const ShowIf = ({show, children}) => <span>{show ? children : ''}</span>;
+const TaskDescription = props => {
+  if(props.editing) {
+    return <textarea className='edit-task-description'
+                     value={props.value}
+                     onChange={props.onChange} />;
+  }
+  return <div>{props.value}</div>
+}
+
 
 class Task extends React.Component {
   componentWillMount () {
     const { taskID, unboundActions } = this.props;
-    this.boundActions = bindToID(taskID)(unboundActions);
+    this.boundActions = bindAllToID(taskID)(unboundActions);
   }
   render() {
     const { tasks, taskID } = this.props;
-    const task              = tasks[taskID];
-    const { workedOn }      = task;
+    const task = tasks[taskID];
+    const { workedOn, edit } = task;
 
-    const comments  = R.defaultTo([], this.props.comments);
-    const goal      = R.defaultTo('No Goal', this.props.goal);
-    const workingOn = isDateToday(workedOn);
-    const actions   = this.boundActions;
-    const level     = editValIfExists(4, 'level')(task);
-
-
-    !(task.edit && task.edit.level) ? task.level : task.edit.level;
-    const taskDescription = !task.edit ? task.description :
-      <textarea className='edit-task-description' value={task.edit.description || ''} onChange={actions.editDescription} />;
+    const isEditing   = !!edit;
+    const comments    = R.defaultTo([], this.props.comments);
+    const goal        = R.defaultTo('No Goal', this.props.goal);
+    const workingOn   = isDateToday(workedOn);
+    const actions     = this.boundActions;
+    const level       = editValIfExists(4 , 'level')(task);
+    const description = editValIfExists('', 'description')(task);
 
     return (
       <div className="box task-container">
         <div className="main-task-box">
-          { (task.edit && task.edit.saving) && <i className="fa fa-spinner fa-pulse fa-3x fa-fw" style={{position: 'absolute', left: 'calc(50% - 25px)', top: 'calc(50% - 25px)'}}></i>}
 
-          {/* Corner Graphic: Indicates if the user is working on this today */}
+          {/* Spinner while saving */}
+          <ShowIf show={edit && edit.saving}>
+            <i className="fa fa-spinner fa-pulse fa-3x fa-fw task-saving-spinner"></i>
+          </ShowIf>
+
+          {/* Is-Working-On Corner Flap */}
           <svg width="50" height="50" className={'corner-working-on-marker' + (workingOn ? ' filled' : '')}>
             <path d="M 0,0 L 50,50 L 50,0 Z" />
           </svg>
-          { (typeof task.workedOnEditing !== 'undefined')  && <i className="fa fa-spinner fa-pulse fa-fw corner-working-on-marker-update-indicator"></i>}
+          <ShowIf show={R.has('workingOnUpdatePending', task)}>
+            <i className="fa fa-spinner fa-pulse fa-fw working-on-spinner"></i>
+          </ShowIf>
 
           {/* Importance/Severity Box - Also shows days remaining */}
           <div className="IS-KPI-container">
             <ISBox level={level} dateDue={task.dateDue} editing={task.edit} selectLevel={actions.selectLevel}/>
             <p className="task-goal">
-              {!task.edit && goal}
-              { task.edit && <a className="xs-right">{goal} <i className="fa fa-caret-down" /></a>}
+              <ShowIf show={!task.edit}>{goal}</ShowIf>
+              <ShowIf show={ task.edit}>
+                <a className="xs-right">{goal} <i className="fa fa-caret-down" /></a>
+              </ShowIf>
             </p>
           </div>
 
           {/* Task Description */}
-          <div className="task-description">{taskDescription}</div>
+
+          <div className="task-description">
+            <TaskDescription value={description}
+                             editing={isEditing}
+                             onChange={actions.editDescription} />
+          </div>
 
         </div>
-        { task.error && <div className="task-error"> {task.error} <a href="#"> (click here to report)</a></div> }
+        { task.error && <div className="task-error"> {task.error} <a href="#nowhere"> (click here to report)</a></div> }
 
         {/* Task Actions - These change depending on the status */}
         <div className="box task-actions">
 
           {/* Left-hand side options */}
-          { (!task.edit && !task.addComment) && <a href="#">Add comment...</a> }
+          { (!task.edit && !task.addComment) && <a href="#nowhere">Add comment...</a> }
           { (task.edit)                      && <span>&nbsp;</span> }
           { (task.addComment)                &&
             <span>
-              <a href="#" className="primary-link">Send Comment</a> &nbsp;- &nbsp;<a href="#">Cancel</a>
+              <a href="#nowhere" className="primary-link">Send Comment</a> &nbsp;- &nbsp;<a href="#nowhere">Cancel</a>
             </span>
           }
 
@@ -105,15 +130,15 @@ class Task extends React.Component {
           <span className="xs-right">
             { (task.edit) &&
               <span>
-                <a href="#" onClick={actions.cancelTaskEdit}>Cancel</a>&nbsp; -
-                &nbsp; <a href="#" className="primary-link">Save</a>
+                <a href="#nowhere" onClick={actions.cancelTaskEdit}>Cancel</a>&nbsp; -
+                &nbsp; <a href="#nowhere" className="primary-link" onClick={actions.submitTaskEdits}>Save</a>
               </span>
             }
             { (!task.edit && !task.addComment) &&
               <span>
-                <a href="#">Delete</a>&nbsp; -
-                  &nbsp; <a href="#" onClick={actions.startTaskEdit}>Edit</a>&nbsp; -
-                  &nbsp; <a href="#">Mark&nbsp;complete</a>
+                <a href="#nowhere">Delete</a>&nbsp; -
+                  &nbsp; <a href="#nowhere" onClick={actions.startTaskEdit}>Edit</a>&nbsp; -
+                  &nbsp; <a href="#nowhere">Mark&nbsp;complete</a>
               </span>
             }
           </span>
@@ -125,7 +150,7 @@ class Task extends React.Component {
         {/* View all - Visible if more than 3 comments */}
         {!(comments.length > 3 && !task.expandComments) ? '' :
           <div className="box task-comment">
-            <a href="#" className="primary-link" onClick={actions.expandComments}>View {comments.length - 3} more comment{comments.length > 4 ? 's' : ''}</a>
+            <a href="#nowhere" className="primary-link" onClick={actions.expandComments}>View {comments.length - 3} more comment{comments.length > 4 ? 's' : ''}</a>
           </div>}
 
         {/* Comments - Up to 3 of the most recent comments */}

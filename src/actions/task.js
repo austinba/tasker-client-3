@@ -8,11 +8,11 @@ export const cancelTaskEdit = (taskID, event) => {
 };
 export const expandComments = taskID => { type: 'VIEW_MORE_COMMENTS', taskID };
 export const submitTaskEdits = taskID => dispatch => {
-    dispatch({ action: 'EDIT_TASK_SAVE_PENDING' });
-    setTimeout(() =>
-      dispatch({ action: 'EDIT_TASK_SAVE_SUCCESS' })
-    , 1000)
-  };
+  dispatch({ type: 'EDIT_TASK_SAVE_PENDING', taskID });
+  setTimeout(() =>
+    dispatch({ type: 'EDIT_TASK_SAVE_SUCCESS', taskID })
+  , 1000)
+};
 export const selectLevel = (taskID, level) => {
   return ({ type: 'EDIT_IS_LEVEL', level, taskID })
 };

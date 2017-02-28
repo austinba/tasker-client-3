@@ -40,29 +40,28 @@ const taskReducers = {
   EDIT_TASK_CANCEL: R.omit('edit'),
   EDIT_TASK_SAVE_PENDING: R.assocPath(['edit', 'saving'], true),
   EDIT_TASK_SAVE_SUCCESS:
-    R.compose(
-      R.omit('edit'),
-      R.converge(
-        R.merge, [R.identity, R.prop('edit')]
-      )),
+    R.pipe(
+      R.converge(R.merge, [R.identity, R.prop('edit')]),
+      R.omit('edit')
+    ),
   EDIT_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
   EDIT_TASK_DESCRIPTION: updateFieldPath(['edit', 'description']),
   EDIT_IS_LEVEL: state => action => R.assocPath(['edit', 'level'], action.level, state),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),
-  TOGGLE_WORKING_TODAY_PENDING: updateField('workedOnEditing'),
+  TOGGLE_WORKING_TODAY_PENDING: updateField('workingOnUpdatePending'),
   TOGGLE_WORKING_TODAY_SUCCESS:
     R.compose(
-      R.omit('workedOnEditing'),
+      R.omit('workingOnUpdatePending'),
       R.omit('error'),
       R.converge(
         R.assoc, [ R.always('workedOn'),
-                   R.prop('workedOnEditing'),
+                   R.prop('workingOnUpdatePending'),
                    R.identity,
                  ])),
   TOGGLE_WORKING_TODAY_FAILURE:
     R.compose(
-      R.omit('workedOnEditing'),
+      R.omit('workingOnUpdatePending'),
       R.assoc('error', 'Failed updating working-on status...')),
   ADD_COMMENT: R.assoc('addComment', {comment: ''}),
   ADD_COMMENT_UPDATE: updateFieldPath(['addComment', 'comment']),

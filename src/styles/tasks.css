@@ -17,7 +17,11 @@
   margin: 15px auto;
   color: white;
 }
-
+.task-saving-spinner {
+  position: absolute;
+  left: calc(50% - 25px);
+  top: calc(50% - 25px);
+}
 .main-task-box {
   position: relative;
   display: flex;
@@ -91,10 +95,11 @@
   bottom: auto;
 }
 
-.corner-working-on-marker-update-indicator {
+.working-on-spinner {
   position: absolute;
   right: 3px;
   top: 6px;
+  z-index: -1;
 }
 .corner-working-on-marker {
   position: absolute;

@@ -24,7 +24,7 @@ export const tasks = {
     dateDue: new Date(2017, 2, 2),
     level: 1,
     workedOn: hoursAgo(1),
-    workedOnEditing: hoursAgo(0),
+    workingOnUpdatePending: hoursAgo(0),
     goal: 'Goal #2',
     error: 'Failed updating working-on status',
     comments: [
@@ -74,7 +74,7 @@ export const tasks = {
     completed: 'no',
     dateDue: new Date(2017, 2, 10),
     level: 3,
-    workedOn: daysAgo(5),
+    workedOn: hoursAgo(0),
     expandComments: true,
     addComment: {
       comment: 'Aaron said he can do the tests. Would you mind reassigning to him?'
