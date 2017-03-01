@@ -59,10 +59,22 @@ const Tasks = props => {
         <a href="#">Project</a>
         <div className="sm-right">
           <ShowIf show={!props.tasks['adding-task']}>
-            <a href="#" onClick={props.actions.addTask}>Add Task</a>
+            <a href="#nowhere" onClick={props.actions.addTask}>Add Task</a>
           </ShowIf>
         </div>
       </div>
+      <ShowIf show={Object.keys(props.tasks).length === 0}>
+        <div className="no-tasks-message">
+          <div className="main-message">You have no tasks assigned to you</div>
+          <p>
+            <a href="#nowhere" onClick={props.actions.addTask}>
+              <em>Create a task for yourself</em>
+            </a>
+          </p>
+          <p>or</p>
+          <p><a href="#nowhere"><em>View tasks you've assigned</em></a></p>
+        </div>
+      </ShowIf>
       <SortedTasks tasks={props.tasks} />
     </div>
   );
@@ -70,6 +82,7 @@ const Tasks = props => {
 
 const mapStateToProps = state => ({
   tasks: state.tasks,
+  view: state.view,
   taskView: state.taskView
 });
 

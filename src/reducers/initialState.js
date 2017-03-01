@@ -7,8 +7,8 @@ function hoursAgo(hours) {
 function daysAgo(days) {
   return hoursAgo(days * 24);
 }
-
-export const tasks = {
+export const tasks = {};
+export const tasks_old = {
   'adding-task': {
     taskID: 'adding-task',
     edit: {}
@@ -17,6 +17,7 @@ export const tasks = {
     taskID: 1,
     project: 'Ecommerce',
     description: 'Create the design of the shopping website and check in with me. I think it will take about 3 back-and-forths before ready',
+    assignedFrom: 'Jiangbo Cheng',
     assignedTo: 'Austin Baltes',
     completed: 'no',
     dateDue: new Date(2017, 2, 2),
@@ -44,6 +45,7 @@ export const tasks = {
     taskID: 2,
     project: 'Dragonfly',
     description: 'Make sure website is ready for deployment by March 10th',
+    assignedFrom: 'Jiangbo Cheng',
     assignedTo: 'Wilson',
     completed: 'pending',
     dateDue: new Date(2017, 2, 1),
@@ -68,6 +70,7 @@ export const tasks = {
     taskID: 3,
     project: 'Dragonfly',
     description: `We need to create tests for our logging system. Deployment of our Dragonfly system is scheduled on March 10th, so we absolutely have to have this done by then`,
+    assignedFrom: 'Jiangbo Cheng',
     assignedTo: 'Austin Baltes',
     completed: 'no',
     dateDue: new Date(2017, 2, 10),
@@ -107,6 +110,7 @@ export const tasks = {
   '4': {
     taskID: 4,
     description: `We need to create a poster for the hackathon next month -- can you take care of this? Also, let me give the okay on your idea before you have the poster made.`,
+    assignedFrom: 'Jiangbo Cheng',
     assignedTo: 'Austin Baltes',
     completed: 'no',
     dateDue: new Date(2017, 3, 2),

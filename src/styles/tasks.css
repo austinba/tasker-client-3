@@ -113,7 +113,6 @@
 .corner-working-on-marker:hover {
   fill: rgba(79, 129, 189, 0.15) !important;
 }
-
 .edit-task-description, .add-comment-text {
   box-sizing: content-box;
   padding: 0;
@@ -126,7 +125,22 @@
   background: inherit;
   border: 7px solid rgba(79, 129, 189, 0.3);
 }
-
 .task-goal {
   font-size: 14px;
+}
+.no-tasks-message {
+  font-size: 20px;
+  text-align: center;
+  margin: 80px 20px 50px 20px;
+}
+.no-tasks-message p {
+  line-height: 1.6em;
+}
+.no-tasks-message div.main-message {
+  font-size: 30px;
+  line-height: 1.5em;
+  margin-bottom: 40px;
+}
+.no-tasks-message em {
+  font-style: italic;
 }
