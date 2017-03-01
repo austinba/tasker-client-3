@@ -28,8 +28,6 @@ const TaskDescription = props => {
 }
 
 
-console.log('woooooohojo')
-
 class Task extends React.Component {
   componentWillMount () {
     const { taskID, unboundActions } = this.props;
@@ -38,12 +36,10 @@ class Task extends React.Component {
   render() {
     const { tasks, taskID } = this.props;
     const task = tasks[taskID];
-    const { workedOn, edit, error, addComment } = task;
 
-    const isEditing   = !!edit;
     const comments    = R.defaultTo([], task.comments);
     const goal        = R.defaultTo('No Goal', this.props.goal);
-    const workingOn   = isDateToday(workedOn);
+    const workingOn   = isDateToday(task.workedOn);
     const actions     = this.boundActions;
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
@@ -55,7 +51,7 @@ class Task extends React.Component {
         <div className="main-task-box">
 
           {/* Spinner while saving */}
-          <ShowIf show={edit && edit.saving}>
+          <ShowIf show={task.edit && task.edit.saving}>
             <i className="fa fa-spinner fa-pulse fa-3x fa-fw task-saving-spinner" />
           </ShowIf>
 
@@ -88,24 +84,28 @@ class Task extends React.Component {
 
           <div className="task-description">
             <TaskDescription value={description}
-                             editing={isEditing}
+                             editing={!!task.edit}
                              onChange={actions.editDescription} />
           </div>
         </div>
 
-        <ShowIf show={error}>
+        <ShowIf show={task.error}>
           <div className="task-error">
             &nbsp;{task.error}&nbsp;
             <a href="#nowhere"> (click here to report)</a>
           </div>
         </ShowIf>
 
-        <TaskActionsBar edit={edit}
-                        addComment={addComment}
+        <TaskActionsBar edit={task.edit}
+                        addComment={actions.addComment}
                         startTaskEdit={actions.startTaskEdit}
                         cancelTaskEdit={actions.cancelTaskEdit}
                         submitTaskEdits={actions.submitTaskEdits} />
-        <Comments comments={comments} expanded={task.expandComments} addComment={task.addComment} expand={task.expandComments}/>
+
+        <Comments comments={comments}
+                  expanded={task.expandComments}
+                  addComment={task.addComment}
+                  expand={actions.expandComments}/>
 
 
       </div>

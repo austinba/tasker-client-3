@@ -6,11 +6,11 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import App from './components/App';
 import MyTasks from './components/MyTasks';
 import TasksIveAssigned from './components/TasksIveAssigned';
+import Home from './Home';
 import configureStore from './store'
 import './styles/reset.css';
 import './styles/index.css';
 import 'font-awesome/css/font-awesome.min.css';
-
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
@@ -19,7 +19,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={MyTasks} />
+        <IndexRoute component={Home} />
         <Route path="/my-tasks" component={MyTasks} />
         <Route path="/tasks-ive-assigned" component={TasksIveAssigned} />
       </Route>
@@ -27,3 +27,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+// <Route path="/home" component={Home} />
