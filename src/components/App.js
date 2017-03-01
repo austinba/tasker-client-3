@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Tasks from './Tasks';
+import { Link } from 'react-router';
 import ShowIf from './common/ShowIf';
 import { dash, bar } from '../utilities';
 import * as viewActions from '../actions/view';
@@ -16,7 +16,6 @@ const MenuIcon = ({onClick}) => (
 );
 
 const App = props => {
-
   return (
     <div className="overall-container">
       <ShowIf show={props.view.menuOpen} >
@@ -24,13 +23,13 @@ const App = props => {
           <MenuIcon onClick={props.actions.toggleMenu} />
           <ul className="menu-items">
             <li>Manager View</li>
-            <li>User View</li>
+            <li><Link to="/my-tasks">My Tasks</Link></li>
           </ul>
         </div>
       </ShowIf>
         <div className="main-container">
           <MenuIcon onClick={props.actions.toggleMenu} />
-          <Tasks />
+          {props.children}
         </div>
     </div>
   );
