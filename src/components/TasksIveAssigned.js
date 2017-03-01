@@ -6,6 +6,7 @@ import ShowIf from './common/ShowIf';
 import Task from './Task';
 import * as tasksActions from '../actions/tasks'
 import { dash } from '../utilities';
+import '../styles/tasks.css';
 
 const sortByGoal = R.sortWith([
   R.descend(R.propEq('taskID', 'adding-task')),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Menu, MenuIcon } from './Menu';
+import { Menu, MenuIcon, friendlyRouteNames } from './Menu';
 import ShowIf from './common/ShowIf';
 import * as viewActions from '../actions/view';
 import R from 'ramda';
@@ -16,7 +16,10 @@ const App = props => {
         <Menu toggleMenuAction={actions.toggleMenu} route={route} />
       </ShowIf>
         <div className="main-container">
-          <MenuIcon onClick={actions.toggleMenu} />
+          <div className="header-row">
+            <MenuIcon onClick={actions.toggleMenu} />
+            <div className="header-row-title">{friendlyRouteNames[route]}</div>
+          </div>
           {props.children}
         </div>
     </div>

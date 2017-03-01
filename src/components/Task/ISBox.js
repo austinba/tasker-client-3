@@ -1,9 +1,7 @@
 import React from 'react';
 import _ from 'lodash/fp';
 _.map = _.map.convert({ 'cap': false }); // fixes lodash issue of not passing in key
-import { Menu, MenuItem, MenuItemText } from './common/Menu';
-import '../styles/tasks.css';
-import DatePicker from 'react-bootstrap-date-picker';
+import { Menu, MenuItem, MenuItemText } from '../common/Menu';
 
 
 const subBoxClassesByLevel = {

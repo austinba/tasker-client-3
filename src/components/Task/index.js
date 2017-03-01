@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ISBox from './ISBox';
-import ShowIf from './common/ShowIf';
+import ShowIf from '../common/ShowIf';
+import Comments from './Comments';
+import TaskActionsBar from './TaskActionsBar';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
-import { prettyTimeElapsed, isDateToday, bindAll, dash } from '../utilities';
-import '../styles/tasks.css';
-import * as taskActions from '../actions/task';
+import { isDateToday, bindAll, dash } from '../../utilities';
+import * as taskActions from '../../actions/task';
 
 /** getEditField(defaultValue, property, object)
     defaluts to task[prop] is task.edit[prop] doesn't exist  */
@@ -27,32 +28,7 @@ const TaskDescription = props => {
 }
 
 
-
-const CommentBoxes = R.pipe(
-  R.ifElse(
-    R.prop('expand'),
-    R.prop('comments'),
-    R.compose(R.take(3), R.prop('comments'))
-  ),
-  R.map(comment => (
-    <div className="box task-comment" key={comment.commentID}>
-      {comment.from}: {comment.comment} - {prettyTimeElapsed(comment.date)} ago
-    </div>
-  )),
-  result => <div>{result}</div>
-);
-
-const AddComment = R.pipe(
-  R.path(['addComment', 'comment']),
-  R.unless(R.not,
-    comment =>
-    <div className="box task-comment">
-      <textarea className='add-comment-text' value={comment} />
-    </div>
-  ),
-  R.defaultTo(<div />)
-);
-
+console.log('woooooohojo')
 
 class Task extends React.Component {
   componentWillMount () {
@@ -72,9 +48,6 @@ class Task extends React.Component {
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
 
-    const viewMoreCommentsText =
-      'View ' + (comments.length - 3) +
-      ' more comment' + ((comments.length > 4) ? 's' : '');
 
 
     return (
@@ -97,7 +70,6 @@ class Task extends React.Component {
             <i className="fa fa-spinner fa-pulse fa-fw working-on-spinner"></i>
           </ShowIf>
 
-          {/* Importance/Severity Box - Also shows days remaining */}
           <div className="IS-KPI-container">
             <ISBox level={level}
                    dateDue={task.dateDue}
@@ -114,15 +86,13 @@ class Task extends React.Component {
             </p>
           </div>
 
-          {/* Task Description */}
-
           <div className="task-description">
             <TaskDescription value={description}
                              editing={isEditing}
                              onChange={actions.editDescription} />
           </div>
-
         </div>
+
         <ShowIf show={error}>
           <div className="task-error">
             &nbsp;{task.error}&nbsp;
@@ -130,56 +100,14 @@ class Task extends React.Component {
           </div>
         </ShowIf>
 
-        {/* Task Actions - These change depending on the status */}
-        <div className="box task-actions">
+        <TaskActionsBar edit={edit}
+                        addComment={addComment}
+                        startTaskEdit={actions.startTaskEdit}
+                        cancelTaskEdit={actions.cancelTaskEdit}
+                        submitTaskEdits={actions.submitTaskEdits} />
+        <Comments comments={comments} expanded={task.expandComments} addComment={task.addComment} expand={task.expandComments}/>
 
-          <ShowIf show={addComment}>
-            <span>
-              <a href="#nowhere" className="primary-link">Send Comment</a>
-              {dash}
-              <a href="#nowhere">Cancel</a>
-            </span>
-          </ShowIf>
 
-          <ShowIf show={edit}>
-            &nbsp;
-            <span className="xs-right">
-              <a href="#nowhere" onClick={actions.cancelTaskEdit}>Cancel</a>
-              {dash}
-              <a href="#nowhere" className="primary-link"
-                 onClick={actions.submitTaskEdits}>Save</a>
-            </span>
-          </ShowIf>
-
-          <ShowIf show={!edit && !addComment}>
-            <a href="#nowhere">Add comment...</a>
-            <span className="xs-right">
-              <span>
-                <a href="#nowhere">Delete</a>
-                {dash}
-                <a href="#nowhere" onClick={actions.startTaskEdit}>Edit</a>
-                {dash}
-                <a href="#nowhere">Mark&nbsp;complete</a>
-              </span>
-            </span>
-          </ShowIf>
-
-        </div>
-
-        {/* Add Comment - Box Visible After User Selects "Add Comment" */}
-        <AddComment addComment={task.addComment} />
-
-        {/* View all - Visible if more than 3 comments */}
-        <ShowIf show={comments.length > 3 && !task.expandComments}>
-          <div className="box task-comment">
-            <a href="#nowhere" className="primary-link"
-              onClick={actions.expandComments}>
-              {viewMoreCommentsText}
-            </a>
-          </div>
-        </ShowIf>
-        {/* Comments - Up to 3 of the most recent comments */}
-        <CommentBoxes comments={comments} expand={task.expandComments} />
       </div>
     );
   }

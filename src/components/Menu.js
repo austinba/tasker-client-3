@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+export const friendlyRouteNames = {
+  '/my-tasks': 'My Tasks',
+  '/tasks-ive-assigned': `Tasks I've Assigned`
+};
+
 const MenuLink = ({to, onClick, route, children}) => {
   if(route === to) {
     return <span className="active-menu-item">{children}</span>;
@@ -13,12 +18,12 @@ export const Menu = ({toggleMenuAction, route}) => (
     <ul className="menu-items">
       <li>
         <MenuLink to="/my-tasks" onClick={toggleMenuAction} route={route}>
-          My Tasks
+          {friendlyRouteNames['/my-tasks']}
         </MenuLink>
       </li>
       <li>
         <MenuLink to="/tasks-ive-assigned" onClick={toggleMenuAction} route={route}>
-          Tasks I've Assigned
+          {friendlyRouteNames['/tasks-ive-assigned']}
         </MenuLink>
       </li>
     </ul>
