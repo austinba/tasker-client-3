@@ -145,12 +145,12 @@ export const tasks = [
   }
 ];
 
-export const users = {
-  '101': {userID: 101, firstName: 'Austin', lastName: 'Baltes'},
-  '102': {userID: 102, firstName: 'Jiangbo', lastName: 'Cheng'},
-  '103': {userID: 103, firstName: 'Nick', lastName: 'Carr'},
-  '104': {userID: 104, firstName: 'Chris', lastName: 'Niel'},
-};
+export const users = [
+  {userID: 101, firstName: 'Austin', lastName: 'Baltes'},
+  {userID: 102, firstName: 'Jiangbo', lastName: 'Cheng'},
+  {userID: 103, firstName: 'Nick', lastName: 'Carr'},
+  {userID: 104, firstName: 'Chris', lastName: 'Niel'}
+];
 
 export const view = {
 };

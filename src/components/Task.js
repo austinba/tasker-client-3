@@ -83,8 +83,7 @@ class Task extends React.Component {
 
           {/* Spinner while saving */}
           <ShowIf show={edit && edit.saving}>
-            <i className=
-              "fa fa-spinner fa-pulse fa-3x fa-fw task-saving-spinner" />
+            <i className="fa fa-spinner fa-pulse fa-3x fa-fw task-saving-spinner" />
           </ShowIf>
 
           {/* Is-Working-On Corner Flap */}

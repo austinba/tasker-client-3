@@ -4,11 +4,6 @@ import R from 'ramda';
 
 const user = 101;
 
-const myTasks = userID => R.pipe(
-  R.filter(task => task.assignedTo === userID),
-  R.indexBy(R.prop('taskID'))
-);
-
 // R.whereEq({
 //   assignedTo: userID
 // });
@@ -17,10 +12,46 @@ const tasksIveAssigned = userID => R.where({
 });
 
 export function getMyTasks() {
-  return Promise.resolve(R.clone(myTasks(user)(tasks))).delay(500);
+  return Promise.resolve({
+    tasks: R.pipe(
+      R.filter(task => task.assignedTo === user),
+      R.indexBy(R.prop('taskID')),
+      R.clone
+    )(tasks),
+    users: R.pipe(
+      R.filter(task => task.assignedTo === user),
+      R.map(task => [ task.assignedTo,
+                      task.assignedFrom,
+                      R.map(comment => comment.from)(task.comments)]),
+      R.flatten,
+      R.reject(R.isNil),
+      R.dropRepeats,
+      R.map(userID => R.find(R.propEq('userID', userID))(users)),
+      R.indexBy(R.prop('userID')),
+      R.clone
+    )(tasks)
+  }).delay(500);
 }
 export function getTasksIveAssigned() {
-  return Promise.resolve(R.clone(tasksIveAssigned(user)(tasks))).delay(500);
+  return Promise.resolve({
+    tasks: R.pipe(
+      R.filter(task => task.assignedFrom === user),
+      R.indexBy(R.prop('taskID')),
+      R.clone
+    )(tasks),
+    users: R.pipe(
+      R.filter(task => task.assignedFrom === user),
+      R.map(task => [ task.assignedTo,
+                      task.assignedFrom,
+                      R.map(comment => comment.from)(task.comments)]),
+      R.flatten,
+      R.reject(R.isNil),
+      R.dropRepeats,
+      R.map(userID => R.find(R.propEq('userID', userID))(users)),
+      R.indexBy(R.prop('userID')),
+      R.clone
+    )(tasks)
+  }).delay(500);
 }
 export function addTask({description, assignedTo, assignedFrom, level, dueDate}) {
   const newTask = {
