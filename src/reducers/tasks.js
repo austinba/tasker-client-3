@@ -88,7 +88,11 @@ const taskReducers = {
 
 const tasksReducers = {
   EDIT_TASK_CANCEL: state => action => (action.taskID === 'adding-task') ? R.omit('adding-task', state) : state,
-  ADD_TASK: R.assoc('adding-task', {taskID: 'adding-task', edit: {}})
+  ADD_TASK: R.assoc('adding-task', {taskID: 'adding-task', edit: {}}),
+  LOADING_TASKS: state => ({...state, loading: true}),
+  LOAD_TASKS_SUCCESS: state => action => action.tasks,
+  LOAD_TASKS_ERROR: state => state,
+
 };
 
 function taskReducer(state = tasks, action) {

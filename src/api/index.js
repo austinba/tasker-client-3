@@ -1,12 +1,17 @@
-import { tasks, users } from mockData;
+import { tasks, users } from './mockData';
 import Promise from 'bluebird';
 import R from 'ramda';
 
 const user = 101;
 
-const myTasks = userID => R.where({
-  assignedTo: R.equals(userID)
-});
+const myTasks = userID => R.pipe(
+  R.filter(task => task.assignedTo === userID),
+  R.indexBy(R.prop('taskID'))
+);
+
+// R.whereEq({
+//   assignedTo: userID
+// });
 const tasksIveAssigned = userID => R.where({
   assignedFrom: R.equals(userID)
 });
@@ -38,7 +43,7 @@ export function editTask(taskID, {description, assignedTo, assignedFrom, level, 
     if(dueDate) task.dueDate = dueDate;
     return Promise.resolve(R.clone(task)).delay(500);
   }
-  return Promise.reject({error: 'TASK_DOESNT_EXIST'}).delay(500);
+  return Promise.reject('TASK_DOESNT_EXIST').delay(500);
 }
 export function deleteTask(taskID) {
   delete tasks[taskID];
@@ -50,7 +55,7 @@ export function setWorkingOnStatus(taskID, workingOn) {
     task.workedOn = workingOn;
     return Promise.resolve(R.clone(task));
   }
-  return Promise.reject({error: 'TASK_DOESNT_EXIST'}).delay(500);
+  return Promise.reject('TASK_DOESNT_EXIST').delay(500);
 }
 export function addComment(taskID, comment) {
   if(tasks[taskID]) {
@@ -63,7 +68,7 @@ export function addComment(taskID, comment) {
     tasks[taskID].push(newComment);
     return Promise.resolve(R.clone(newComment)).delay(500);
   }
-  return Promise.reject({error: 'TASK_DOESNT_EXIST'}).delay(500);
+  return Promise.reject('TASK_DOESNT_EXIST').delay(500);
 }
 
 export function getUsers() {

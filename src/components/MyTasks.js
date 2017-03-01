@@ -46,39 +46,54 @@ const SortedTasks = ({tasks}) => {
   return <div>{mapTasks(sortByProject)(tasks)}</div>;
 };
 
-const Tasks = props => {
-  return (
-    <div>
-      <div className="sort-actions">
-        Sort by:
-        &nbsp;&nbsp;
-        <a href="#">Importance Severity</a>
-        {dash}
-        <a href="#">Goal</a>
-        {dash}
-        <a href="#">Project</a>
-        <div className="sm-right">
-          <ShowIf show={!props.tasks['adding-task']}>
-            <a href="#nowhere" onClick={props.actions.addTask}>Add Task</a>
-          </ShowIf>
+class Tasks extends React.Component {
+  componentDidMount() {
+    this.props.actions.getMyTasks();
+  }
+  render() {
+    const { tasks, actions } = this.props;
+    const taskCount = Object.keys(tasks).length;
+
+    if(tasks.loading) {
+      return (
+        <div><i className="fa fa-spinner fa-pulse fa-3x fa-fw task-saving-spinner"></i></div>
+      );
+    }
+
+    return (
+      <div>
+        <div className="sort-actions">
+          Sort by:
+          &nbsp;&nbsp;
+          <a href="#">Importance Severity</a>
+          {dash}
+          <a href="#">Goal</a>
+          {dash}
+          <a href="#">Project</a>
+          <div className="sm-right">
+            <ShowIf show={!tasks['adding-task']}>
+              <a href="#nowhere" onClick={actions.addTask}>Add Task</a>
+            </ShowIf>
+          </div>
         </div>
+        <ShowIf show={taskCount === 0 }>
+          <div className="no-tasks-message">
+            <div className="main-message">You have no tasks assigned to you</div>
+            <p>
+              <a href="#nowhere" onClick={actions.addTask}>
+                <em>Create a task for yourself</em>
+              </a>
+            </p>
+            <p>or</p>
+            <p><a href="#nowhere"><em>View tasks you've assigned</em></a></p>
+          </div>
+        </ShowIf>
+        <SortedTasks tasks={tasks} />
       </div>
-      <ShowIf show={Object.keys(props.tasks).length === 0}>
-        <div className="no-tasks-message">
-          <div className="main-message">You have no tasks assigned to you</div>
-          <p>
-            <a href="#nowhere" onClick={props.actions.addTask}>
-              <em>Create a task for yourself</em>
-            </a>
-          </p>
-          <p>or</p>
-          <p><a href="#nowhere"><em>View tasks you've assigned</em></a></p>
-        </div>
-      </ShowIf>
-      <SortedTasks tasks={props.tasks} />
-    </div>
-  );
-};
+    );
+  }
+}
+
 
 const mapStateToProps = state => ({
   tasks: state.tasks,
