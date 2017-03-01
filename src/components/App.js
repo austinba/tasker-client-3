@@ -22,8 +22,8 @@ const App = props => {
         <div className="menu-container">
           <MenuIcon onClick={props.actions.toggleMenu} />
           <ul className="menu-items">
-            <li>Manager View</li>
             <li><Link to="/my-tasks">My Tasks</Link></li>
+            <li>Manager View</li>
           </ul>
         </div>
       </ShowIf>

@@ -19,6 +19,7 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={MyTasks} />
+        <Route path="/my-tasks" component={MyTasks} />
       </Route>
     </Router>
   </Provider>,

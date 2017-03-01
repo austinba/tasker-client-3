@@ -16,6 +16,7 @@
   width: calc(100% - 20px);
   margin: 15px auto;
   color: white;
+  border-radius: 5px;
 }
 .task-saving-spinner {
   position: absolute;
@@ -103,7 +104,8 @@
 }
 .corner-working-on-marker {
   position: absolute;
-  right: 0;
+  right: -1px;
+  top: -1px;
   stroke: rgb(79, 129, 189);
   fill: transparent;
 }

@@ -91,7 +91,8 @@ class Task extends React.Component {
           <svg width="50" height="50" className={'corner-working-on-marker' +
                                                  (workingOn ? ' filled' : '')}
           >
-            <path d="M 0,0 L 50,50 L 50,0 Z" />
+            {/*<path d="M 0,0 L 50,50 L 50,0 Z" />*/}
+            <path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 Z" />
           </svg>
           <ShowIf show={R.has('workingOnUpdatePending', task)}>
             <i className="fa fa-spinner fa-pulse fa-fw working-on-spinner"></i>
