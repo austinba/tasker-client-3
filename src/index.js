@@ -18,8 +18,8 @@ const history = syncHistoryWithStore(browserHistory, store);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
+      <Route path="/" component={Home} />
       <Route path="/" component={App}>
-        <IndexRoute component={Home} />
         <Route path="/my-tasks" component={MyTasks} />
         <Route path="/tasks-ive-assigned" component={TasksIveAssigned} />
       </Route>
