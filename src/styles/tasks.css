@@ -103,13 +103,13 @@
   bottom: auto;
 }
 
-.working-on-spinner {
+.checked-in-spinner {
   position: absolute;
   right: 3px;
   top: 8px;
   z-index: -1;
 }
-.corner-working-on-marker {
+.corner-checked-in-marker {
   position: absolute;
   right: -1px;
   top: -1px;
@@ -119,13 +119,13 @@
   /*stroke: none;*/
   /*fill: rgba(255, 255, 255, 0.1);*/
 }
-.corner-working-on-marker.filled {
+.corner-checked-in-marker.filled {
   fill: rgba(200, 200, 255, 0.35);
   stroke: rgba(255, 255, 255, 0.7);
 
   /*fill: rgba(79, 129, 189, 0.4);*/
 }
-.corner-working-on-marker:hover {
+.corner-checked-in-marker:hover {
   fill: rgba(200, 200, 255, 0.2) !important;
   /*fill: rgba(79, 129, 189, 0.15) !important;*/
 }

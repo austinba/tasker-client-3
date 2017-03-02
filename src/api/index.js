@@ -1,4 +1,4 @@
-import { tasks, users } from './mockData';
+import { tasks, users, checkIns } from './mockData';
 import Promise from 'bluebird';
 import R from 'ramda';
 
@@ -7,17 +7,55 @@ const user = 101;
 // R.whereEq({
 //   assignedTo: userID
 // });
-const tasksIveAssigned = userID => R.where({
-  assignedFrom: R.equals(userID)
-});
+
+export function checkIn(taskID) {
+  const now = new Date();
+  const taskCheckIns = checkIns[taskID];
+  if(!taskCheckIns) {
+    checkIns[taskID] = [now];
+    return Promise.resolve(now).delay(500);
+  }
+  const mostRecent = taskCheckIns[0];
+  const mostRecentDateString = new Date(mostRecent || 0).toJSON().split('T')[0];
+  const nowDateString = now.toJSON().split('T')[0];
+  if(nowDateString === mostRecentDateString) {
+    delete taskCheckIns[0];
+  }
+  taskCheckIns.unshift(now);
+  return Promise.resolve(now).delay(500);
+}
+
+export function cancelCheckIn(taskID) {
+  const now = new Date();
+  const taskCheckIns = checkIns[taskID];
+  if(!taskCheckIns) {
+    checkIns[taskID] = [now];
+    return Promise.resolve(0).delay(500);
+  }
+  const mostRecent = taskCheckIns[0];
+  const mostRecentDateString = new Date(mostRecent || 0).toJSON().split('T')[0];
+  const nowDateString = now.toJSON().split('T')[0];
+  if(nowDateString === mostRecentDateString) {
+    delete taskCheckIns[0];
+  }
+  return Promise.resolve(taskCheckIns[0] || 0).delay(500);
+
+}
 
 export function getMyTasks() {
   return Promise.resolve({
     tasks: R.pipe(
       R.filter(task => task.assignedTo === user),
+      R.map(task => console.log(checkIns, task.taskID) ||
+        R.assoc( 'lastCheckIn',
+                 R.reduce(R.max, 0, R.defaultTo([], checkIns[task.taskID])),
+                  task)
+      ),
+      R.map(task => console.log(task) || task),
       R.indexBy(R.prop('taskID')),
       R.clone
     )(tasks),
+
     users: R.pipe(
       R.filter(task => task.assignedTo === user),
       R.map(task => [ task.assignedTo,
@@ -36,9 +74,14 @@ export function getTasksIveAssigned() {
   return Promise.resolve({
     tasks: R.pipe(
       R.filter(task => task.assignedFrom === user),
+      R.map(task => console.log(checkIns, task.taskID) ||
+        R.assoc( 'lastCheckIn',
+                 R.reduce(R.max, 0, R.defaultTo([], checkIns[task.taskID])),
+                  task)
+      ),
       R.indexBy(R.prop('taskID')),
       R.clone
-    )(tasks),
+      )(tasks),
     users: R.pipe(
       R.filter(task => task.assignedFrom === user),
       R.map(task => [ task.assignedTo,
@@ -80,14 +123,6 @@ export function deleteTask(taskID) {
   delete tasks[taskID];
   return Promise.resolve();
 }
-export function setWorkingOnStatus(taskID, workingOn) {
-  const task = tasks[taskID];
-  if(task) {
-    task.workedOn = workingOn;
-    return Promise.resolve(R.clone(task));
-  }
-  return Promise.reject('TASK_DOESNT_EXIST').delay(500);
-}
 export function addComment(taskID, comment) {
   if(tasks[taskID]) {
     const newComment = {
@@ -101,6 +136,7 @@ export function addComment(taskID, comment) {
   }
   return Promise.reject('TASK_DOESNT_EXIST').delay(500);
 }
+
 
 export function getUsers() {
   return Promise.resolve(users).then(R.indexBy(R.prop('userID'))).delay(500);

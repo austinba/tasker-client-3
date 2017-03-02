@@ -142,6 +142,14 @@ export const tasks = [
   }
 ];
 
+export const checkIns = {
+  201: [hoursAgo(10), hoursAgo(30)],
+  202: [daysAgo(2)],
+  203: [hoursAgo(1), hoursAgo(30), daysAgo(8)],
+  204: [hoursAgo(3)],
+
+}
+
 export const users = [
   {userID: 101, firstName: 'Austin', lastName: 'Baltes'},
   {userID: 102, firstName: 'Jiangbo', lastName: 'Cheng'},

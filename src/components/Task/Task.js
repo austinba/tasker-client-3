@@ -42,7 +42,8 @@ class Task extends React.Component {
 
     const comments    = R.defaultTo([], task.comments);
     const goal        = R.defaultTo('No Goal', this.props.goal);
-    const workingOn   = isDateToday(task.workedOn);
+    const checkedIn   = R.eqBy(date => new Date(date || 0).toJSON().split('T')[0],
+                               new Date())(task.lastCheckIn);
     const actions     = this.boundActions;
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
@@ -58,17 +59,21 @@ class Task extends React.Component {
             <i className="fa fa-spinner fa-pulse fa-3x fa-fw task-saving-spinner" />
           </ShowIf>
 
-          {/* Is-Working-On Corner Flap */}
-          <svg width="50" height="50" className={'corner-working-on-marker' +
-                                                 (workingOn ? ' filled' : '')}
-          >
-            {/*<path d="M 0,0 L 50,50 L 50,0 Z" />*/}
-            <path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 Z" />
-            {/*<path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 A 120,120 0 0,1 50,50 Z" />*/}
-          </svg>
-          <ShowIf show={R.has('workingOnUpdatePending', task)}>
-            <i className="fa fa-spinner fa-pulse fa-fw working-on-spinner"></i>
-          </ShowIf>
+          {/* CheckedIn Corner Flap */}
+          <a href="#nowhere"
+             onClick={checkedIn ? actions.cancelCheckIn : actions.checkIn}>
+
+             <svg width="50" height="50" className={'corner-checked-in-marker' +
+               (checkedIn ? ' filled' : '')}
+               >
+               {/*<path d="M 0,0 L 50,50 L 50,0 Z" />*/}
+               <path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 Z" />
+               {/*<path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 A 120,120 0 0,1 50,50 Z" />*/}
+             </svg>
+             <ShowIf show={R.has('checkInUpdatePending', task)}>
+               <i className="fa fa-spinner fa-pulse fa-fw checked-in-spinner"></i>
+             </ShowIf>
+          </a>
 
           <div className="IS-KPI-container">
             <ISBox level={level}

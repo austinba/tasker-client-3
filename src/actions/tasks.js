@@ -15,7 +15,6 @@ export const getMyTasks = () => dispatch => {
 export const getTasksIveAssigned = () => dispatch => {
   dispatch({ type: 'LOADING_TASKS' });
   api.getTasksIveAssigned().then(data => {
-    console.log(data)
     dispatch({ type: 'LOAD_TASKS_SUCCESS',
                tasks: data.tasks,
                users: data.users });
@@ -26,6 +25,5 @@ export const getTasksIveAssigned = () => dispatch => {
 
 export const addTask = event => {
   event.stopPropagation();
-  console.log('add task')
   return { type: 'ADD_TASK' };
 };
