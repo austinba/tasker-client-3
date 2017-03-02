@@ -1,5 +1,5 @@
 .box {
-  border: 1px solid rgb(79, 129, 189);
+  border: 1px solid rgba(79, 129, 189, 0.6);
   border-radius: 2px;
   margin: -1px;
 }
