@@ -23,7 +23,7 @@ export function prettyTimeElapsed(date){
       return `${timeElaspedInUnit} ${singularUnit}`;
     }
   }
-  return 'just now';
+  return 'just seconds';
 }
 
 /** isDateToday(date) */

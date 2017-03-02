@@ -31,13 +31,14 @@ CommentBoxes = connect(state => ({ users: state.users }))(CommentBoxes)
 
 
 const AddComment = (props) => {
-  const {commentBeingAdded, cancel, save} = props;
+  const {commentBeingAdded, cancel, save, edit} = props;
   const {comment} = commentBeingAdded;
   const onKeyUp = onActionKey(save, cancel);
   return (
     <div className="box inner-box task-comment add-comment">
       <textarea className='add-comment-text'
                 onKeyUp={onKeyUp}
+                onChange={edit}
                 value={comment} />
     </div>
   );
@@ -49,6 +50,7 @@ const Comments = props => {
           saveComment,
           editComment,
           cancelAddComment,
+          addCommentEdit,
           expanded,
           expand} = props;
 
@@ -60,6 +62,7 @@ const Comments = props => {
       <ShowIf show={commentBeingAdded}>
         <AddComment commentBeingAdded={commentBeingAdded}
                     save={saveComment}
+                    edit={addCommentEdit}
                     cancel={cancelAddComment}/>
       </ShowIf>
       <ShowIf show={comments.length >= 4 && !expanded}>

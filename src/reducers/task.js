@@ -29,18 +29,17 @@ const taskReducers = {
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),
   ADD_COMMENT: R.assoc('commentBeingAdded', {comment: ''}),
+  ADD_COMMENT_EDIT: updateFieldPath(['commentBeingAdded', 'comment']),
   CANCEL_ADD_COMMENT: R.omit('commentBeingAdded'),
-  ADD_COMMENT_UPDATE: updateFieldPath(['commentBeingAdded', 'comment']),
-  ADD_COMMENT_SAVE_SUBMIT: R.assocPath(['commentBeingAdded', 'saving'], true),
-  ADD_COMMENT_SAVE_SUCCESS: R.compose(
+  SAVE_COMMENT_PENDING: R.assocPath(['commentBeingAdded', 'saving'], true),
+  SAVE_COMMENT_SUCCESS: state => action => R.pipe(
     R.omit('commentBeingAdded'),
-    R.converge(
-      R.assoc,
-      [ R.always('comment'),
-        R.path(['commentBeingAdded', 'comment']),
-        R.identity
-      ]
-    )),
+    R.evolve({comments: R.append(action.comment)})
+  )(state),
+  SAVE_COMMENT_FAILURE: R.pipe(
+    R.dissocPath(['commentBeingAdded', 'saving']),
+    R.assoc('error', 'Failed to save comment')
+    ),
   REMOVE_ERROR: R.omit('error'),
   ADD_COMMENT_SAVE_FAILURE: R.assoc('error', 'Failed to save comment'),
   VIEW_MORE_COMMENTS: R.assoc('expandComments', true),

@@ -117,24 +117,25 @@ export function editTask(taskID, {description, assignedTo, assignedFrom, level, 
     if(dueDate) task.dueDate = dueDate;
     return Promise.resolve(R.clone(task)).delay(500);
   }
-  return Promise.reject('TASK_DOESNT_EXIST').delay(500);
+  return Promise.reject().delay(500);
 }
 export function deleteTask(taskID) {
   delete tasks[taskID];
   return Promise.resolve();
 }
-export function addComment(taskID, comment) {
-  if(tasks[taskID]) {
-    const newComment = {
-      commentID: Math.floor(Math.random() * 100000),
-      from: user,
-      date: Date.now(),
-      comment
-    };
-    tasks[taskID].push(newComment);
-    return Promise.resolve(R.clone(newComment)).delay(500);
+export function saveComment(taskID, comment) {
+  const taskIndex = R.findIndex(R.propEq('taskID', taskID))(tasks);
+  if(!taskIndex === -1) {
+    return Promise.reject().delay(500)
+  };
+  const newComment = {
+    commentID: Math.floor(Math.random() * 100000),
+    from: user,
+    date: Date.now(),
+    comment
   }
-  return Promise.reject('TASK_DOESNT_EXIST').delay(500);
+  tasks[taskIndex].comments.push(newComment);
+  return Promise.resolve(R.clone(newComment)).delay(500);
 }
 
 

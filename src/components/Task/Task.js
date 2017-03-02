@@ -48,8 +48,6 @@ class Task extends React.Component {
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
 
-
-
     return (
       <div className="box task-container">
         <div className="main-task-box">
@@ -123,6 +121,7 @@ class Task extends React.Component {
                   editComment={actions.editComment}
                   saveComment={actions.saveComment}
                   cancelAddComment={actions.cancelAddComment}
+                  addCommentEdit={actions.addCommentEdit}
                   expand={actions.expandComments}/>
 
 

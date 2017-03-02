@@ -1,4 +1,5 @@
 import * as api from '../api';
+import R from 'ramda';
 
 export const startTaskEdit = (taskID, event) => {
   event.preventDefault();
@@ -10,33 +11,48 @@ export const cancelTaskEdit = (taskID, event) => {
   return { type: 'EDIT_TASK_CANCEL', taskID };
 };
 
-export const expandComments = (taskID, event) => {
-  event.preventDefault();
-  return { type: 'VIEW_MORE_COMMENTS', taskID };
+export const editDescription = (taskID, event) => {
+  return { type: 'EDIT_TASK_DESCRIPTION', value: event.target.value, taskID };
 }
-
-export const submitTaskEdits = (taskID, event) => dispatch => {
-  event.preventDefault();
-  dispatch({ type: 'EDIT_TASK_SAVE_PENDING', taskID });
-  setTimeout(() =>
-    dispatch({ type: 'EDIT_TASK_SAVE_SUCCESS', taskID })
-  , 1000)
-};
 
 export const selectLevel = (taskID, level) => {
   event.preventDefault();
   return ({ type: 'EDIT_IS_LEVEL', level, taskID })
 };
 
-export const editDescription = (taskID, event) => {
+export const submitTaskEdits = (taskID, event) => dispatch => {
   event.preventDefault();
-  return { type: 'EDIT_TASK_DESCRIPTION', value: event.target.value, taskID };
+  dispatch({ type: 'EDIT_TASK_SAVE_PENDING', taskID });
+  setTimeout(() =>
+  dispatch({ type: 'EDIT_TASK_SAVE_SUCCESS', taskID })
+  , 1000)
+};
+
+export const expandComments = (taskID, event) => {
+  event.preventDefault();
+  return { type: 'VIEW_MORE_COMMENTS', taskID };
 }
 
 export const addComment = (taskID, event) => {
   event.preventDefault();
   return { type: 'ADD_COMMENT', taskID };
 };
+
+export const saveComment = (taskID, event) => (dispatch, getState) => {
+  event.preventDefault();
+  dispatch({ type: 'SAVE_COMMENT_PENDING', taskID });
+  const state = getState();
+  const comment = R.path(['tasks', taskID, 'commentBeingAdded', 'comment'])(state) || '';
+  api.saveComment(taskID, comment).then(
+    comment => dispatch({ type: 'SAVE_COMMENT_SUCCESS', comment, taskID })
+  ).catch(
+    error => dispatch({ type: 'SAVE_COMMENT_FAILURE', error, taskID })
+  )
+}
+
+export const addCommentEdit = (taskID, event) => {
+  return { type: 'ADD_COMMENT_EDIT', value: event.target.value, taskID }
+}
 
 export const cancelAddComment = (taskID, event) => {
   event.preventDefault();
