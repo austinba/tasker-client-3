@@ -41,3 +41,13 @@ export const fullName = users => userID => {
   const lastName  = R.defaultTo('', users[userID].lastName );
   return firstName + ' ' + lastName;
 }
+
+export const onActionKey = (enterCallback, escCallback) => event => {
+  if(event.keyCode === 13 && !event.shiftKey) {
+    event.preventDefault();
+    enterCallback && enterCallback(event);
+  } else if(event.keyCode === 27) {
+    event.preventDefault();
+    escCallback && escCallback(event);
+  }
+}

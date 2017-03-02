@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import ShowIf from '../common/ShowIf';
-import { prettyTimeElapsed, fullName } from '../../utilities';
+import { prettyTimeElapsed, fullName, onActionKey } from '../../utilities';
 import { connect } from 'react-redux'
 import * as taskActions from '../../actions/task';
 
@@ -29,14 +29,6 @@ let CommentBoxes = ({users, comments, expanded}) => {
 };
 CommentBoxes = connect(state => ({ users: state.users }))(CommentBoxes)
 
-const onActionKey = (enterCallback, escCallback) => event => {
-  event.stopPropagation();
-  if(event.keyCode === 13 && !event.shiftKey) {
-    enterCallback && enterCallback();
-  } else if(event.keyCode === 27) {
-    escCallback && escCallback();
-  }
-}
 
 const AddComment = (props) => {
   const {commentBeingAdded, cancel, save} = props;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import R from 'ramda';
 import ShowIf from './common/ShowIf';
-import Task from './Task';
+import Task from './Task/Task';
 import * as tasksActions from '../actions/tasks'
 import { dash } from '../utilities';
 import '../styles/tasks.css';

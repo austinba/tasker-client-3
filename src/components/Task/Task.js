@@ -6,7 +6,7 @@ import Comments from './Comments';
 import TaskActionsBar from './TaskActionsBar';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
-import { isDateToday, bindAll, dash } from '../../utilities';
+import { isDateToday, bindAll, dash, onActionKey } from '../../utilities';
 import * as taskActions from '../../actions/task';
 
 /** getEditField(defaultValue, property, object)
@@ -18,11 +18,14 @@ const getEditField =
                                                 R.path(['edit', prop])
                                               ]));
 
+
 const TaskDescription = props => {
   if(props.editing) {
     return <textarea className='edit-task-description'
                      value={props.value}
-                     onChange={props.onChange} />;
+                     onChange={props.onChange}
+                     onKeyDown={onActionKey(props.submitTaskEdits,
+                                            props.cancelTaskEdit)} />;
   }
   return <div>{props.value}</div>
 }
@@ -61,6 +64,7 @@ class Task extends React.Component {
           >
             {/*<path d="M 0,0 L 50,50 L 50,0 Z" />*/}
             <path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 Z" />
+            {/*<path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 A 120,120 0 0,1 50,50 Z" />*/}
           </svg>
           <ShowIf show={R.has('workingOnUpdatePending', task)}>
             <i className="fa fa-spinner fa-pulse fa-fw working-on-spinner"></i>
@@ -72,6 +76,7 @@ class Task extends React.Component {
                    editing={task.edit}
                    selectLevel={actions.selectLevel}
             />
+          {/*}
             <p className="task-goal">
               <ShowIf show={!task.edit}>{goal}</ShowIf>
               <ShowIf show={ task.edit}>
@@ -80,12 +85,15 @@ class Task extends React.Component {
                 </a>
               </ShowIf>
             </p>
+          {*/}
           </div>
 
           <div className="task-description">
             <TaskDescription value={description}
                              editing={!!task.edit}
-                             onChange={actions.editDescription} />
+                             onChange={actions.editDescription}
+                             cancelTaskEdit={actions.cancelTaskEdit}
+                             submitTaskEdits={actions.submitTaskEdits} />
           </div>
         </div>
 
