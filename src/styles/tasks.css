@@ -25,6 +25,10 @@
 .box.task-container {
   border-color: white;
 }
+.box.task-container.deleted-task {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+}
 .task-saving-spinner {
   position: absolute;
   left: calc(50% - 25px);

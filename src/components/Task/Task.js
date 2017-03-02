@@ -48,6 +48,37 @@ class Task extends React.Component {
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
 
+    if(task.deleted) {
+      const deleteDate = task.deleted.toLocaleDateString();
+      return (
+        <div className="box task-container deleted-task">
+          <div className="main-task-box">
+            <div className="task-description">
+              Deleted
+              (<a href="#nowhere"><em>undelete</em></a>) {deleteDate}:&nbsp;&nbsp;
+              {description}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    if(task.completed) {
+      const completedDate = task.completed.toLocaleDateString();
+      return (
+        <div className="box task-container deleted-task">
+          <div className="main-task-box">
+            <div className="task-description">
+              Completed
+              (<a href="#nowhere"><em>undo</em></a>) {completedDate}:&nbsp;&nbsp;
+              {description}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+
     return (
       <div className="box task-container">
         <div className="main-task-box">
