@@ -140,7 +140,7 @@ export function markComplete(taskID) {
   const taskIndex = getTaskIndex(taskID);
   if(taskIndex === -1) return Promise.reject();
 
-  tasks[taskIndex] = R.assoc('completed', new Date())(tasks[taskIndex])
+  tasks[taskIndex] = R.assoc('dateCompleted', new Date())(tasks[taskIndex])
   return Promise.resolve(tasks[taskIndex]);
 }
 
@@ -148,7 +148,7 @@ export function markDeleted(taskID) {
   const taskIndex = getTaskIndex(taskID);
   if(taskIndex === -1) return Promise.reject();
 
-  tasks[taskIndex] = R.assoc('deleted', new Date())(tasks[taskIndex])
+  tasks[taskIndex] = R.assoc('dateDeleted', new Date())(tasks[taskIndex])
   return Promise.resolve(tasks[taskIndex]);
 }
 
@@ -156,13 +156,13 @@ export function unmarkComplete(taskID) {
   const taskIndex = getTaskIndex(taskID);
   if(taskIndex === -1) return Promise.reject();
 
-  tasks[taskIndex] = R.dissoc('completed')(tasks[taskIndex])
+  tasks[taskIndex] = R.dissoc('dateCompleted')(tasks[taskIndex])
   return Promise.resolve(tasks[taskIndex]);
 }
 export function unmarkDeleted(taskID) {
   const taskIndex = getTaskIndex(taskID);
   if(taskIndex === -1) return Promise.reject();
 
-  tasks[taskIndex] = R.dissoc('deleted')(tasks[taskIndex])
+  tasks[taskIndex] = R.dissoc('dateDeleted')(tasks[taskIndex])
   return Promise.resolve(tasks[taskIndex]);
 }

@@ -11,7 +11,7 @@ function daysAgo(days) {
 export const tasks = [
   {
     taskID: 202,
-    completed: daysAgo(3),
+    dateCompleted: daysAgo(3),
     project: 'Dragonfly',
     description: 'Make sure website is ready for deployment by March 10th',
     assignedFrom: 102,

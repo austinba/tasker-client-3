@@ -4,6 +4,8 @@ import ISBox from './ISBox';
 import ShowIf from '../common/ShowIf';
 import Comments from './Comments';
 import TaskActionsBar from './TaskActionsBar';
+import DeletedTask from './DeletedTask';
+import CompletedTask from './CompletedTask';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { isDateToday, bindAll, dash, onActionKey } from '../../utilities';
@@ -48,38 +50,15 @@ class Task extends React.Component {
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
 
-    if(task.deleted) {
-      const deleteDate = task.deleted.toLocaleDateString();
-      return (
-        <div className="box task-container deleted-task">
-          <div className="main-task-box">
-            <div className="task-description">
-              <span>
-                DELETED
-                (<a href="#nowhere" onClick={actions.unmarkDeleted}><em>undo</em></a>) {deleteDate}:&nbsp;&nbsp;
-                {description}
-              </span>
-            </div>
-          </div>
-        </div>
-      )
+    if(task.dateDeleted) {
+      return <DeletedTask date={task.dateDeleted}
+                          description={task.description}
+                          undo={actions.unmarkDeleted} />;
     }
-
-    if(task.completed) {
-      const completedDate = task.completed.toLocaleDateString();
-      return (
-        <div className="box task-container completed-task">
-          <div className="main-task-box">
-            <div className="task-description">
-              <span>
-                COMPLETED
-                (<a href="#nowhere" onClick={actions.unmarkComplete}><em>undo</em></a>) {completedDate}:&nbsp;&nbsp;
-                {description}
-              </span>
-            </div>
-          </div>
-        </div>
-      )
+    if(task.dateCompleted) {
+      return <CompletedTask date={task.dateCompleted}
+                            description={task.description}
+                            undo={actions.unmarkComplete} />;
     }
 
 
