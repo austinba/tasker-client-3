@@ -1,7 +1,10 @@
 .box {
-  border: 1px solid rgba(79, 129, 189, 0.6);
+  border: 1px solid rgba(79, 129, 189, 0.1);
   border-radius: 10px 2px 10px 10px;
   margin: -1px;
+}
+.IS-box, .IS-box .box {
+  border: 1px solid rgba(79, 129, 189, 0.5);
 }
 .box.inner-box {
   border-bottom: none;
@@ -150,4 +153,7 @@
 }
 .no-tasks-message em {
   font-style: italic;
+}
+.add-comment {
+  display: flex;
 }

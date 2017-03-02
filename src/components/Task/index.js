@@ -107,6 +107,9 @@ class Task extends React.Component {
         <Comments comments={comments}
                   expanded={task.expandComments}
                   commentBeingAdded={task.commentBeingAdded}
+                  editComment={actions.editComment}
+                  saveComment={actions.saveComment}
+                  cancelAddComment={actions.cancelAddComment}
                   expand={actions.expandComments}/>
 
 
