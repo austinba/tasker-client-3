@@ -33,11 +33,11 @@ CommentBoxes = connect(state => ({ users: state.users }))(CommentBoxes)
 const AddComment = (props) => {
   const {commentBeingAdded, cancel, save, edit} = props;
   const {comment} = commentBeingAdded;
-  const onKeyUp = onActionKey(save, cancel);
+  const onKeyDown = onActionKey(save, cancel);
   return (
     <div className="box inner-box task-comment add-comment">
       <textarea className='add-comment-text'
-                onKeyUp={onKeyUp}
+                onKeyDown={onKeyDown}
                 onChange={edit}
                 value={comment} />
     </div>

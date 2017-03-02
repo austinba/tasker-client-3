@@ -34,7 +34,7 @@ const taskReducers = {
   SAVE_COMMENT_PENDING: R.assocPath(['commentBeingAdded', 'saving'], true),
   SAVE_COMMENT_SUCCESS: state => action => R.pipe(
     R.omit('commentBeingAdded'),
-    R.evolve({comments: R.append(action.comment)})
+    R.evolve({comments: R.prepend(action.comment)})
   )(state),
   SAVE_COMMENT_FAILURE: R.pipe(
     R.dissocPath(['commentBeingAdded', 'saving']),
