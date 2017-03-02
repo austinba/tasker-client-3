@@ -1,43 +1,47 @@
 import React from 'react';
 import R from 'ramda';
 import ShowIf from '../common/ShowIf';
-import { prettyTimeElapsed } from '../../utilities';
+import { prettyTimeElapsed, fullName } from '../../utilities';
+import { connect } from 'react-redux'
 
 
-const CommentBoxes = R.pipe(
-  R.ifElse(
-    R.prop('expanded'),
-    R.prop('comments'),
-    R.compose(R.take(3), R.prop('comments'))
-  ),
-  R.map(comment => (
-    <div className="box task-comment" key={comment.commentID}>
-      {comment.from}: {comment.comment} - {prettyTimeElapsed(comment.date)} ago
-    </div>
-  )),
-  result => <div>{result}</div>
+const getComments = R.ifElse(
+  R.prop('expanded'),
+  R.prop('comments'),
+  R.compose(R.take(3), R.prop('comments'))
 );
 
-const AddComment = R.pipe(
-  R.path(['addComment', 'comment']),
-  R.unless(R.not,
-    comment =>
-    <div className="box task-comment">
-      <textarea className='add-comment-text' value={comment} />
-    </div>
-  ),
-  R.defaultTo(<div />)
+let CommentBoxes = ({users, comments, expanded}) => {
+  if(expanded) comments = R.take(3, comments);
+  return R.pipe(
+    R.map(({comment, from, commentID, date}) => (
+      <div className="box inner-box task-comment" key={commentID}>
+        {fullName(users)(from) || 'Unknown User'}: &nbsp;
+        {comment} - {prettyTimeElapsed(date)} ago
+      </div>
+    )),
+    result => <div>{result}</div>
+  )(comments);
+};
+CommentBoxes = connect(state => ({ users: state.users }))(CommentBoxes)
+
+const AddComment = (props) => (
+  <div className="box inner-box task-comment">
+    <textarea className='add-comment-text' value={props.comment} />
+  </div>
 );
 
-const Comments = ({comments, addComment, expanded, expand}) => {
+const Comments = ({comments, commentBeingAdded, expanded, expand}) => {
   const viewMoreCommentsText =
     'View ' + (comments.length - 3) +
     ' more comment' + ((comments.length > 4) ? 's' : '');
   return (
     <div>
-      <AddComment addComment={addComment} />
+      <ShowIf show={commentBeingAdded}>
+        <AddComment commentBeingAdded={commentBeingAdded} />
+      </ShowIf>
       <ShowIf show={comments.length > 3 && !expanded}>
-        <div className="box task-comment">
+        <div className="box inner-box task-comment">
           <a href="#nowhere" className="primary-link"
             onClick={expand}>
             {viewMoreCommentsText}
@@ -48,5 +52,7 @@ const Comments = ({comments, addComment, expanded, expand}) => {
     </div>
   );
 }
+
+
 
 export default Comments;

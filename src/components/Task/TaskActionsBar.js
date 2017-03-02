@@ -2,15 +2,15 @@ import React from 'react';
 import { dash } from '../../utilities';
 import ShowIf from '../common/ShowIf';
 
-const TaskActionsBar = ({edit, addComment, startTaskEdit, cancelTaskEdit, submitTaskEdits}) => {
+const TaskActionsBar = ({edit, commentBeingAdded, addComment, cancelAddComment, startTaskEdit, cancelTaskEdit, submitTaskEdits}) => {
   return (
-    <div className="box task-actions">
+    <div className="box inner-box task-actions">
 
-      <ShowIf show={addComment}>
+      <ShowIf show={commentBeingAdded}>
         <span>
           <a href="#nowhere" className="primary-link">Send Comment</a>
           {dash}
-          <a href="#nowhere">Cancel</a>
+          <a href="#nowhere" onClick={cancelAddComment}>Cancel</a>
         </span>
       </ShowIf>
 
@@ -24,8 +24,8 @@ const TaskActionsBar = ({edit, addComment, startTaskEdit, cancelTaskEdit, submit
         </span>
       </ShowIf>
 
-      <ShowIf show={!edit && !addComment}>
-        <a href="#nowhere">Add comment...</a>
+      <ShowIf show={!edit && !commentBeingAdded}>
+        <a href="#nowhere" onClick={addComment}>Add comment...</a>
         <span className="xs-right">
           <span>
             <a href="#nowhere">Delete</a>

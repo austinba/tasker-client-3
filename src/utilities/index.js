@@ -34,3 +34,10 @@ export const bindAll = id => R.map(fn => fn.bind(null, id));
 
 export const dash = <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>;
 export const bar  = <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>;
+
+export const fullName = users => userID => {
+  if(!users || !users[userID]) return 'Unknown User';
+  const firstName = R.defaultTo('', users[userID].firstName);
+  const lastName  = R.defaultTo('', users[userID].lastName );
+  return firstName + ' ' + lastName;
+}

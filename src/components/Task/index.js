@@ -97,14 +97,16 @@ class Task extends React.Component {
         </ShowIf>
 
         <TaskActionsBar edit={task.edit}
+                        commentBeingAdded={task.commentBeingAdded}
                         addComment={actions.addComment}
+                        cancelAddComment={actions.cancelAddComment}
                         startTaskEdit={actions.startTaskEdit}
                         cancelTaskEdit={actions.cancelTaskEdit}
                         submitTaskEdits={actions.submitTaskEdits} />
 
         <Comments comments={comments}
                   expanded={task.expandComments}
-                  addComment={task.addComment}
+                  commentBeingAdded={task.commentBeingAdded}
                   expand={actions.expandComments}/>
 
 

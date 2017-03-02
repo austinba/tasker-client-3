@@ -103,7 +103,7 @@ export function addComment(taskID, comment) {
 }
 
 export function getUsers() {
-  return Promise.resolve(users).delay(500);
+  return Promise.resolve(users).then(R.indexBy(R.prop('userID'))).delay(500);
 }
 
 export function getViewPreferences() {

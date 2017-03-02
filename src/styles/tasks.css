@@ -3,20 +3,24 @@
   border-radius: 2px;
   margin: -1px;
 }
-
+.box.inner-box {
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
 .task-actions, .task-comment {
   padding: 8px 10px;
   font-size: 14px;
 }
 
-.task-comment {
-  display: flex;
-}
 .task-container {
   width: calc(100% - 20px);
   margin: 15px auto;
   color: white;
   border-radius: 5px;
+}
+.box.task-container {
+  border-color: white;
 }
 .task-saving-spinner {
   position: absolute;
@@ -106,7 +110,8 @@
   position: absolute;
   right: -1px;
   top: -1px;
-  stroke: rgb(79, 129, 189);
+  /*stroke: rgb(79, 129, 189);*/
+  stroke: white;
   fill: transparent;
 }
 .corner-working-on-marker.filled {

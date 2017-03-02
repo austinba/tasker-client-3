@@ -68,15 +68,16 @@ const taskReducers = {
     R.compose(
       R.omit('workingOnUpdatePending'),
       R.assoc('error', 'Failed updating working-on status...')),
-  ADD_COMMENT: R.assoc('addComment', {comment: ''}),
-  ADD_COMMENT_UPDATE: updateFieldPath(['addComment', 'comment']),
-  ADD_COMMENT_SAVE_SUBMIT: R.assocPath(['addComment', 'saving'], true),
+  ADD_COMMENT: R.assoc('commentBeingAdded', {comment: ''}),
+  CANCEL_ADD_COMMENT: R.omit('commentBeingAdded'),
+  ADD_COMMENT_UPDATE: updateFieldPath(['commentBeingAdded', 'comment']),
+  ADD_COMMENT_SAVE_SUBMIT: R.assocPath(['commentBeingAdded', 'saving'], true),
   ADD_COMMENT_SAVE_SUCCESS: R.compose(
-    R.omit('addComment'),
+    R.omit('commentBeingAdded'),
     R.converge(
       R.assoc,
       [ R.always('comment'),
-        R.path(['addComment', 'comment']),
+        R.path(['commentBeingAdded', 'comment']),
         R.identity
       ]
     )),

@@ -203,7 +203,11 @@ input, button {
   background-color: rgba(0, 0, 0, 0.8);
   border: 1px solid rgb(79, 129, 189);
   border-radius: 5px;
-  padding: 10px;
+  padding: 15px 18px;
+  margin: 4px 7px;
+}
+input {
+  width: 280px;
 }
 button {
   box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.5);
@@ -235,15 +239,15 @@ button {
   bottom: 30px;
   width: 100%;
 }
-.create-a-team-email {
-  width: 280px;
+.create-a-team-form button, .create-a-team-form input {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-.create-a-team-email, .create-a-team-email-submit {
-  padding: 15px 18px;
-  margin: 4px 7px;
-}
-
-h2 {
+.create-a-team-domain-suffix {
+  margin-bottom: 30px;
   font-size: 18px;
-  line-height: 2em;
+}
+strong {
+  font-weight: 400;
 }

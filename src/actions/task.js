@@ -33,5 +33,8 @@ export const toggleWorkingToday = (taskID, isWorking) => {
   };
 }
 
+export const addComment = (taskID) => ({ type: 'ADD_COMMENT', taskID });
+
+export const cancelAddComment = (taskID) => ({type: 'CANCEL_ADD_COMMENT', taskID});
 // export const startGoalSelect; // TODO: determine how to deal with this....
 // export const goalSelected; // TODO: determine how to deal with this....

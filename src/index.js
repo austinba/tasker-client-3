@@ -6,7 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import App from './components/App';
 import MyTasks from './components/MyTasks';
 import TasksIveAssigned from './components/TasksIveAssigned';
-import Home from './Home';
+import Home from './components/Home';
 import configureStore from './store'
 import './styles/reset.css';
 import './styles/index.css';
