@@ -51,7 +51,7 @@ export function getMyTasks() {
                  R.reduce(R.max, 0, R.defaultTo([], checkIns[task.taskID])),
                   task)
       ),
-      R.map(task => console.log(task) || task),
+      R.map(R.evolve({ comments: R.sortWith([R.descend(R.prop('date'))]) })),
       R.indexBy(R.prop('taskID')),
       R.clone
     )(tasks),
@@ -74,7 +74,7 @@ export function getTasksIveAssigned() {
   return Promise.resolve({
     tasks: R.pipe(
       R.filter(task => task.assignedFrom === user),
-      R.map(task => console.log(checkIns, task.taskID) ||
+      R.map(task =>
         R.assoc( 'lastCheckIn',
                  R.reduce(R.max, 0, R.defaultTo([], checkIns[task.taskID])),
                   task)
@@ -137,8 +137,6 @@ export function saveComment(taskID, comment) {
   tasks[taskIndex].comments.push(newComment);
   return Promise.resolve(R.clone(newComment)).delay(500);
 }
-
-
 export function getUsers() {
   return Promise.resolve(users).then(R.indexBy(R.prop('userID'))).delay(500);
 }
