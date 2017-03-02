@@ -54,9 +54,11 @@ class Task extends React.Component {
         <div className="box task-container deleted-task">
           <div className="main-task-box">
             <div className="task-description">
-              Deleted
-              (<a href="#nowhere"><em>undelete</em></a>) {deleteDate}:&nbsp;&nbsp;
-              {description}
+              <span>
+                DELETED
+                (<a href="#nowhere" onClick={actions.unmarkDeleted}><em>undo</em></a>) {deleteDate}:&nbsp;&nbsp;
+                {description}
+              </span>
             </div>
           </div>
         </div>
@@ -66,12 +68,14 @@ class Task extends React.Component {
     if(task.completed) {
       const completedDate = task.completed.toLocaleDateString();
       return (
-        <div className="box task-container deleted-task">
+        <div className="box task-container completed-task">
           <div className="main-task-box">
             <div className="task-description">
-              Completed
-              (<a href="#nowhere"><em>undo</em></a>) {completedDate}:&nbsp;&nbsp;
-              {description}
+              <span>
+                COMPLETED
+                (<a href="#nowhere" onClick={actions.unmarkComplete}><em>undo</em></a>) {completedDate}:&nbsp;&nbsp;
+                {description}
+              </span>
             </div>
           </div>
         </div>
@@ -144,7 +148,9 @@ class Task extends React.Component {
                         cancelAddComment={actions.cancelAddComment}
                         startTaskEdit={actions.startTaskEdit}
                         cancelTaskEdit={actions.cancelTaskEdit}
-                        submitTaskEdits={actions.submitTaskEdits} />
+                        submitTaskEdits={actions.submitTaskEdits}
+                        markDeleted={actions.markDeleted}
+                        markComplete={actions.markComplete} />
 
         <Comments comments={comments}
                   expanded={task.expandComments}

@@ -79,5 +79,52 @@ export const cancelCheckIn = (taskID, event) => dispatch => {
   )
 }
 
+export const markDeleted = (taskID) => dispatch => {
+  console.log('marking delete');
+  event.stopPropagation();
+  dispatch({ type: 'TASK_UPDATING' });
+  api.markDeleted(taskID).then(
+    (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
+  ).catch(
+    (error) => dispatch({ type: 'MARK_DELETE_FAILURE', taskID, error })
+  ).finally(
+    () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
+  );
+}
+export const unmarkDeleted = (taskID) => dispatch => {
+  event.stopPropagation();
+  dispatch({ type: 'TASK_UPDATING' });
+  api.unmarkDeleted(taskID).then(
+    (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
+  ).catch(
+    (error) => dispatch({ type: 'UNMARK_DELETE_FAILURE', taskID, error })
+  ).finally(
+    () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
+  );
+}
+
+export const markComplete = (taskID) => dispatch => {
+  console.log('marking delete');
+  event.stopPropagation();
+  dispatch({ type: 'TASK_UPDATING' });
+  api.markComplete(taskID).then(
+    (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
+  ).catch(
+    (error) => dispatch({ type: 'MARK_COMPLETE_FAILURE', taskID, error })
+  ).finally(
+    () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
+  );
+}
+export const unmarkComplete = (taskID) => dispatch => {
+  event.stopPropagation();
+  dispatch({ type: 'TASK_UPDATING' });
+  api.unmarkComplete(taskID).then(
+    (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
+  ).catch(
+    (error) => dispatch({ type: 'UNMARK_COMPLETE_FAILURE', taskID, error })
+  ).finally(
+    () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
+  );
+}
 // export const startGoalSelect; // TODO: determine how to deal with this....
 // export const goalSelected; // TODO: determine how to deal with this....

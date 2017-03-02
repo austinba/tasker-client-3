@@ -3,7 +3,7 @@ import Promise from 'bluebird';
 import R from 'ramda';
 
 const user = 101;
-
+const getTaskIndex = (taskID) => R.findIndex(R.propEq('taskID', taskID))(tasks);
 // R.whereEq({
 //   assignedTo: userID
 // });
@@ -119,10 +119,6 @@ export function editTask(taskID, {description, assignedTo, assignedFrom, level, 
   }
   return Promise.reject().delay(500);
 }
-export function deleteTask(taskID) {
-  delete tasks[taskID];
-  return Promise.resolve();
-}
 export function saveComment(taskID, comment) {
   const taskIndex = R.findIndex(R.propEq('taskID', taskID))(tasks);
   if(!taskIndex === -1) {
@@ -140,10 +136,33 @@ export function saveComment(taskID, comment) {
 export function getUsers() {
   return Promise.resolve(users).then(R.indexBy(R.prop('userID'))).delay(500);
 }
+export function markComplete(taskID) {
+  const taskIndex = getTaskIndex(taskID);
+  if(taskIndex === -1) return Promise.reject();
 
-export function getViewPreferences() {
-
+  tasks[taskIndex] = R.assoc('completed', new Date())(tasks[taskIndex])
+  return Promise.resolve(tasks[taskIndex]);
 }
-export function saveViewPreferences() {
 
+export function markDeleted(taskID) {
+  const taskIndex = getTaskIndex(taskID);
+  if(taskIndex === -1) return Promise.reject();
+
+  tasks[taskIndex] = R.assoc('deleted', new Date())(tasks[taskIndex])
+  return Promise.resolve(tasks[taskIndex]);
+}
+
+export function unmarkComplete(taskID) {
+  const taskIndex = getTaskIndex(taskID);
+  if(taskIndex === -1) return Promise.reject();
+
+  tasks[taskIndex] = R.dissoc('completed')(tasks[taskIndex])
+  return Promise.resolve(tasks[taskIndex]);
+}
+export function unmarkDeleted(taskID) {
+  const taskIndex = getTaskIndex(taskID);
+  if(taskIndex === -1) return Promise.reject();
+
+  tasks[taskIndex] = R.dissoc('deleted')(tasks[taskIndex])
+  return Promise.resolve(tasks[taskIndex]);
 }

@@ -52,7 +52,10 @@ const taskReducers = {
   CANCEL_CHECK_IN_SUCCESS: state => action => R.pipe(
     R.assoc('lastCheckIn', action.date),
     R.dissoc('checkInUpdatePending'))(state),
-  CANCEL_CHECK_IN_FAILURE: R.assoc('error', 'Failed to cancel check in')
+  CANCEL_CHECK_IN_FAILURE: R.assoc('error', 'Failed to cancel check in'),
+  TASK_UPDATING: R.assoc('isUpdating', true),
+  TASK_UPDATE_COMPLETE: R.omit('isUpdating'),
+  UPDATE_SUCCESS: state => action => action.task
 };
 
 

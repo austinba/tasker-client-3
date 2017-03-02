@@ -2,7 +2,9 @@ import React from 'react';
 import { dash } from '../../utilities';
 import ShowIf from '../common/ShowIf';
 
-const TaskActionsBar = ({edit, commentBeingAdded, addComment, cancelAddComment, startTaskEdit, cancelTaskEdit, submitTaskEdits}) => {
+const TaskActionsBar = ({ edit, commentBeingAdded, addComment, cancelAddComment,
+                          startTaskEdit, cancelTaskEdit, submitTaskEdits,
+                          markDeleted, markComplete}) => {
   return (
     <div className="box inner-box task-actions">
 
@@ -28,11 +30,11 @@ const TaskActionsBar = ({edit, commentBeingAdded, addComment, cancelAddComment, 
         <a href="#nowhere" onClick={addComment}>Add comment...</a>
         <span className="xs-right">
           <span>
-            <a href="#nowhere">Delete</a>
+            <a href="#nowhere" onClick={markDeleted}>Delete</a>
             {dash}
             <a href="#nowhere" onClick={startTaskEdit}>Edit</a>
             {dash}
-            <a href="#nowhere">Mark&nbsp;complete</a>
+            <a href="#nowhere" onClick={markComplete}>Mark&nbsp;complete</a>
           </span>
         </span>
       </ShowIf>
