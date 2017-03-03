@@ -46,7 +46,7 @@ export function getMyTasks() {
   return Promise.resolve({
     tasks: R.pipe(
       R.filter(task => task.assignedTo === user),
-      R.map(task => console.log(checkIns, task.taskID) ||
+      R.map(task => 
         R.assoc( 'lastCheckIn',
                  R.reduce(R.max, 0, R.defaultTo([], checkIns[task.taskID])),
                   task)

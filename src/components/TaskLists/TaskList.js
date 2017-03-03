@@ -2,39 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import R from 'ramda';
-import ShowIf from './common/ShowIf';
-import Task from './Task/Task';
-import * as tasksActions from '../actions/tasks'
-import { dash } from '../utilities';
-import '../styles/tasks.css';
-
-const sortByGoal = R.sortWith([
-  R.descend(R.propEq('taskID', 'adding-task')),
-  R.ascend(R.prop('goal')),
-  R.ascend(R.prop('dueDate')),
-  R.descend(R.prop('lastDateWorkedOn')),
-  R.ascend(R.prop('level')),
-  R.ascend(R.prop('project'))
-]);
-
-const sortByImportanceSeverity = R.sortWith([
-  R.descend(R.propEq('taskID', 'adding-task')),
-  R.ascend(R.prop('level')),
-  R.ascend(R.prop('dueDate')),
-  R.descend(R.prop('lastDateWorkedOn')),
-  R.ascend(R.prop('project')),
-  R.ascend(R.prop('goal'))
-]);
-
-const sortByProject = R.sortWith([
-  R.descend(R.propEq('taskID', 'adding-task')),
-  R.ascend(R.prop('project')),
-  R.ascend(R.prop('dueDate')),
-  R.descend(R.prop('lastDateWorkedOn')),
-  R.ascend(R.prop('level')),
-  R.ascend(R.prop('goal'))
-]);
-
+import ShowIf from '../common/ShowIf';
+import Task from '../Task/Task';
+import * as tasksActions from '../../actions/tasks'
+import { dash } from '../../utilities';
+import * as sorters from './sorters';
+import '../../styles/tasks.css';
 
 const mapTasks = sortBy =>
   R.pipe(
@@ -44,12 +17,21 @@ const mapTasks = sortBy =>
   );
 
 const SortedTasks = ({tasks}) => {
-  return <div>{mapTasks(sortByProject)(tasks)}</div>;
+  return <div>{mapTasks(sorters.sortByProject)(tasks)}</div>;
 };
 
 class Tasks extends React.Component {
   componentDidMount() {
-    this.props.actions.getMyTasks();
+    switch(this.props.preset) {
+      case 'myTasks':
+        this.props.actions.getMyTasks();
+      break;
+      case 'tasksIveAssigned':
+        this.props.actions.getTasksIveAssigned();
+      break;
+      default:
+        throw new Error('TaskList requires a preset');
+    }
   }
   render() {
     const { tasks, actions } = this.props;

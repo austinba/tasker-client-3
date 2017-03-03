@@ -7,7 +7,7 @@ import TaskActionsBar from './TaskActionsBar';
 import InactiveTask from './InactiveTask';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
-import { isDateToday, bindAll, dash, onActionKey } from '../../utilities';
+import { bindAll, onActionKey } from '../../utilities';
 import * as taskActions from '../../actions/task';
 
 /** getEditField(defaultValue, property, object)
@@ -42,7 +42,6 @@ class Task extends React.Component {
     const task = tasks[taskID];
 
     const comments    = R.defaultTo([], task.comments);
-    const goal        = R.defaultTo('No Goal', this.props.goal);
     const checkedIn   = R.eqBy(date => new Date(date || 0).toJSON().split('T')[0],
                                new Date())(task.lastCheckIn);
     const actions     = this.boundActions;

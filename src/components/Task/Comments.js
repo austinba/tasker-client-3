@@ -3,14 +3,6 @@ import R from 'ramda';
 import ShowIf from '../common/ShowIf';
 import { prettyTimeElapsed, fullName, onActionKey } from '../../utilities';
 import { connect } from 'react-redux'
-import * as taskActions from '../../actions/task';
-
-
-const getComments = R.ifElse(
-  R.prop('expanded'),
-  R.prop('comments'),
-  R.compose(R.take(3), R.prop('comments'))
-);
 
 let CommentBoxes = ({users, comments, expanded}) => {
   if(!expanded) {
@@ -48,7 +40,6 @@ const Comments = props => {
   const { comments,
           commentBeingAdded,
           saveComment,
-          editComment,
           cancelAddComment,
           addCommentEdit,
           expanded,

@@ -5,8 +5,9 @@ function usersReducer(state = {}, action) {
     case 'LOAD_USERS_FAILURE':
       console.log('Failed to load users')
       return state;
+    default:
+      return state;
   }
-  return state;
 }
 
 export default usersReducer;

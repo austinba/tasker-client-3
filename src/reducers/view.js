@@ -1,12 +1,12 @@
 import { view } from './initialState';
-import R from 'ramda';
 
 function viewReducer(state = view, action) {
   switch(action.type) {
     case 'TOGGLE_MENU':
       return { ...state, menuOpen: !state.menuOpen };
+    default:
+      return state;
   }
-  return state;
 }
 
 export default viewReducer;

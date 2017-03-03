@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import App from './components/App';
-import MyTasks from './components/MyTasks';
-import TasksIveAssigned from './components/TasksIveAssigned';
+import MyTasks from './components/TaskLists/MyTasks';
+import TasksIveAssigned from './components/TaskLists/TasksIveAssigned';
 import Home from './components/Home';
 import configureStore from './store'
 import './styles/reset.css';

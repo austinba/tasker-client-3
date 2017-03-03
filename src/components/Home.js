@@ -2,12 +2,11 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Field, reduxForm, formValueSelector, change } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import ShowIf from './common/ShowIf';
 import * as createATeamActions from '../actions/createATeam';
 
 const formName = 'createATeamEmail';
-const get = formValueSelector(formName);
 class CreateATeamForm extends React.Component {
   render() {
     return (
