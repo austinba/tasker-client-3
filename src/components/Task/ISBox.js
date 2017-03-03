@@ -3,6 +3,9 @@ import _ from 'lodash/fp';
 _.map = _.map.convert({ 'cap': false }); // fixes lodash issue of not passing in key
 import { Menu, MenuItem, MenuItemText } from '../common/Menu';
 
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css'
 
 const subBoxClassesByLevel = {
   '1': ['box', 'IS-sub-box', 'important', 'severe'],
@@ -35,25 +38,29 @@ const ISBox = props => {
       );
     }
 
-    // If Editing
-    let menu = '';
-    if(props.editing.menuOpen) {
-      menu = (!props.editing || !props.editing.menuOpen) ? '' :
-        <Menu>
-          <MenuItemText
-            text={ 'Due Date: ' +
-                   (props.dateDue || new Date()).toLocaleDateString()} />
-          <MenuItem text="Edit Date" />
-          <MenuItem text="Cancel" />
-        </Menu>
-    }
+    // // If Editing
+    // let menu = '';
+    // if(props.editing.menuOpen) {
+    //   menu = (!props.editing || !props.editing.menuOpen) ? '' :
+    //     <Menu>
+    //       <MenuItemText
+    //         text={ 'Due Date: ' +
+    //                (props.dateDue || new Date()).toLocaleDateString()} />
+    //       <MenuItem text="Edit Date" />
+    //       <MenuItem text="Cancel" />
+    //     </Menu>
+    // }
     const selectLevel = props.selectLevel;
     const subBoxes = _.map((classes, level) => {
 
       if (level === props.level.toString()) {
-        return <div className={classes.join(' ')} key={level}>
-                 {menu}{daysRemaining}
-               </div>;
+        return (
+          <div className={classes.join(' ') + ' selected'} key={level}>
+            <DatePicker
+              selected={moment(props.dateDue)} />
+            <div className="days-remaining">{daysRemaining}</div>
+          </div>
+        );
       }
       return <div className={classes.join(' ') + ' unselected'}
                   onClick={selectLevel.bind(null, level)}

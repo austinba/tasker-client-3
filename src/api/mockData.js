@@ -37,6 +37,7 @@ export const tasks = [
     dateDue: new Date(2017, 3, 2),
     level: 3,
     workedOn: daysAgo(2),
+    edit: {},
     comments: [
       {
         commentID: 313,

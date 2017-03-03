@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import { bindAll, onActionKey, fullName } from '../../utilities';
 import * as taskActions from '../../actions/task';
 
+
 /** getEditField(defaultValue, property, object)
     defaluts to task[prop] is task.edit[prop] doesn't exist  */
 const getEditField =
