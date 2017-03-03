@@ -8,7 +8,11 @@ const tasksReducers = {
   LOADING_TASKS: state => ({...state, loading: true}),
   LOAD_TASKS_SUCCESS: state => action => action.tasks,
   LOAD_TASKS_ERROR: state => state,
-
+  ADD_TASK_SAVE_SUCCESS: state => action => R.pipe(
+    R.assoc(action.task.taskID, action.task),
+    R.dissoc('adding-task'),
+    state => console.log(state) ||  state
+  )(state),
 };
 
 function taskReducer(state = tasks, action) {

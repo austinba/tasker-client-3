@@ -8,7 +8,7 @@ import InactiveTask from './InactiveTask';
 import UsersDropDown from './UsersDropDown';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
-import { bindAll, onActionKey } from '../../utilities';
+import { bindAll, onActionKey, fullName } from '../../utilities';
 import * as taskActions from '../../actions/task';
 
 /** getEditField(defaultValue, property, object)
@@ -43,14 +43,16 @@ class Task extends React.Component {
     if(preset === 'myTasks') {
       this.preset.myTasks = true;
       this.preset.assignmentLabel = 'Assigned From';
+      this.preset.assignmentKey = 'assignedFrom';
+      this.preset.assignmentEditAction = this.boundActions.editAssignedFrom;
     } else if (preset === 'tasksIveAssigned') {
       this.preset.tasksIveAssigned = true;
       this.preset.assignmentLabel = 'Assigned To';
+      this.preset.assignmentKey = 'assignedTo';
+      this.preset.assignmentEditAction = this.boundActions.editAssignedTo;
     } else {
       throw new Error('Task requires a preset');
     }
-
-
   }
   render() {
     const { tasks, taskID, users, currentUser } = this.props;
@@ -85,7 +87,7 @@ class Task extends React.Component {
         <div className="main-task-box">
 
           {/* Spinner while saving */}
-          <ShowIf show={task.edit && task.edit.saving}>
+          <ShowIf show={task.isUpdating}>
             <i className="fa fa-spinner fa-pulse fa-3x fa-fw task-saving-spinner" />
           </ShowIf>
 
@@ -136,10 +138,19 @@ class Task extends React.Component {
               <div className="task-assignment-text">
                 {this.preset.assignmentLabel}:
                 <ShowIf show={task.edit}>
-                  <UsersDropDown recentUsers={users.recentUsers} allUsers={users.allUsers} currentUserID={currentUser.userID}/>
+                  <UsersDropDown
+                    recentUsers={users.recentUsers}
+                    allUsers={users.allUsers}
+                    currentUserID={currentUser.userID}
+                    onChange={this.preset.assignmentEditAction}
+                    value={(task.edit && task.edit[this.preset.assignmentKey]) ||
+                           task[this.preset.assignmentKey] }/>
                 </ShowIf>
                 <ShowIf show={!task.edit}>
-                  &nbsp;Austin Baltes
+                  &nbsp;
+                  {fullName(users.allUsers || {})(
+                     task[this.preset.assignmentKey]
+                  )}
                 </ShowIf>
               </div>
             </div>

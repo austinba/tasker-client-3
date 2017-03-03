@@ -46,7 +46,7 @@ export function getMyTasks() {
   return Promise.resolve({
     tasks: R.pipe(
       R.filter(task => task.assignedTo === user),
-      R.map(task => 
+      R.map(task =>
         R.assoc( 'lastCheckIn',
                  R.reduce(R.max, 0, R.defaultTo([], checkIns[task.taskID])),
                   task)
@@ -107,17 +107,27 @@ export function addTask({description, assignedTo, assignedFrom, level, dueDate})
   tasks.push(newTask);
   return Promise.resolve(R.clone(newTask)).delay(500);
 }
-export function editTask(taskID, {description, assignedTo, assignedFrom, level, dueDate}) {
-  const task = tasks[taskID];
-  if(task) {
-    if(description) task.description = description;
-    if(assignedTo) task.assignedTo = assignedTo;
-    if(assignedFrom) task.assignedFrom = assignedFrom;
-    if(level) task.level = level;
-    if(dueDate) task.dueDate = dueDate;
-    return Promise.resolve(R.clone(task)).delay(500);
+export function editTask(taskID, taskDetails) {
+  let task;
+  if(taskID === 'adding-task') {
+    task = {};
+    tasks.push(task);
+    task.taskID =  Math.floor(Math.random() * 100000);
+  } else {
+    const taskIndex = R.findIndex(R.propEq('taskID', taskID))(tasks);
+    if(!taskIndex === -1) {
+      return Promise.reject().delay(500)
+    };
+    task = tasks[taskIndex];
   }
-  return Promise.reject().delay(500);
+  // actually mutate 'task' -- it's our pseudo database in this mock api
+  R.forEachObjIndexed((value, key) => task[key] = value)(taskDetails)
+  // if(description) task.description = taskDetails.description;
+  // if(assignedTo) task.assignedTo = taskDetails.assignedTo;
+  // if(assignedFrom) task.assignedFrom = taskDetails.assignedFrom;
+  // if(level) task.level = taskDetails.level;
+  // if(dueDate) task.dueDate = taskDetails.dueDate;
+  return Promise.resolve(R.clone(task)).delay(500);
 }
 export function saveComment(taskID, comment) {
   const taskIndex = R.findIndex(R.propEq('taskID', taskID))(tasks);
@@ -141,7 +151,7 @@ export function markComplete(taskID) {
   if(taskIndex === -1) return Promise.reject();
 
   tasks[taskIndex] = R.assoc('dateCompleted', new Date())(tasks[taskIndex])
-  return Promise.resolve(tasks[taskIndex]);
+  return Promise.resolve(tasks[taskIndex]).delay(500);
 }
 
 export function markDeleted(taskID) {
@@ -149,7 +159,7 @@ export function markDeleted(taskID) {
   if(taskIndex === -1) return Promise.reject();
 
   tasks[taskIndex] = R.assoc('dateDeleted', new Date())(tasks[taskIndex])
-  return Promise.resolve(tasks[taskIndex]);
+  return Promise.resolve(tasks[taskIndex]).delay(500);
 }
 
 export function unmarkComplete(taskID) {
@@ -157,12 +167,12 @@ export function unmarkComplete(taskID) {
   if(taskIndex === -1) return Promise.reject();
 
   tasks[taskIndex] = R.dissoc('dateCompleted')(tasks[taskIndex])
-  return Promise.resolve(tasks[taskIndex]);
+  return Promise.resolve(tasks[taskIndex]).delay(500);
 }
 export function unmarkDeleted(taskID) {
   const taskIndex = getTaskIndex(taskID);
   if(taskIndex === -1) return Promise.reject();
 
   tasks[taskIndex] = R.dissoc('dateDeleted')(tasks[taskIndex])
-  return Promise.resolve(tasks[taskIndex]);
+  return Promise.resolve(tasks[taskIndex]).delay(500);
 }

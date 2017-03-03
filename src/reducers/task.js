@@ -17,14 +17,11 @@ const taskReducers = {
       R.identity
     ]),
   EDIT_TASK_CANCEL: R.omit('edit'),
-  EDIT_TASK_SAVE_PENDING: R.assocPath(['edit', 'saving'], true),
-  EDIT_TASK_SAVE_SUCCESS:
-    R.pipe(
-      R.converge(R.merge, [R.identity, R.prop('edit')]),
-      R.omit('edit')
-    ),
-  EDIT_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
+  EDIT_TASK_SAVE_SUCCESS: state => action => action.task,
+  EDIT_OR_ADD_TASK_SAVE_FAILURE: R.assoc('error', 'Failed trying to save task'),
   EDIT_TASK_DESCRIPTION: updateFieldPath(['edit', 'description']),
+  EDIT_ASSIGNED_TO: updateFieldPath(['edit', 'assignedTo']),
+  EDIT_ASSIGNED_FROM: updateFieldPath(['edit', 'assignedFrom']),
   EDIT_IS_LEVEL: state => action => R.assocPath(['edit', 'level'], action.level, state),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),

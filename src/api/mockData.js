@@ -32,7 +32,7 @@ export const tasks = [
   {
     taskID: 204,
     description: `We need to create a poster for the hackathon next month -- can you take care of this? Also, let me give the okay on your idea before you have the poster made.`,
-    assignedFrom: 102,
+    assignedFrom: 103,
     assignedTo: 101,
     dateDue: new Date(2017, 3, 2),
     level: 3,

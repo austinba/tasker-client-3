@@ -13,19 +13,43 @@ export const cancelTaskEdit = (taskID, event) => {
 
 export const editDescription = (taskID, event) => {
   return { type: 'EDIT_TASK_DESCRIPTION', value: event.target.value, taskID };
-}
+};
+
+export const editAssignedTo = (taskID, event) => {
+  return { type: 'EDIT_ASSIGNED_TO', value: event.target.value, taskID };
+};
+
+export const editAssignedFrom = (taskID, event) => {
+  return { type: 'EDIT_ASSIGNED_FROM', value: event.target.value, taskID };
+};
 
 export const selectLevel = (taskID, level) => {
   event.preventDefault();
   return ({ type: 'EDIT_IS_LEVEL', level, taskID })
 };
 
-export const submitTaskEdits = (taskID, event) => dispatch => {
+export const submitTaskEdits = (taskID, event) => (dispatch, getState) => {
   event.preventDefault();
-  dispatch({ type: 'EDIT_TASK_SAVE_PENDING', taskID });
-  setTimeout(() =>
-  dispatch({ type: 'EDIT_TASK_SAVE_SUCCESS', taskID })
-  , 1000)
+  const state = getState();
+  const task  = state.tasks[taskID];
+  dispatch({ type: 'TASK_UPDATING', taskID });
+  if(taskID === 'adding-task') {
+    api.editTask(taskID, task.edit).then(
+      task => dispatch({ type: 'ADD_TASK_SAVE_SUCCESS', task, taskID })
+    ).catch(error => {
+      dispatch({ type: 'EDIT_OR_ADD_TASK_SAVE_FAILURE', error, taskID })
+      // don't update_complete if 'adding-task' no longe exists
+      dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
+    })
+  } else {
+    api.editTask(taskID, task.edit).then(
+      task => dispatch({ type: 'ADD_TASK_SAVE_SUCCESS', task, taskID })
+    ).catch(
+      error => dispatch({ type: 'EDIT_OR_ADD_TASK_SAVE_FAILURE', error, taskID })
+    ).finally(
+      () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
+    )
+  }
 };
 
 export const expandComments = (taskID, event) => {
@@ -80,9 +104,8 @@ export const cancelCheckIn = (taskID, event) => dispatch => {
 }
 
 export const markDeleted = (taskID) => dispatch => {
-  console.log('marking delete');
   event.stopPropagation();
-  dispatch({ type: 'TASK_UPDATING' });
+  dispatch({ type: 'TASK_UPDATING', taskID });
   api.markDeleted(taskID).then(
     (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
   ).catch(
@@ -93,7 +116,7 @@ export const markDeleted = (taskID) => dispatch => {
 }
 export const unmarkDeleted = (taskID) => dispatch => {
   event.stopPropagation();
-  dispatch({ type: 'TASK_UPDATING' });
+  dispatch({ type: 'TASK_UPDATING', taskID });
   api.unmarkDeleted(taskID).then(
     (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
   ).catch(
@@ -104,9 +127,8 @@ export const unmarkDeleted = (taskID) => dispatch => {
 }
 
 export const markComplete = (taskID) => dispatch => {
-  console.log('marking delete');
   event.stopPropagation();
-  dispatch({ type: 'TASK_UPDATING' });
+  dispatch({ type: 'TASK_UPDATING', taskID });
   api.markComplete(taskID).then(
     (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
   ).catch(
@@ -117,7 +139,7 @@ export const markComplete = (taskID) => dispatch => {
 }
 export const unmarkComplete = (taskID) => dispatch => {
   event.stopPropagation();
-  dispatch({ type: 'TASK_UPDATING' });
+  dispatch({ type: 'TASK_UPDATING', taskID });
   api.unmarkComplete(taskID).then(
     (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
   ).catch(

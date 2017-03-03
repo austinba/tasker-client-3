@@ -17,7 +17,7 @@ const getTasks = (getTaskAPICall, recentUsersSource) => () => dispatch => {
       )(data.tasks);
     dispatch({ type: 'RECEIVE_RECENT_USERS_LIST', recentUsers});
   }).catch(error => {
-    dispatch({ type: 'LOAD_TASK_ERROR', error });
+    dispatch({ type: 'LOAD_TASKS_ERROR', error });
   })
 };
 
