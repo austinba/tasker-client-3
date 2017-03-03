@@ -5,9 +5,10 @@ import ShowIf from '../common/ShowIf';
 import Comments from './Comments';
 import TaskActionsBar from './TaskActionsBar';
 import InactiveTask from './InactiveTask';
+import UsersDropDown from './UsersDropDown';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
-import { bindAll, onActionKey, fullName } from '../../utilities';
+import { bindAll, onActionKey } from '../../utilities';
 import * as taskActions from '../../actions/task';
 
 /** getEditField(defaultValue, property, object)
@@ -61,27 +62,6 @@ class Task extends React.Component {
     const actions     = this.boundActions;
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
-
-    const recentUsers   = R.defaultTo([])(users.recentUsers);
-    const allUsers      = R.defaultTo({})(users.allUsers);
-    const recentUserIDs = R.map(s => s.toString())(recentUsers);
-    const allUserIDs    = R.keys(allUsers);
-
-    const currentUserID = currentUser.userID.toString();
-
-    const userPickList  =
-      R.reject(R.equals(currentUserID))(
-        R.union(recentUserIDs, allUserIDs)
-    );
-
-    const userSelection = R.pipe(
-      R.map(userID =>
-            <option value={userID} key={userID}>
-              {fullName(allUsers)(userID)}
-            </option>
-      ),
-      result => <select className="task-edit">{result}</select>
-    )(userPickList)
 
     if(task.dateDeleted) {
       return <InactiveTask label="DELETED"
@@ -156,7 +136,7 @@ class Task extends React.Component {
               <div className="task-assignment-text">
                 {this.preset.assignmentLabel}:
                 <ShowIf show={task.edit}>
-                  {userSelection}
+                  <UsersDropDown recentUsers={users.recentUsers} allUsers={users.allUsers} currentUserID={currentUser.userID}/>
                 </ShowIf>
                 <ShowIf show={!task.edit}>
                   &nbsp;Austin Baltes
