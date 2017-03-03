@@ -7,7 +7,7 @@ import TaskActionsBar from './TaskActionsBar';
 import InactiveTask from './InactiveTask';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
-import { bindAll, onActionKey } from '../../utilities';
+import { bindAll, onActionKey, fullName } from '../../utilities';
 import * as taskActions from '../../actions/task';
 
 /** getEditField(defaultValue, property, object)
@@ -52,7 +52,7 @@ class Task extends React.Component {
 
   }
   render() {
-    const { tasks, taskID, users } = this.props;
+    const { tasks, taskID, users, currentUser } = this.props;
     const task = tasks[taskID];
 
     const comments    = R.defaultTo([], task.comments);
@@ -67,8 +67,21 @@ class Task extends React.Component {
     const recentUserIDs = R.map(s => s.toString())(recentUsers);
     const allUserIDs    = R.keys(allUsers);
 
-    const userPickListIDs = R.union(recentUserIDs, allUserIDs);
-    this.userPickList     = R.map(userID => allUsers[userID])(userPickListIDs);
+    const currentUserID = currentUser.userID.toString();
+
+    const userPickList  =
+      R.reject(R.equals(currentUserID))(
+        R.union(recentUserIDs, allUserIDs)
+    );
+
+    const userSelection = R.pipe(
+      R.map(userID =>
+            <option value={userID} key={userID}>
+              {fullName(allUsers)(userID)}
+            </option>
+      ),
+      result => <select className="task-edit">{result}</select>
+    )(userPickList)
 
     if(task.dateDeleted) {
       return <InactiveTask label="DELETED"
@@ -143,11 +156,7 @@ class Task extends React.Component {
               <div className="task-assignment-text">
                 {this.preset.assignmentLabel}:
                 <ShowIf show={task.edit}>
-                  <select className="task-edit">
-                    <option>
-                      Austin Baltes
-                    </option>
-                  </select>
+                  {userSelection}
                 </ShowIf>
                 <ShowIf show={!task.edit}>
                   &nbsp;Austin Baltes
@@ -194,7 +203,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   tasks: state.tasks,
-  users: state.users
+  users: state.users,
+  currentUser: state.currentUser
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);

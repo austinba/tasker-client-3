@@ -208,6 +208,9 @@ export const statistics = {
   }
 };
 
+export const currentUser = {
+  userID: 101
+}
 export const users = [
   'Austin Baltes',
   'Wilson',
