@@ -51,7 +51,6 @@
   font-style: italic;
 }
 .task-description {
-  display: flex;
   flex: 0 1 auto;
   width: 100%;
   margin: 15px 40px 15px 10px;
@@ -166,4 +165,29 @@
 }
 .add-comment {
   display: flex;
+}
+.task-assignment-text {
+  margin-top: 10px;
+  color: #666;
+}
+select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  background: transparent;
+  -webkit-appearance: none;
+          border-radius: 0;
+  -webkit-border-radius: 0;
+  /*border-color: rgba(255, 255, 255, 0.2);*/
+  border-radius: 2px;
+  margin-left: 10px;
+  padding: 6px 27px 6px 8px;
+
+
+    background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#444' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    border: 7px solid rgba(79, 129, 189, 0.3);
+
 }

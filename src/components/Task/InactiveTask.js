@@ -1,13 +1,13 @@
 import React from 'react';
-const DeletedTask = ({ date, undo, description }) => {
+const InactiveTask = ({ label, className, date, undo, description }) => {
   const dateString = date.toLocaleDateString();
   return (
-    <div className="box task-container deleted-task">
+    <div className={['box task-container', className].join(' ')}>
       <div className="main-task-box">
         <div className="task-description">
           <span>
-            DELETED
-            (<a href="#nowhere" onClick={undo}>
+            {label} (
+            <a href="#nowhere" onClick={undo}>
               <em>undo</em>
             </a>) {dateString}:&nbsp;&nbsp;
             {description}
@@ -18,4 +18,4 @@ const DeletedTask = ({ date, undo, description }) => {
   );
 }
 
-export default DeletedTask;
+export default InactiveTask;

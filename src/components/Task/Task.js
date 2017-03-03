@@ -4,8 +4,7 @@ import ISBox from './ISBox';
 import ShowIf from '../common/ShowIf';
 import Comments from './Comments';
 import TaskActionsBar from './TaskActionsBar';
-import DeletedTask from './DeletedTask';
-import CompletedTask from './CompletedTask';
+import InactiveTask from './InactiveTask';
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { isDateToday, bindAll, dash, onActionKey } from '../../utilities';
@@ -51,14 +50,18 @@ class Task extends React.Component {
     const description = getEditField('', 'description')(task);
 
     if(task.dateDeleted) {
-      return <DeletedTask date={task.dateDeleted}
-                          description={task.description}
-                          undo={actions.unmarkDeleted} />;
+      return <InactiveTask label="DELETED"
+                           className="deleted-task"
+                           date={task.dateDeleted}
+                           description={task.description}
+                           undo={actions.unmarkDeleted} />;
     }
     if(task.dateCompleted) {
-      return <CompletedTask date={task.dateCompleted}
-                            description={task.description}
-                            undo={actions.unmarkComplete} />;
+      return <InactiveTask label="COMPLETED"
+                           className="completed-task"
+                           date={task.dateCompleted}
+                           description={task.description}
+                           undo={actions.unmarkComplete} />;
     }
 
 
@@ -106,11 +109,21 @@ class Task extends React.Component {
           </div>
 
           <div className="task-description">
-            <TaskDescription value={description}
-                             editing={!!task.edit}
-                             onChange={actions.editDescription}
-                             cancelTaskEdit={actions.cancelTaskEdit}
-                             submitTaskEdits={actions.submitTaskEdits} />
+            <div>
+              <TaskDescription value={description}
+                editing={!!task.edit}
+                onChange={actions.editDescription}
+                cancelTaskEdit={actions.cancelTaskEdit}
+                submitTaskEdits={actions.submitTaskEdits} />
+              <div className="task-assignment-text">
+                Assigned From:
+                <select>
+                  <option>
+                    Austin Baltes
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
 
