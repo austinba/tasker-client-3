@@ -1,40 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import R from 'ramda';
 import ShowIf from '../common/ShowIf';
-import Task from '../Task/Task';
+import SortedTasks from './SortedTasks';
+import UtilityBar from './UtilityBar';
 import * as tasksActions from '../../actions/tasks'
-import { dash } from '../../utilities';
 import * as sorters from './sorters';
 import '../../styles/tasks.css';
 
-const mapTasks = sortBy =>
-  R.pipe(
-    R.values,
-    sortBy,
-    R.map(task => (<Task taskID={task.taskID} key={'task-' + task.taskID} />))
-  );
-
-const SortedTasks = ({tasks}) => {
-  return <div>{mapTasks(sorters.sortByProject)(tasks)}</div>;
-};
-
 class Tasks extends React.Component {
-  componentDidMount() {
-    switch(this.props.preset) {
-      case 'myTasks':
-        this.props.actions.getMyTasks();
-      break;
-      case 'tasksIveAssigned':
-        this.props.actions.getTasksIveAssigned();
-      break;
-      default:
-        throw new Error('TaskList requires a preset');
+  constructor(props) {
+    super(props);
+    const { preset, actions } = props;
+
+    if(preset === 'myTasks') {
+      actions.getMyTasks();
+    } else if (preset === 'tasksIveAssigned') {
+      actions.getTasksIveAssigned();
+    } else {
+      throw new Error('TaskList requires a preset');
     }
   }
   render() {
-    const { tasks, actions } = this.props;
+    const { tasks, actions, preset } = this.props;
     const taskCount = Object.keys(tasks).length;
 
     if(tasks.loading) {
@@ -45,20 +33,8 @@ class Tasks extends React.Component {
 
     return (
       <div>
-        <div className="sort-actions">
-          Sort by:
-          &nbsp;&nbsp;
-          <a href="#">Importance Severity</a>
-          {dash}
-          <a href="#">Goal</a>
-          {dash}
-          <a href="#">Project</a>
-          <div className="sm-right">
-            <ShowIf show={!tasks['adding-task']}>
-              <a href="#nowhere" onClick={actions.addTask}>Add Task</a>
-            </ShowIf>
-          </div>
-        </div>
+        <UtilityBar isAddingTask={!tasks['adding-task']}
+                    addTask={actions.addTask} />
         <ShowIf show={taskCount === 0 }>
           <div className="no-tasks-message">
             <div className="main-message">You have no tasks assigned to you</div>
@@ -71,7 +47,7 @@ class Tasks extends React.Component {
             <p><a href="#nowhere"><em>View tasks you've assigned</em></a></p>
           </div>
         </ShowIf>
-        <SortedTasks tasks={tasks} />
+        <SortedTasks tasks={tasks} sortBy={sorters.sortByProject} preset={preset}/>
       </div>
     );
   }

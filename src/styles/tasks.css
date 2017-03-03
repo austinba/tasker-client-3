@@ -116,21 +116,19 @@
   position: absolute;
   right: -1px;
   top: -1px;
-  /*stroke: rgb(79, 129, 189);*/
-  stroke: rgba(255, 255, 255, 0.2);
   fill: transparent;
-  /*stroke: none;*/
-  /*fill: rgba(255, 255, 255, 0.1);*/
+}
+.corner-checked-in-marker.enabled {
+  stroke: rgba(255, 255, 255, 0.2);
 }
 .corner-checked-in-marker.filled {
   fill: rgba(200, 200, 255, 0.35);
-  stroke: rgba(255, 255, 255, 0.7);
-
-  /*fill: rgba(79, 129, 189, 0.4);*/
 }
-.corner-checked-in-marker:hover {
+.corner-checked-in-marker.filled.enabled {
+  stroke: rgba(255, 255, 255, 0.7);
+}
+.corner-checked-in-marker.enabled:hover {
   fill: rgba(200, 200, 255, 0.2) !important;
-  /*fill: rgba(79, 129, 189, 0.15) !important;*/
 }
 .edit-task-description, .add-comment-text {
   box-sizing: content-box;

@@ -33,9 +33,19 @@ const TaskDescription = props => {
 
 
 class Task extends React.Component {
-  componentWillMount () {
-    const { taskID, unboundActions } = this.props;
+  constructor(props) {
+    super(props);
+    const { taskID, unboundActions, preset } = props;
     this.boundActions = bindAll(taskID)(unboundActions);
+
+    this.preset = {};
+    if(preset === 'myTasks') {
+      this.preset.myTasks = true;
+    } else if (preset === 'tasksIveAssigned') {
+      this.preset.tasksIveAssigned = true;
+    } else {
+      throw new Error('Task requires a preset');
+    }
   }
   render() {
     const { tasks, taskID } = this.props;
@@ -63,6 +73,7 @@ class Task extends React.Component {
                            undo={actions.unmarkComplete} />;
     }
 
+    const toggleCheckIn = checkedIn ? actions.cancelCheckIn : actions.checkIn;
 
     return (
       <div className="box task-container">
@@ -74,11 +85,13 @@ class Task extends React.Component {
           </ShowIf>
 
           {/* CheckedIn Corner Flap */}
-          <a href="#nowhere"
-             onClick={checkedIn ? actions.cancelCheckIn : actions.checkIn}>
+          <a href={this.preset.myTasks && '#nowhere'}
+             onClick={this.preset.myTasks && toggleCheckIn}>
 
-             <svg width="50" height="50" className={'corner-checked-in-marker' +
-               (checkedIn ? ' filled' : '')}
+             <svg width="50" height="50" className={['corner-checked-in-marker',
+               (checkedIn ? 'filled' : ''),
+               (this.preset.myTasks ? 'enabled' : '')
+             ].join(' ')}
                >
                {/*<path d="M 0,0 L 50,50 L 50,0 Z" />*/}
                <path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 Z" />
