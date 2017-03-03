@@ -48,9 +48,11 @@ class Task extends React.Component {
     } else {
       throw new Error('Task requires a preset');
     }
+
+
   }
   render() {
-    const { tasks, taskID } = this.props;
+    const { tasks, taskID, users } = this.props;
     const task = tasks[taskID];
 
     const comments    = R.defaultTo([], task.comments);
@@ -59,6 +61,14 @@ class Task extends React.Component {
     const actions     = this.boundActions;
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
+
+    const recentUsers   = R.defaultTo([])(users.recentUsers);
+    const allUsers      = R.defaultTo({})(users.allUsers);
+    const recentUserIDs = R.map(s => s.toString())(recentUsers);
+    const allUserIDs    = R.keys(allUsers);
+
+    const userPickListIDs = R.union(recentUserIDs, allUserIDs);
+    this.userPickList     = R.map(userID => allUsers[userID])(userPickListIDs);
 
     if(task.dateDeleted) {
       return <InactiveTask label="DELETED"

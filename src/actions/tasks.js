@@ -7,7 +7,6 @@ const getTasks = (getTaskAPICall, recentUsersSource) => () => dispatch => {
     dispatch({ type: 'LOAD_TASKS_SUCCESS',
                tasks: data.tasks,
                users: data.users });
-    console.log(data.tasks);
     const recentUsers =
       R.pipe(
         R.values,
