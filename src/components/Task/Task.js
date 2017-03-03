@@ -183,7 +183,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  tasks: state.tasks
+  tasks: state.tasks,
+  users: state.users
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);

@@ -5,6 +5,7 @@ import { prettyTimeElapsed, fullName, onActionKey } from '../../utilities';
 import { connect } from 'react-redux'
 
 let CommentBoxes = ({users, comments, expanded}) => {
+  const allUsers = users.allUsers;
   if(!expanded) {
     if(comments.length >= 4) comments = R.take(2, comments);
     if(comments.length <= 3) comments = R.take(3, comments);
@@ -12,7 +13,7 @@ let CommentBoxes = ({users, comments, expanded}) => {
   return R.pipe(
     R.map(({comment, from, commentID, date}) => (
       <div className="box inner-box task-comment" key={commentID}>
-        {fullName(users)(from) || 'Unknown User'}: &nbsp;
+        {fullName(allUsers)(from) || 'Unknown User'}: &nbsp;
         {comment} - {prettyTimeElapsed(date)} ago
       </div>
     )),
