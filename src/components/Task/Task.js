@@ -41,8 +41,10 @@ class Task extends React.Component {
     this.preset = {};
     if(preset === 'myTasks') {
       this.preset.myTasks = true;
+      this.preset.assignmentLabel = 'Assigned From';
     } else if (preset === 'tasksIveAssigned') {
       this.preset.tasksIveAssigned = true;
+      this.preset.assignmentLabel = 'Assigned To';
     } else {
       throw new Error('Task requires a preset');
     }
@@ -88,11 +90,12 @@ class Task extends React.Component {
           <a href={this.preset.myTasks && '#nowhere'}
              onClick={this.preset.myTasks && toggleCheckIn}>
 
-             <svg width="50" height="50" className={['corner-checked-in-marker',
-               (checkedIn ? 'filled' : ''),
-               (this.preset.myTasks ? 'enabled' : '')
-             ].join(' ')}
-               >
+             <svg width="50" height="50"
+                  className={[ 'corner-checked-in-marker',
+                               (checkedIn ? 'filled' : ''),
+                               (this.preset.myTasks ? 'enabled' : '')
+                             ].join(' ')}
+             >
                {/*<path d="M 0,0 L 50,50 L 50,0 Z" />*/}
                <path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 Z" />
                {/*<path d="M 50,50 L 50,5 A5,5 0 0,0 45,0 L 0,0 A 120,120 0 0,1 50,50 Z" />*/}
@@ -128,7 +131,7 @@ class Task extends React.Component {
                 cancelTaskEdit={actions.cancelTaskEdit}
                 submitTaskEdits={actions.submitTaskEdits} />
               <div className="task-assignment-text">
-                Assigned from:
+                {this.preset.assignmentLabel}:
                 <ShowIf show={task.edit}>
                   <select className="task-edit">
                     <option>

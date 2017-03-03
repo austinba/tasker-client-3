@@ -1,27 +1,29 @@
 import * as api from '../api';
+import R from 'ramda';
 
-export const getMyTasks = () => dispatch => {
+const getTasks = (getTaskAPICall, recentUsersSource) => () => dispatch => {
   dispatch({ type: 'LOADING_TASKS' });
-  api.getMyTasks().then(data => {
+  getTaskAPICall().then(data => {
     dispatch({ type: 'LOAD_TASKS_SUCCESS',
                tasks: data.tasks,
                users: data.users });
+    console.log(data.tasks);
+    const recentUsers =
+      R.pipe(
+        R.values,
+        R.map(R.prop(recentUsersSource)),
+        R.groupWith(R.equals),
+        R.sortBy(R.pipe(R.length, R.negate)),
+        R.map(R.head)
+      )(data.tasks);
+    dispatch({ type: 'RECEIVE_RECENT_USERS_LIST', recentUsers});
   }).catch(error => {
     dispatch({ type: 'LOAD_TASK_ERROR', error });
   })
 };
 
-
-export const getTasksIveAssigned = () => dispatch => {
-  dispatch({ type: 'LOADING_TASKS' });
-  api.getTasksIveAssigned().then(data => {
-    dispatch({ type: 'LOAD_TASKS_SUCCESS',
-               tasks: data.tasks,
-               users: data.users });
-  }).catch(error => {
-    dispatch({ type: 'LOAD_TASK_ERROR', error });
-  })
-};
+export const getMyTasks = getTasks(api.getMyTasks, 'assignedFrom');
+export const getTasksIveAssigned = getTasks(api.getTasksIveAssigned, 'assignedTo');
 
 export const addTask = event => {
   event.stopPropagation();
