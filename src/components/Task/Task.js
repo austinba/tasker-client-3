@@ -116,12 +116,17 @@ class Task extends React.Component {
                 cancelTaskEdit={actions.cancelTaskEdit}
                 submitTaskEdits={actions.submitTaskEdits} />
               <div className="task-assignment-text">
-                Assigned From:
-                <select>
-                  <option>
-                    Austin Baltes
-                  </option>
-                </select>
+                Assigned from:
+                <ShowIf show={task.edit}>
+                  <select className="task-edit">
+                    <option>
+                      Austin Baltes
+                    </option>
+                  </select>
+                </ShowIf>
+                <ShowIf show={!task.edit}>
+                  &nbsp;Austin Baltes
+                </ShowIf>
               </div>
             </div>
           </div>
