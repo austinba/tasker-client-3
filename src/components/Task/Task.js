@@ -140,6 +140,7 @@ class Task extends React.Component {
               <div className="task-assignment-text">
                 {this.preset.assignmentLabel}:
                 <ShowIf show={task.edit}>
+                  &nbsp;&nbsp;&nbsp;
                   <UsersDropDown
                     recentUsers={users.recentUsers}
                     allUsers={users.allUsers}
