@@ -113,9 +113,10 @@ class Task extends React.Component {
 
           <div className="IS-KPI-container">
             <ISBox level={level}
-                   dateDue={task.dateDue}
+                   dateDue={(task.edit && task.edit.dateDue) || task.dateDue}
                    editing={task.edit}
                    selectLevel={actions.selectLevel}
+                   editDateDue={actions.editDateDue}
             />
           {/*}
             <p className="task-goal">

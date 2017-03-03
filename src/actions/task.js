@@ -23,6 +23,11 @@ export const editAssignedFrom = (taskID, event) => {
   return { type: 'EDIT_ASSIGNED_FROM', value: event.target.value, taskID };
 };
 
+export const editDateDue = (taskID, date) => {
+  console.log('HELLO')
+  return { type: 'EDIT_DATE_DUE', value: date, taskID };
+}
+
 export const selectLevel = (taskID, level) => {
   event.preventDefault();
   return ({ type: 'EDIT_IS_LEVEL', level, taskID })

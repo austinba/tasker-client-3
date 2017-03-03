@@ -22,6 +22,7 @@ const taskReducers = {
   EDIT_TASK_DESCRIPTION: updateFieldPath(['edit', 'description']),
   EDIT_ASSIGNED_TO: updateFieldPath(['edit', 'assignedTo']),
   EDIT_ASSIGNED_FROM: updateFieldPath(['edit', 'assignedFrom']),
+  EDIT_DATE_DUE: updateFieldPath(['edit', 'dateDue']),
   EDIT_IS_LEVEL: state => action => R.assocPath(['edit', 'level'], action.level, state),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),

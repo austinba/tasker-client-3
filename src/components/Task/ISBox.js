@@ -57,7 +57,9 @@ const ISBox = props => {
         return (
           <div className={classes.join(' ') + ' selected'} key={level}>
             <DatePicker
-              selected={moment(props.dateDue)} />
+              selected={moment(props.dateDue)}
+              onChange={props.editDateDue}
+              dropdownMode="select" />
             <div className="days-remaining">{daysRemaining}</div>
           </div>
         );
