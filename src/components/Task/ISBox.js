@@ -23,9 +23,9 @@ const ISBoxContainer = props => {
 }
 
 const ISBox = props => {
-    const daysRemaining = props.dateDue ?
+    const daysRemaining = props.dueDate ?
                           Math.round(
-                            (props.dateDue - Date.now()) / (24*60*60*1000)) :
+                            (props.dueDate - Date.now()) / (24*60*60*1000)) :
                           0;
     // If Not Editing
     if(!props.editing) {
@@ -45,7 +45,7 @@ const ISBox = props => {
     //     <Menu>
     //       <MenuItemText
     //         text={ 'Due Date: ' +
-    //                (props.dateDue || new Date()).toLocaleDateString()} />
+    //                (props.dueDate || new Date()).toLocaleDateString()} />
     //       <MenuItem text="Edit Date" />
     //       <MenuItem text="Cancel" />
     //     </Menu>
@@ -57,8 +57,8 @@ const ISBox = props => {
         return (
           <div className={classes.join(' ') + ' selected'} key={level}>
             <DatePicker
-              selected={moment(props.dateDue)}
-              onChange={props.editDateDue}
+              selected={moment(props.dueDate)}
+              onChange={props.editdueDate}
               dropdownMode="select" />
             <div className="days-remaining">{daysRemaining}</div>
           </div>

@@ -23,8 +23,7 @@ export const editAssignedFrom = (taskID, event) => {
   return { type: 'EDIT_ASSIGNED_FROM', value: event.target.value, taskID };
 };
 
-export const editDateDue = (taskID, date) => {
-  console.log('HELLO')
+export const editdueDate = (taskID, date) => {
   return { type: 'EDIT_DATE_DUE', value: date, taskID };
 }
 
@@ -51,7 +50,7 @@ export const submitTaskEdits = (taskID, event) => (dispatch, getState) => {
       task => dispatch({ type: 'ADD_TASK_SAVE_SUCCESS', task, taskID })
     ).catch(
       error => dispatch({ type: 'EDIT_OR_ADD_TASK_SAVE_FAILURE', error, taskID })
-    ).finally(
+    ).then(
       () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
     )
   }
@@ -115,7 +114,7 @@ export const markDeleted = (taskID) => dispatch => {
     (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
   ).catch(
     (error) => dispatch({ type: 'MARK_DELETE_FAILURE', taskID, error })
-  ).finally(
+  ).then(
     () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
   );
 }
@@ -126,7 +125,7 @@ export const unmarkDeleted = (taskID) => dispatch => {
     (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
   ).catch(
     (error) => dispatch({ type: 'UNMARK_DELETE_FAILURE', taskID, error })
-  ).finally(
+  ).then(
     () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
   );
 }
@@ -138,7 +137,7 @@ export const markComplete = (taskID) => dispatch => {
     (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
   ).catch(
     (error) => dispatch({ type: 'MARK_COMPLETE_FAILURE', taskID, error })
-  ).finally(
+  ).then(
     () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
   );
 }
@@ -149,7 +148,7 @@ export const unmarkComplete = (taskID) => dispatch => {
     (task)  => dispatch({ type: 'UPDATE_SUCCESS', taskID, task })
   ).catch(
     (error) => dispatch({ type: 'UNMARK_COMPLETE_FAILURE', taskID, error })
-  ).finally(
+  ).then(
     () => dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
   );
 }

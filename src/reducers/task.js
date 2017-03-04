@@ -9,6 +9,8 @@ const updateField = R.curry((field, task, action) =>
 const updateFieldPath = R.curry((fieldPath, task, action) =>
   R.assocPath(fieldPath, R.prop('value', action), task));
 
+
+
 const taskReducers = {
   EDIT_TASK: R.converge(
     R.assoc,
@@ -22,7 +24,7 @@ const taskReducers = {
   EDIT_TASK_DESCRIPTION: updateFieldPath(['edit', 'description']),
   EDIT_ASSIGNED_TO: updateFieldPath(['edit', 'assignedTo']),
   EDIT_ASSIGNED_FROM: updateFieldPath(['edit', 'assignedFrom']),
-  EDIT_DATE_DUE: updateFieldPath(['edit', 'dateDue']),
+  EDIT_DATE_DUE: updateFieldPath(['edit', 'dueDate']),
   EDIT_IS_LEVEL: state => action => R.assocPath(['edit', 'level'], action.level, state),
   GOAL_SELECT_OPEN: (task => task),
   GOAL_SELECT_CHOOSE: updateField('goal'),
@@ -43,14 +45,20 @@ const taskReducers = {
   VIEW_MORE_COMMENTS: R.assoc('expandComments', true),
   CHECK_IN_PENDING: R.assoc('checkInUpdatePending', true),
   CHECK_IN_SUCCESS: state => action => R.pipe(
-    R.assoc('lastCheckIn', action.date),
+    R.assoc('lastCheckInDate', action.date),
     R.dissoc('checkInUpdatePending'))(state),
-  CHECK_IN_FAILURE: R.assoc('error', 'Failed to check in'),
+  CHECK_IN_FAILURE: R.pipe(
+    R.assoc('error', 'Failed to check in'),
+    R.dissoc('checkInUpdatePending')
+  ),
   CANCEL_CHECK_IN_PENDING: R.assoc('checkInUpdatePending', true),
   CANCEL_CHECK_IN_SUCCESS: state => action => R.pipe(
-    R.assoc('lastCheckIn', action.date),
+    R.assoc('lastCheckInDate', action.date),
     R.dissoc('checkInUpdatePending'))(state),
-  CANCEL_CHECK_IN_FAILURE: R.assoc('error', 'Failed to cancel check in'),
+  CANCEL_CHECK_IN_FAILURE: R.pipe(
+    R.assoc('error', 'Failed to cancel check in'),
+    R.dissoc('checkInUpdatePending')
+  ),
   TASK_UPDATING: R.assoc('isUpdating', true),
   TASK_UPDATE_COMPLETE: R.omit('isUpdating'),
   UPDATE_SUCCESS: state => action => action.task

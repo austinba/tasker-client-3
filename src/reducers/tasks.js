@@ -7,7 +7,7 @@ const tasksReducers = {
   ADD_TASK: R.assoc('adding-task', {taskID: 'adding-task', edit: {}}),
   LOADING_TASKS: state => ({...state, loading: true}),
   LOAD_TASKS_SUCCESS: state => action => action.tasks,
-  LOAD_TASKS_ERROR: state => state,
+  LOAD_TASKS_ERROR: state => action => console.log(action) || state,
   ADD_TASK_SAVE_SUCCESS: state => action => R.pipe(
     R.assoc(action.task.taskID, action.task),
     R.dissoc('adding-task'),

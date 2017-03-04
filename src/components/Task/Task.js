@@ -61,22 +61,22 @@ class Task extends React.Component {
 
     const comments    = R.defaultTo([], task.comments);
     const checkedIn   = R.eqBy(date => new Date(date || 0).toJSON().split('T')[0],
-                               new Date())(task.lastCheckIn);
+                               new Date())(task.lastCheckInDate);
     const actions     = this.boundActions;
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
 
-    if(task.dateDeleted) {
+    if(task.deleteDate) {
       return <InactiveTask label="DELETED"
                            className="deleted-task"
-                           date={task.dateDeleted}
+                           date={task.deleteDate}
                            description={task.description}
                            undo={actions.unmarkDeleted} />;
     }
-    if(task.dateCompleted) {
+    if(task.completionDate) {
       return <InactiveTask label="COMPLETED"
                            className="completed-task"
-                           date={task.dateCompleted}
+                           date={task.completionDate}
                            description={task.description}
                            undo={actions.unmarkComplete} />;
     }
@@ -113,10 +113,10 @@ class Task extends React.Component {
 
           <div className="IS-KPI-container">
             <ISBox level={level}
-                   dateDue={(task.edit && task.edit.dateDue) || task.dateDue}
+                   dueDate={(task.edit && task.edit.dueDate) || task.dueDate}
                    editing={task.edit}
                    selectLevel={actions.selectLevel}
-                   editDateDue={actions.editDateDue}
+                   editdueDate={actions.editdueDate}
             />
           {/*}
             <p className="task-goal">
