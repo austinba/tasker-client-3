@@ -151,6 +151,9 @@
   stroke: rgba(255, 255, 255, 0.7);
 }
 .corner-checked-in-marker.enabled:hover {
+  fill: rgba(200, 200, 255, 0.07) !important;
+}
+.corner-checked-in-marker.enabled.filled:hover {
   fill: rgba(200, 200, 255, 0.2) !important;
 }
 .edit-task-description, .add-comment-text {
