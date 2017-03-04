@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Textarea from 'react-textarea-autosize';
 import ISBox from './ISBox';
 import ShowIf from '../common/ShowIf';
 import Comments from './Comments';
@@ -24,7 +25,8 @@ const getEditField =
 
 const TaskDescription = props => {
   if(props.editing) {
-    return <textarea className='edit-task-description'
+    return <Textarea className='edit-task-description'
+                     minRows={2}
                      value={props.value}
                      onChange={props.onChange}
                      onKeyDown={onActionKey(props.submitTaskEdits,

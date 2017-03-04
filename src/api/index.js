@@ -1,8 +1,9 @@
 import R from 'ramda';
 import request from 'superagent';
 
-// const domain = 'http://localhost:4000';
-const domain = 'http://qstesting1.us-west-2.elasticbeanstalk.com';
+const domain = 'http://localhost:4000';
+// const domain = 'http://qstesting1.us-west-2.elasticbeanstalk.com';
+// const domain = 'https://api.quarterstretch.com';
 
 const parseJSON = text => JSON.parse(text, (key, value) => {
   if(key.toLowerCase().endsWith('date')) {
