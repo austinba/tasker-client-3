@@ -66,7 +66,7 @@ const ISBox = props => {
               showYearDropDown
               withPortal
               customInput={
-                <div className="days-remaining">{daysRemaining}</div>
+                <div><div className="days-remaining">{daysRemaining}</div></div>
               }/>
           </div>
         );
