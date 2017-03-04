@@ -1,12 +1,8 @@
-// import { tasks, users, checkIns } from './mockData';
-// import Promise from 'bluebird';
 import R from 'ramda';
-// import http from 'http';
 import request from 'superagent';
-// request.prototype.endAsync = Promise.promisify(request.prototype.end);
 
-// const user = 101;
-// const getTaskIndex = (taskID) => R.findIndex(R.propEq('taskID', taskID))(tasks);
+// const domain = 'http://localhost:4000';
+const domain = 'http://qstesting1.us-west-2.elasticbeanstalk.com';
 
 const parseJSON = text => JSON.parse(text, (key, value) => {
   if(key.toLowerCase().endsWith('date')) {
@@ -18,7 +14,7 @@ const getBody = R.pipe(R.prop('text'), parseJSON);
 
 export function checkIn(taskID) {
   return request
-    .post('http://localhost:4000/mockapi/checkin')
+    .post(`${domain}/mockapi/checkin`)
     .send({taskID})
     .then(getBody)
     .then(R.prop('date'))
@@ -26,7 +22,7 @@ export function checkIn(taskID) {
 
 export function cancelCheckIn(taskID) {
   return request
-    .post('http://localhost:4000/mockapi/cancel-checkin')
+    .post(`${domain}/mockapi/cancel-checkin`)
     .send({taskID})
     .then(getBody)
     .then(R.prop('date'))
@@ -34,14 +30,14 @@ export function cancelCheckIn(taskID) {
 
 export function getMyTasks() {
     return request
-      .post('http://localhost:4000/mockapi/get-my-tasks')
+      .post(`${domain}/mockapi/get-my-tasks`)
       .send()
       .then(getBody);
 }
 
 export function getTasksIveAssigned() {
   return request
-    .post('http://localhost:4000/mockapi/get-tasks-ive-assigned')
+    .post(`${domain}/mockapi/get-tasks-ive-assigned`)
     .send()
     .then(getBody)
 }
@@ -49,13 +45,13 @@ export function getTasksIveAssigned() {
 // server-side - if no dueDate add one - if no assignment add one
 export function addTask({description, assignedTo, assignedFrom, level, dueDate}) {
   return request
-    .post('http://localhost:4000/mockapi/addTask')
+    .post(`${domain}/mockapi/addTask`)
     .send({description, assignedTo, assignedFrom, level, dueDate})
     .then(getBody)
 }
 export function editTask(taskID, taskDetails) {
   return request
-    .post('http://localhost:4000/mockapi/editTask')
+    .post(`${domain}/mockapi/editTask`)
     .send({
       taskID,
       taskDetails: R.evolve({dueDate: (d=>d.toJSON()) })(taskDetails)})
@@ -63,37 +59,37 @@ export function editTask(taskID, taskDetails) {
 }
 export function saveComment(taskID, comment) {
   return request
-    .post('http://localhost:4000/mockapi/saveComment')
+    .post(`${domain}/mockapi/saveComment`)
     .send({taskID, comment})
     .then(getBody);
 }
 export function getUsers() {
   return request
-    .post('http://localhost:4000/mockapi/getUsers')
+    .post(`${domain}/mockapi/getUsers`)
     .send()
     .then(getBody);
 }
 export function markComplete(taskID) {
   return request
-    .post('http://localhost:4000/mockapi/markComplete')
+    .post(`${domain}/mockapi/markComplete`)
     .send({taskID})
     .then(getBody)
 }
 export function markDeleted(taskID) {
   return request
-    .post('http://localhost:4000/mockapi/markDeleted')
+    .post(`${domain}/mockapi/markDeleted`)
     .send({taskID})
     .then(getBody)
 }
 export function unmarkComplete(taskID) {
   return request
-    .post('http://localhost:4000/mockapi/unmarkComplete')
+    .post(`${domain}/mockapi/unmarkComplete`)
     .send({taskID})
     .then(getBody)
 }
 export function unmarkDeleted(taskID) {
   return request
-    .post('http://localhost:4000/mockapi/unmarkDeleted')
+    .post(`${domain}/mockapi/unmarkDeleted`)
     .send({taskID})
     .then(getBody)
 }
