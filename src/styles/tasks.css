@@ -97,22 +97,6 @@
   line-height: 28px;
   background-color: rgba(0, 255, 255, 0.2);
 }
-.edit-task .IS-sub-box.selected .react-datepicker__input-container {
-  width: 100%;
-  height:100%;
-  text-align: left;
-}
-.edit-task .IS-sub-box.selected input {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  color: transparent;
-  background-color: transparent;
-  border: none;
-  z-index: 10;
-}
 .edit-task .IS-sub-box .days-remaining {
   position: absolute;
   top: 0;

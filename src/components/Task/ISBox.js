@@ -5,7 +5,7 @@ import { Menu, MenuItem, MenuItemText } from '../common/Menu';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import 'react-datepicker/dist/react-datepicker.css'
+import 'react-datepicker/dist/react-datepicker.css';
 
 const subBoxClassesByLevel = {
   '1': ['box', 'IS-sub-box', 'important', 'severe'],
@@ -59,8 +59,15 @@ const ISBox = props => {
             <DatePicker
               selected={moment(props.dueDate)}
               onChange={props.editdueDate}
-              dropdownMode="select" />
-            <div className="days-remaining">{daysRemaining}</div>
+              dropdownMode="select"
+              todayButton={"Today"}
+              minDate={moment()}
+              showMonthDropDown
+              showYearDropDown
+              withPortal
+              customInput={
+                <div className="days-remaining">{daysRemaining}</div>
+              }/>
           </div>
         );
       }
