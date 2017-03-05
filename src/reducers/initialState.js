@@ -59,7 +59,7 @@ export const statistics = {
 };
 
 export const currentUser = {
-  userID: 101
+  userID: '00000000-0000-0000-0000-000000000101'
 }
 export const users = [
   'Austin Baltes',
