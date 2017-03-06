@@ -1,110 +1,103 @@
 import React from 'react';
+import R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Field, reduxForm } from 'redux-form';
 import ShowIf from './common/ShowIf';
 import * as createATeamActions from '../actions/createATeam';
+import GenericField from './common/GenericField';
 
-const formName = 'createATeamEmail';
 class CreateATeamForm extends React.Component {
+  constructor(props) {
+    super(props);
+    const { editField, blurField, goToPage } = props.actions;
+    this.Field = GenericField(editField, blurField);
+  }
+  componentWillUnmount() {
+    this.props.actions.unmount();
+  }
   render() {
+    const { goToPage, submit } = this.props.actions;
+    const Field = this.Field;
+    const { fields } = this.props;
+
+    const fieldsValid = R.pipe(
+      R.props(R.__, fields),
+      R.pluck('error'),
+      R.reject(R.isEmpty),
+      R.length,
+      R.equals(0)
+    );
+console.log(!fieldsValid(['email']));
+
     return (
-      <form onSubmit="" className="create-a-team-form">
-        <Field name="page"
-               component="input"
-               type="hidden"
-        />
-        <ShowIf show={!this.props.page}>
+      <form onSubmit={submit} className="create-a-team-form">
+        <ShowIf show={this.props.page === 1}>
           <Field name="email"
-                 component="input"
                  placeholder="Email address"
-                 type="text"
                  className="create-a-team-email"
-          />
-          <button onClick={this.props.actions.goToPage.bind(2)}
-                  className="create-a-team-email-submit create-a-team-button"
-            >
+                 fields={fields}
+                 autoFocus/>
+          <button
+            onClick={goToPage.bind(2)}
+            disabled={!fieldsValid(['email'])}
+            className="create-a-team-email-submit create-a-team-button" >
             Create a Team
           </button>
+
         </ShowIf>
         <ShowIf show={this.props.page === 2}>
-          <Field name="firstName"
-                 component="input"
-                 placeholder="First Name"
-                 type="text"
-          />
-          <Field name="lastName"
-                 component="input"
-                 placeholder="Last Name"
-                 type="text"
-          />
-          <Field name="username"
-                 component="input"
-                 placeholder="Username"
-                 type="text"
-          />
-          <button onClick={this.props.actions.goToPage.bind(3)}
-                  className="create-a-team-email-submit"
-            >
+          <Field name="firstName"  placeholder="First Name"  fields={fields} autoFocus/>
+          <Field name="lastName"   placeholder="Last Name"   fields={fields}/>
+          <Field name="username"   placeholder="Username"    fields={fields}/>
+          <button onClick={goToPage.bind(3)}
+            disabled={!fieldsValid(['firstName', 'lastName', 'username'])}
+            className="create-a-team-email-submit">
             Continue to Password
           </button>
+
         </ShowIf>
         <ShowIf show={this.props.page === 3}>
-          <Field name="password"
-                 component="input"
-                 placeholder="Password"
-                 type="password"
-          />
-
-          <button onClick={this.props.actions.goToPage.bind(4)}
-                  className="create-a-team-email-submit"
-            >
+          <Field name="password"   placeholder="Password" type="password" fields={fields} autoFocus/>
+          <button
+            onClick={goToPage.bind(4)}
+            disabled={!fieldsValid(['password'])}
+            className="create-a-team-email-submit" >
             Continue to Team Name
           </button>
+
         </ShowIf>
         <ShowIf show={this.props.page === 4}>
-          <Field name="teamName"
-                 component="input"
-                 placeholder="Team Name"
-                 type="text"
-          />
-          <button onClick={this.props.actions.goToPage.bind(5)}
-                  className="create-a-team-email-submit"
-            >
+          <Field name="teamName"   placeholder="Team Name"   fields={fields} autoFocus/>
+          <button onClick={goToPage.bind(5)}
+            disabled={!fieldsValid(['teamName'])}
+            className="create-a-team-email-submit" >
             Continue to Team Domain
           </button>
+
         </ShowIf>
         <ShowIf show={this.props.page === 5}>
-          <Field name="teamDomain"
-                 component="input"
-                 placeholder="Team Domain"
-                 type="text"
-          />
+          <Field name="teamdomain" placeholder="Team Domain" fields={fields} autoFocus/>
           <div className="create-a-team-domain-suffix">.quarterstretch.com</div>
           <button onClick=""
-                  className="create-a-team-email-submit"
-            >
+            disabled={!fieldsValid(['teamdomain'])}
+            className="create-a-team-email-submit">
             Create Team
           </button>
+
         </ShowIf>
       </form>
     );
   }
 }
-CreateATeamForm = reduxForm({
-  form: formName,
-  forceUnregisterOnUnmount: false
-})(CreateATeamForm);
-
-CreateATeamForm = connect(
-  state => ({
-    page: state.createATeam.page,
-  }),
-  dispatch => ({
-    actions: bindActionCreators(createATeamActions, dispatch)
-  })
-  )(CreateATeamForm);
+const mapStateToProps = state => ({
+  page: state.createATeam.page,
+  fields: state.createATeam.fields
+});
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(createATeamActions, dispatch)
+});
+CreateATeamForm = connect(mapStateToProps, mapDispatchToProps)(CreateATeamForm);
 
 
 class Home extends React.Component {
