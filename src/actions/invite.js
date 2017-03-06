@@ -10,8 +10,12 @@ export const submit = (fields, event) => {
   return dispatch => {
     dispatch({type: 'INVITING_IN_PROCESS'})
     api.submitInviteForm(fields)
-      .then(() => {
-        dispatch({type: 'INVITE_SUCCESS'})
+      .then(result => {
+        if(!result.emailFailed) {
+          dispatch({type: 'INVITE_SUCCESS'});
+        } else {
+          dispatch({type: 'INVITE_EMAIL_FAILED', inviteID: result.inviteID});
+        }
       })
       .catch(error => {
         dispatch({type: 'INVITE_FAIL'});

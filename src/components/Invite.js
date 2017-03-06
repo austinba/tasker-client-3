@@ -5,16 +5,32 @@ import * as inviteActions from '../actions/invite';
 
 class Invite extends React.Component {
   componentWillUnmount() {
-    this.actions.unmount();
+    this.props.actions.unmount();
   }
   render() {
-    const {email, error, pending, validationError} = this.props.invite;
-    const {editEmail, submit, successful} = this.props.actions;
-    if(successful) {
-      return
+    const {email, error, pending, validationError, success, emailFailed, inviteID} = this.props.invite;
+    console.log(error, success);
+    const {editEmail, submit} = this.props.actions;
+    if(success) {
+      return (
         <div className="invite-box create-a-team-form">
           We just sent an email inviting {email} to your team!
-        </div>;
+        </div>
+      );
+    }
+    if(emailFailed) {
+      const addr = `https://quarterstretch.com/invite/${inviteID}`;
+      return (
+        <div className="invite-box create-a-team-form">
+          For some reason we couldn't send the invitation email.
+          <br />
+          <br />
+          Please provide this link so the user can join the team.
+          <br />
+          <br />
+          <a href="${addr}"><em>{addr}</em></a>
+        </div>
+      );
     }
     const submitAction = submit.bind(null, {email});
     return (

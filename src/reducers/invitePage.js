@@ -24,6 +24,12 @@ function invitePageReducer(state = initialState, action) {
         R.assoc('pending', false),
         R.assoc('error', 'Sorry, failed to send invite to user for some reason. :( Please try again.')
       )(state);
+    case 'INVITE_EMAIL_FAILED':
+      return R.pipe(
+        R.assoc('pending', false),
+        R.assoc('inviteID', action.inviteID),
+        R.assoc('emailFailed', true)
+      )(state);
     case 'INVITE_UNMOUNT':
       return {};
     default:
