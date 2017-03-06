@@ -17,6 +17,19 @@ const parseJSON = text => JSON.parse(text, (key, value) => {
 })
 const getBody = R.pipe(R.prop('text'), parseJSON);
 
+export function submitAcceptInvite(fields) {
+  return request
+    .post(`${domain}/takeInvite/createUser`)
+    .send(fields)
+    .then(getBody);
+}
+export const getInviteInfo = ({inviteID}) =>
+request
+  .get(`${domain}/takeInvite/getInfo`)
+  .query({inviteID})
+  .then(getBody)
+
+
 const _doesTeamExist = ({teamdomain}) =>
   request
     .get(`${domain}/signup/doesTeamExist`)
@@ -25,9 +38,20 @@ const _doesTeamExist = ({teamdomain}) =>
 
 export const doesTeamExist = debounce(_doesTeamExist, 200);
 
+
+const _doesUserExist = ({username, teamdomain}) =>
+  request
+    .get(`${domain}/takeInvite/doesUserExist`)
+    .query({username, teamdomain})
+    .then(getBody)
+
+export const doesUserExist = debounce(_doesUserExist, 200);
+
+
 export function submitInviteForm(fields) {
   return request
-    .post(`${domain}/invite`)
+    .post(`${domain}/invite/new`)
+    .set('authorization', auth.getToken())
     .send(fields)
     .then(getBody)
 }

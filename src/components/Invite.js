@@ -16,7 +16,7 @@ class Invite extends React.Component {
           We just sent an email inviting {email} to your team!
         </div>;
     }
-    const submitAction = submit.bind(null, email);
+    const submitAction = submit.bind(null, {email});
     return (
       <form className="invite-box create-a-team-form">
         Invite someone to join your team :-D

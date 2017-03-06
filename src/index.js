@@ -9,6 +9,7 @@ import Invite from './components/Invite';
 import MyTasks from './components/TaskLists/MyTasks';
 import TasksIveAssigned from './components/TaskLists/TasksIveAssigned';
 import Home from './components/Home';
+import AcceptInvite from './components/AcceptInvite';
 import SignIn from './components/SignIn';
 import configureStore from './store'
 import './styles/reset.css';
@@ -23,6 +24,7 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={Home} />
       <Route path="/signin" component={SignIn} />
+      <Route path="/invite/:id" component={AcceptInvite} />
       <Route path="/" component={App} onEnter={requireAuth}>
         <Route path="/my-tasks" component={MyTasks} />
         <Route path="/tasks-ive-assigned" component={TasksIveAssigned} />

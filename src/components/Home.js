@@ -28,7 +28,6 @@ class CreateATeamForm extends React.Component {
       R.length,
       R.equals(0)
     );
-    console.log(R.pluck('value')(fields))
     const submitAction = submit.bind(null, R.pluck('value')(fields));
 
     return (
@@ -76,7 +75,8 @@ class CreateATeamForm extends React.Component {
             className="create-a-team-email-submit" >
             Continue to Team Domain
           </button>
-          {teamAvailable && 'Team is avaiable!!'}
+          {teamAvailable && !pendingTeamLookup && 'Team Domain is available!!'}
+          {!teamAvailable && !pendingTeamLookup && 'Team Domain is already taken'}
         </ShowIf>
         <ShowIf show={this.props.page === 5}>
           <Field name="teamdomain" placeholder="Team Domain" fields={fields} autoFocus/>

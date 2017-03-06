@@ -16,12 +16,12 @@ function invitePageReducer(state = initialState, action) {
       return R.assoc('pending', true)(state);
     case 'INVITE_SUCCESS':
       return R.pipe(
-        R.assoc('inProcess', false),
+        R.assoc('pending', false),
         R.assoc('success', true)
       )(state);
     case 'INVITE_FAIL':
       return R.pipe(
-        R.assoc('inProcess', false),
+        R.assoc('pending', false),
         R.assoc('error', 'Sorry, failed to send invite to user for some reason. :( Please try again.')
       )(state);
     case 'INVITE_UNMOUNT':
