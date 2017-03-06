@@ -245,6 +245,12 @@ button {
   margin-left: auto;
   margin-right: auto;
 }
+.create-a-team-form button {
+  background: rgba(255, 255, 255, 0.2);
+}
+.create-a-team-form button:disabled {
+  background: transparent;
+}
 .create-a-team-domain-suffix {
   margin-bottom: 30px;
   font-size: 18px;

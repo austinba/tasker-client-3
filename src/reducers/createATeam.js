@@ -6,7 +6,7 @@ const fieldNames = [
   'email', 'firstName', 'lastName', 'username',
   'password', 'teamName', 'teamdomain' ];
 const initialState = {
-  page: 1,
+  page: 5,
   fields: R.reduceRight(  //create an obj[fieldnames] with initial values set
     R.assoc(R.__, {pristine: true, value: '', error: ' '}), {}
   )(fieldNames)
@@ -15,12 +15,27 @@ const initialState = {
 const createATeamReducer = (state = initialState, action) => {
   const {type, field, value} = action
   switch(type) {
+    case 'TEAM_AVAILABILITY_PENDING':
+      return R.assoc('pendingTeamLookup', true)(state);
 
-    case 'CREATE_A_TEAM_GOTO_PAGE':
+    case 'TEAM_AVAILABILITY_RESPONSE':
+      return R.pipe(
+        R.assoc('teamAvailable', !action.exists),
+        R.assoc('pendingTeamLookup', false)
+      )(state)
+
+    case 'TEAM_AVAILABILITY_FAILED':
+      return R.pipe(
+        R.assoc('teamAvailable', true),
+        R.assoc('error', 'Cannot lookup team availability'),
+        R.assoc('pendingTeamLookup', false)
+      )(state)
+
+    case 'CREATE_TEAM_NEXT_PAGE':
       return R.evolve({
         page: R.inc,
         error: R.always('')
-      });
+      })(state);
 
     case 'CREATE_A_TEAM_FIELD_EDIT':
       return R.pipe(

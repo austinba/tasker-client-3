@@ -10,17 +10,17 @@ import GenericField from './common/GenericField';
 class CreateATeamForm extends React.Component {
   constructor(props) {
     super(props);
-    const { editField, blurField, goToPage } = props.actions;
+    const { editField, blurField } = props.actions;
     this.Field = GenericField(editField, blurField);
   }
   componentWillUnmount() {
     this.props.actions.unmount();
   }
   render() {
-    const { goToPage, submit } = this.props.actions;
+    const { nextPage, submit } = this.props.actions;
     const Field = this.Field;
     const { fields, error } = this.props;
-
+    const { pendingTeamLookup, teamAvailable } = this.props.createATeam;
     const fieldsValid = R.pipe(
       R.props(R.__, fields),
       R.pluck('error'),
@@ -41,7 +41,7 @@ class CreateATeamForm extends React.Component {
                  fields={fields}
                  autoFocus/>
           <button
-            onClick={goToPage.bind(2)}
+            onClick={nextPage}
             disabled={!fieldsValid(['email'])}
             className="create-a-team-email-submit create-a-team-button" >
             Create a Team
@@ -52,7 +52,7 @@ class CreateATeamForm extends React.Component {
           <Field name="firstName"  placeholder="First Name"  fields={fields} autoFocus/>
           <Field name="lastName"   placeholder="Last Name"   fields={fields}/>
           <Field name="username"   placeholder="Username"    fields={fields}/>
-          <button onClick={goToPage.bind(3)}
+          <button onClick={nextPage}
             disabled={!fieldsValid(['firstName', 'lastName', 'username'])}
             className="create-a-team-email-submit">
             Continue to Password
@@ -62,7 +62,7 @@ class CreateATeamForm extends React.Component {
         <ShowIf show={this.props.page === 3}>
           <Field name="password"   placeholder="Password" type="password" fields={fields} autoFocus/>
           <button
-            onClick={goToPage.bind(4)}
+            onClick={nextPage}
             disabled={!fieldsValid(['password'])}
             className="create-a-team-email-submit" >
             Continue to Team Name
@@ -71,25 +71,23 @@ class CreateATeamForm extends React.Component {
         </ShowIf>
         <ShowIf show={this.props.page === 4}>
           <Field name="teamName"   placeholder="Team Name"   fields={fields} autoFocus/>
-          <button onClick={goToPage.bind(5)}
+          <button onClick={nextPage}
             disabled={!fieldsValid(['teamName'])}
             className="create-a-team-email-submit" >
             Continue to Team Domain
           </button>
-
+          {teamAvailable && 'Team is avaiable!!'}
         </ShowIf>
         <ShowIf show={this.props.page === 5}>
           <Field name="teamdomain" placeholder="Team Domain" fields={fields} autoFocus/>
           <div className="create-a-team-domain-suffix">.quarterstretch.com</div>
+          <span>{(!pendingTeamLookup && !fields.teamdomain.error) && (teamAvailable ? `${fields.teamdomain.value} is available` : `${fields.teamdomain.value} is taken`)}</span>
           <button onClick={submitAction}
-            disabled={!fieldsValid(['teamdomain'])}
+            disabled={!fieldsValid(['teamdomain']) || !teamAvailable || pendingTeamLookup}
             className="create-a-team-email-submit">
             Create Team
           </button>
 
-        </ShowIf>
-        <ShowIf show={false}>
-          <button />
         </ShowIf>
       </form>
     );
@@ -98,7 +96,8 @@ class CreateATeamForm extends React.Component {
 const mapStateToProps = state => ({
   page: state.createATeam.page,
   fields: state.createATeam.fields,
-  error: state.createATeam.error
+  error: state.createATeam.error,
+  createATeam: state.createATeam
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(createATeamActions, dispatch)

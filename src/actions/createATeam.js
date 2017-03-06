@@ -1,18 +1,31 @@
 import * as api from '../api';
 import { browserHistory } from 'react-router';
 import * as auth from '../auth';
+import { validationError } from '../utilities/createATeamValidation';
 
-export const goToPage = page => ({type: 'CREATE_A_TEAM_GOTO_PAGE', page});
+export const nextPage = (event) => {
+  event.preventDefault();
+  return ({type: 'CREATE_TEAM_NEXT_PAGE'});
+};
 
-export const editField = (event) => {
-  const name = event.target.name;
+export const editField = (event) => (dispatch) => {
+  const field = event.target.name;
   const value = event.target.value;
-  return ({type: 'CREATE_A_TEAM_FIELD_EDIT', field:name, value});
+
+  // if it is the team domain, check it if is available
+  if(field === 'teamdomain' && !validationError(field, value) ) {
+    dispatch({type: 'TEAM_AVAILABILITY_PENDING' });
+    api.doesTeamExist({teamdomain: value}).then(
+      response => dispatch({type: 'TEAM_AVAILABILITY_RESPONSE', exists: response.exists === 'true'})
+    ).
+    catch(() => dispatch({type: 'TEAM_AVAILABILITY_FAILED'}));
+  }
+  dispatch({type: 'CREATE_A_TEAM_FIELD_EDIT', field, value});
 }
 
 export const blurField = (event) => {
-  const name = event.target.name;
-  return ({type: 'CREATE_A_TEAM_FIELD_BLUR', field:name});
+  const field = event.target.name;
+  return ({type: 'CREATE_A_TEAM_FIELD_BLUR', field});
 }
 
 export const submit = (fields, event) => {
@@ -31,7 +44,6 @@ export const submit = (fields, event) => {
         }
       })
       .catch(error => {
-        console.log(error);
         dispatch({type: 'CREATE_TEAM_FAIL'});
       });
   }

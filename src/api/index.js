@@ -1,6 +1,9 @@
 import R from 'ramda';
+import _ from 'underscore';
+import debounce from 'debounce-promise';
 import request from 'superagent';
 import * as auth from '../auth';
+
 
 const domain = 'http://localhost:4000';
 // const domain = 'http://qstesting1.us-west-2.elasticbeanstalk.com';
@@ -13,6 +16,14 @@ const parseJSON = text => JSON.parse(text, (key, value) => {
   return value;
 })
 const getBody = R.pipe(R.prop('text'), parseJSON);
+
+const _doesTeamExist = ({teamdomain}) =>
+  request
+    .get(`${domain}/signup/doesTeamExist`)
+    .query({teamdomain})
+    .then(getBody)
+
+export const doesTeamExist = debounce(_doesTeamExist, 200);
 
 export function submitCreateTeamForm(fields) {
   return request
