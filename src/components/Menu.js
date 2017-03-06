@@ -12,7 +12,7 @@ const MenuLink = (onClick, {to, route, children}) => {
   }
   return <div><Link to={to} onClick={onClick}>{children}</Link></div>;
 }
-export const Menu = ({toggleMenuAction, route}) => {
+export const Menu = ({toggleMenuAction, route, signout}) => {
   const MLink = MenuLink.bind(null, toggleMenuAction);
   return (
     <div className="menu-container">
@@ -24,6 +24,9 @@ export const Menu = ({toggleMenuAction, route}) => {
         <MLink to="/tasks-ive-assigned" route={route}>
           {friendlyRouteNames['/tasks-ive-assigned']}
         </MLink>
+        <div>
+          <a href="#nowhere" onClick={signout}>Sign out</a>
+        </div>
       </div>
     </div>
   );

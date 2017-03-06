@@ -12,7 +12,8 @@ class SignIn extends React.Component {
   render() {
     const {username, teamdomain, password, error, signInPending} = this.props.signInProps;
     const {handleUpdate} = this.props.actions;
-    const {signin} = this.props.sessionActions;
+    const signin =
+      this.props.sessionActions.signin.bind(null, {username, teamdomain, password});
     return (
       <div className="home-page-container signin-page">
         <div className="home-page-title">{`Don't waste your day...`}</div>

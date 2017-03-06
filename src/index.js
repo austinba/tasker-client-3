@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import * as auth from './auth';
 import App from './components/App';
 import MyTasks from './components/TaskLists/MyTasks';
 import TasksIveAssigned from './components/TaskLists/TasksIveAssigned';
@@ -21,7 +22,7 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={Home} />
       <Route path="/sign-in" component={SignIn} />
-      <Route path="/" component={App}>
+      <Route path="/" component={App} onEnter={requireAuth}>
         <Route path="/my-tasks" component={MyTasks} />
         <Route path="/tasks-ive-assigned" component={TasksIveAssigned} />
       </Route>
@@ -31,3 +32,11 @@ ReactDOM.render(
 );
 
 // <Route path="/home" component={Home} />
+function requireAuth(nextState, replace) {
+  if(!auth.isSignedIn()) {
+    replace({
+      pathname: 'sign-in',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
+}

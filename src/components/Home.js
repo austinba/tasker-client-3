@@ -20,9 +20,10 @@ class CreateATeamForm extends React.Component {
                  component="input"
                  placeholder="Email address"
                  type="text"
+                 className="create-a-team-email"
           />
           <button onClick={this.props.actions.goToPage.bind(2)}
-                  className="create-a-team-email-submit"
+                  className="create-a-team-email-submit create-a-team-button"
             >
             Create a Team
           </button>
@@ -113,7 +114,7 @@ class Home extends React.Component {
         <div className="home-page-title">{`Don't waste your day...`}</div>
         <CreateATeamForm />
         <div className="home-page-sign-in-line">
-          Your team already uses Quarterstretch? <Link><em>Sign in</em></Link>
+          Your team already uses Quarterstretch? <Link to="/sign-in"><em>Sign in</em></Link>
         </div>
         <div className="home-page-product-name">welcome to Quarterstretch</div>
       </div>

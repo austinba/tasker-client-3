@@ -13,16 +13,18 @@ const parseJSON = text => JSON.parse(text, (key, value) => {
 })
 const getBody = R.pipe(R.prop('text'), parseJSON);
 
-export function login(username, teamdomain, password) {
-  .post(`${domain}/login`)
-  .send({username, teamdomain, password})
-  .then(getbody)
+export function signin(username, teamdomain, password) {
+  return request
+    .post(`${domain}/login`)
+    .send({username, teamdomain, password})
+    .then(getBody)
 }
 
 export function getMyInfo(jwtToken) {
-  .post(`${domain}/myinfo`)
-  .send({jwtToken})
-  .then(getbody)
+  return request
+    .post(`${domain}/myinfo`)
+    .send({jwtToken})
+    .then(getBody)
 }
 
 export function checkIn(taskID) {

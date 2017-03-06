@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import { Menu, MenuIcon, friendlyRouteNames } from './Menu';
 import ShowIf from './common/ShowIf';
 import * as viewActions from '../actions/view';
@@ -21,12 +22,16 @@ class App extends React.Component {
     this.props.usersActions.getUsers();
   }
   render() {
-    const { view, actions, children, routing } = this.props;
+    if(!auth.isSignedIn()) browserHistory.push('/');
+    const { view, actions, children, routing, sessionActions } = this.props;
     const route = R.path(['locationBeforeTransitions', 'pathname'])(routing);
     return (
       <div className="overall-container">
         <ShowIf show={view.menuOpen} >
-          <Menu toggleMenuAction={actions.toggleMenu} route={route} />
+          <Menu
+            toggleMenuAction={actions.toggleMenu}
+            route={route}
+            signout={sessionActions.signout} />
         </ShowIf>
           <div className="main-container">
             <div className="header-row">
@@ -49,7 +54,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(viewActions, dispatch),
   usersActions: bindActionCreators(usersActions, dispatch),
-  sessionActions: bindActionCreators(sessionActoins, dispatch)
+  sessionActions: bindActionCreators(sessionActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
