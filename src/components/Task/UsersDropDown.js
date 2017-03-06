@@ -15,12 +15,8 @@ class UsersDropDown extends React.Component {
     this.userPickList  = R.pipe(
       R.union(recentUserIDs),
       R.reject(R.equals(currentUserID)),
-      R.append('')
-    );
-    // )(allUserIDs)
-    // R.reject(R.equals(currentUserID))(
-    //   R.union(recentUserIDs, allUserIDs)
-    // );
+      R.append(' ')
+    )(allUserIDs);
 
     console.log(this.userPickList);
     if(!this.props.value) {
@@ -33,7 +29,7 @@ class UsersDropDown extends React.Component {
     const userSelection = R.pipe(
       R.map(userID =>
         <option value={userID} key={userID}>
-        {fullName(this.allUsers)(userID)}
+        {userID === ' ' ? ' ' : fullName(this.allUsers)(userID)}
         </option>
       ),
       result =>
