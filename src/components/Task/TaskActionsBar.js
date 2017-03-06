@@ -4,13 +4,13 @@ import ShowIf from '../common/ShowIf';
 
 const TaskActionsBar = ({ edit, commentBeingAdded, addComment, cancelAddComment,
                           startTaskEdit, cancelTaskEdit, submitTaskEdits,
-                          markDeleted, markComplete}) => {
+                          markDeleted, markComplete, saveComment}) => {
   return (
     <div className="box inner-box task-actions">
 
       <ShowIf show={commentBeingAdded}>
         <span>
-          <a href="#nowhere" className="primary-link">Send Comment</a>
+          <a href="#nowhere" className="primary-link" onClick={saveComment}>Send Comment</a>
           {dash}
           <a href="#nowhere" onClick={cancelAddComment}>Cancel</a>
         </span>

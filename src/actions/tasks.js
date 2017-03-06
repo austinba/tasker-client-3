@@ -1,6 +1,8 @@
 import * as api from '../api';
 import R from 'ramda';
 
+export const unmountList = () => ({type: 'UNMOUNT_TASK_LIST'});
+
 const getTasks = (getTaskAPICall, recentUsersSource) => () => dispatch => {
   dispatch({ type: 'LOADING_TASKS' });
   getTaskAPICall().then(data => {
@@ -25,6 +27,6 @@ export const getMyTasks = getTasks(api.getMyTasks, 'assignedFrom');
 export const getTasksIveAssigned = getTasks(api.getTasksIveAssigned, 'assignedTo');
 
 export const addTask = event => {
-  event.stopPropagation();
+  event.preventDefault();
   return { type: 'ADD_TASK' };
 };

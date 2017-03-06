@@ -28,8 +28,8 @@ class CreateATeamForm extends React.Component {
       R.length,
       R.equals(0)
     );
-
-    const submitAction = submit.bind(null, fields);
+    console.log(R.pluck('value')(fields))
+    const submitAction = submit.bind(null, R.pluck('value')(fields));
 
     return (
       <form className="create-a-team-form">

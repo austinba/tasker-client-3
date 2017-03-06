@@ -21,6 +21,9 @@ class Tasks extends React.Component {
       throw new Error('TaskList requires a preset');
     }
   }
+  componentWillUnmount() {
+    this.props.actions.unmountList();
+  }
   render() {
     const { tasks, actions, preset } = this.props;
     const taskCount = Object.keys(tasks).length;

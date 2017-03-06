@@ -13,9 +13,10 @@ const tasksReducers = {
     R.dissoc('adding-task'),
     state => console.log(state) ||  state
   )(state),
+  UNMOUNT_TASK_LIST: state => ({})
 };
 
-function taskReducer(state = tasks, action) {
+function taskReducer(state = {}, action) {
   const taskID = action.taskID;
   let newState = state;
 

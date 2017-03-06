@@ -175,6 +175,7 @@ class Task extends React.Component {
                         startTaskEdit={actions.startTaskEdit}
                         cancelTaskEdit={actions.cancelTaskEdit}
                         submitTaskEdits={actions.submitTaskEdits}
+                        saveComment={actions.saveComment}
                         markDeleted={actions.markDeleted}
                         markComplete={actions.markComplete} />
 

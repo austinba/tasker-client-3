@@ -11,8 +11,8 @@ let CommentBoxes = ({users, comments, expanded}) => {
     if(comments.length <= 3) comments = R.take(3, comments);
   }
   return R.pipe(
-    R.map(({comment, from, commentID, date}) => (
-      <div className="box inner-box task-comment" key={commentID}>
+    R.map(({comment, from, date}) => (
+      <div className="box inner-box task-comment" key={date}>
         {fullName(allUsers)(from) || 'Unknown User'}: &nbsp;
         {comment} - {prettyTimeElapsed(date)} ago
       </div>

@@ -6,7 +6,7 @@ const fieldNames = [
   'email', 'firstName', 'lastName', 'username',
   'password', 'teamName', 'teamdomain' ];
 const initialState = {
-  page: 5,
+  page: 1,
   fields: R.reduceRight(  //create an obj[fieldnames] with initial values set
     R.assoc(R.__, {pristine: true, value: '', error: ' '}), {}
   )(fieldNames)
