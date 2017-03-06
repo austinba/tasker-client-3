@@ -10,7 +10,7 @@ class UsersDropDown extends React.Component {
     console.log(recentUsers);
     const recentUserIDs = R.map(s => s.toString())(recentUsers);
     const allUserIDs    = R.keys(this.allUsers);
-    const currentUserID = this.props.currentUserID.toString();
+    const currentUserID = this.props.userID.toString();
 
     this.userPickList  = R.pipe(
       R.union(recentUserIDs),

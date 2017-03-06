@@ -15,6 +15,7 @@ export const saveTeamdomain = (teamdomain) =>
 export const getInviteInfo = (fields) => (dispatch) => {
   api.getInviteInfo(fields)
     .then(inviteInfo =>
+      console.log(inviteInfo) ||
       dispatch({type: 'INVITE_INFO_SUCCESS', inviteInfo})
     )
     .catch(error =>
@@ -27,6 +28,8 @@ export const editField = (event) => (dispatch, getState) => {
 
   const field = event.target.name;
   const value = event.target.value;
+
+  dispatch({type: 'ACCEPT_INVITE_FIELD_EDIT', field, value});
 
   // if it is the team domain, check it if is available
   if(field === 'username' && !validationError(field, value)) {
@@ -41,7 +44,6 @@ export const editField = (event) => (dispatch, getState) => {
     catch(() => dispatch({type: 'USERNAME_AVAILABILITY_FAILED'}));
   }
 
-  dispatch({type: 'ACCEPT_INVITE_FIELD_EDIT', field, value});
 }
 
 export const blurField = (event) => {

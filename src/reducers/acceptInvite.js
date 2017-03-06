@@ -16,6 +16,7 @@ const createATeamReducer = (state = initialState, action) => {
   switch(type) {
 
     case 'INVITE_INFO_SUCCESS':
+    console.log(action.inviteInfo);
       return R.assoc('inviteInfo', action.inviteInfo)(state);
 
     case 'SAVE_TEAM_DOMAIN':

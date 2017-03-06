@@ -35,11 +35,11 @@ export const selectLevel = (taskID, level) => {
 export const submitTaskEdits = (taskID, otherProps, event) => (dispatch, getState) => {
   event.preventDefault();
   const state = getState();
-  const task  = R.merge(state.tasks[taskID], otherProps);
-
+  const taskEdits  = R.merge(state.tasks[taskID].edit, otherProps);
+  console.log(taskEdits);
   dispatch({ type: 'TASK_UPDATING', taskID });
   if(taskID === 'adding-task') {
-    api.editTask(taskID, task.edit).then(
+    api.editTask(taskID, taskEdits).then(
       task => dispatch({ type: 'ADD_TASK_SAVE_SUCCESS', task, taskID })
     ).catch(error => {
       dispatch({ type: 'EDIT_OR_ADD_TASK_SAVE_FAILURE', error, taskID })
@@ -47,7 +47,7 @@ export const submitTaskEdits = (taskID, otherProps, event) => (dispatch, getStat
       dispatch({ type: 'TASK_UPDATE_COMPLETE', taskID })
     })
   } else {
-    api.editTask(taskID, task.edit).then(
+    api.editTask(taskID, taskEdits).then(
       task => dispatch({ type: 'ADD_TASK_SAVE_SUCCESS', task, taskID })
     ).catch(
       error => dispatch({ type: 'EDIT_OR_ADD_TASK_SAVE_FAILURE', error, taskID })

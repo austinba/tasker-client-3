@@ -57,7 +57,7 @@ class Task extends React.Component {
     }
   }
   render() {
-    const { tasks, taskID, users, currentUser } = this.props;
+    const { tasks, taskID, users, session } = this.props;
     const task = tasks[taskID];
 
     const comments    = R.defaultTo([], task.comments);
@@ -68,11 +68,11 @@ class Task extends React.Component {
     const description = getEditField('', 'description')(task);
     let submitTaskEdits;
 
-    if(currentUser && currentUser.userID) {
+    if(R.path(['user', 'userID'], session)) {
       if(this.preset.type === 'myTasks') {
-        submitTaskEdits = actions.submitTaskEdits.bind(null, {assignedTo: currentUser.userID});
+        submitTaskEdits = actions.submitTaskEdits.bind(null, {assignedTo: session.user.userID});
       } else if(this.preset.type === 'tasksIveAssigned') {
-        submitTaskEdits = actions.submitTaskEdits.bind(null, {assignedFrom: currentUser.userID});
+        submitTaskEdits = actions.submitTaskEdits.bind(null, {assignedFrom: session.user.userID});
       } else {
         throw new Error('Task requires a preset');
       }
@@ -156,7 +156,7 @@ class Task extends React.Component {
                   <UsersDropDown
                     recentUsers={users.recentUsers}
                     allUsers={users.allUsers}
-                    currentUserID={currentUser.userID}
+                    userID={R.path(['user', 'userID'], session)}
                     onChange={this.preset.assignmentEditAction}
                     value={(task.edit && task.edit[this.preset.assignmentKey]) ||
                            task[this.preset.assignmentKey] }/>
@@ -211,7 +211,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   tasks: state.tasks,
   users: state.users,
-  currentUser: state.currentUser
+  session: state.session
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);

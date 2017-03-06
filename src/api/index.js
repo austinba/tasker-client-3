@@ -29,7 +29,6 @@ request
   .query({inviteID})
   .then(getBody)
 
-
 const _doesTeamExist = ({teamdomain}) =>
   request
     .get(`${domain}/signup/doesTeamExist`)
