@@ -22,7 +22,8 @@ const history = syncHistoryWithStore(browserHistory, store);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={Home} />
+      <Route path="/" component={Home} onEnter={goToInitialPage} />
+      <Route path="/create-team" component={Home} />
       <Route path="/signin" component={SignIn} />
       <Route path="/invite/:id" component={AcceptInvite} />
       <Route path="/" component={App} onEnter={requireAuth}>
@@ -40,6 +41,21 @@ function requireAuth(nextState, replace) {
   if(!auth.isSignedIn()) {
     replace({
       pathname: 'signin',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
+}
+
+// <Route path="/home" component={Home} />
+function goToInitialPage(nextState, replace) {
+  if(!auth.isSignedIn()) {
+    replace({
+      pathname: 'create-team',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  } else {
+    replace({
+      pathname: 'my-tasks',
       state: { nextPathname: nextState.location.pathname }
     });
   }
