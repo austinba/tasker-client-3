@@ -25,6 +25,13 @@ const _doesTeamExist = ({teamdomain}) =>
 
 export const doesTeamExist = debounce(_doesTeamExist, 200);
 
+export function submitInviteForm(fields) {
+  return request
+    .post(`${domain}/invite`)
+    .send(fields)
+    .then(getBody)
+}
+
 export function submitCreateTeamForm(fields) {
   return request
     .post(`${domain}/signup/createTeam`)

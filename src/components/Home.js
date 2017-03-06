@@ -112,7 +112,7 @@ class Home extends React.Component {
         <div className="home-page-title">{`Don't waste your day...`}</div>
         <CreateATeamForm />
         <div className="home-page-sign-in-line">
-          Your team already uses Quarterstretch? <Link to="/sign-in"><em>Sign in</em></Link>
+          Your team already uses Quarterstretch? <Link to="/signin"><em>Sign in</em></Link>
         </div>
         <div className="home-page-product-name">welcome to Quarterstretch</div>
       </div>
