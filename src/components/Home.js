@@ -19,7 +19,7 @@ class CreateATeamForm extends React.Component {
   render() {
     const { goToPage, submit } = this.props.actions;
     const Field = this.Field;
-    const { fields } = this.props;
+    const { fields, error } = this.props;
 
     const fieldsValid = R.pipe(
       R.props(R.__, fields),
@@ -28,10 +28,12 @@ class CreateATeamForm extends React.Component {
       R.length,
       R.equals(0)
     );
-console.log(!fieldsValid(['email']));
+
+    const submitAction = submit.bind(null, fields);
 
     return (
-      <form onSubmit={submit} className="create-a-team-form">
+      <form className="create-a-team-form">
+        {error}
         <ShowIf show={this.props.page === 1}>
           <Field name="email"
                  placeholder="Email address"
@@ -79,12 +81,15 @@ console.log(!fieldsValid(['email']));
         <ShowIf show={this.props.page === 5}>
           <Field name="teamdomain" placeholder="Team Domain" fields={fields} autoFocus/>
           <div className="create-a-team-domain-suffix">.quarterstretch.com</div>
-          <button onClick=""
+          <button onClick={submitAction}
             disabled={!fieldsValid(['teamdomain'])}
             className="create-a-team-email-submit">
             Create Team
           </button>
 
+        </ShowIf>
+        <ShowIf show={false}>
+          <button />
         </ShowIf>
       </form>
     );
@@ -92,7 +97,8 @@ console.log(!fieldsValid(['email']));
 }
 const mapStateToProps = state => ({
   page: state.createATeam.page,
-  fields: state.createATeam.fields
+  fields: state.createATeam.fields,
+  error: state.createATeam.error
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(createATeamActions, dispatch)

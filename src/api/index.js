@@ -14,6 +14,12 @@ const parseJSON = text => JSON.parse(text, (key, value) => {
 })
 const getBody = R.pipe(R.prop('text'), parseJSON);
 
+export function submitCreateTeamForm(fields) {
+  return request
+    .post(`${domain}/createTeam`)
+    .send(fields)
+    .then(getBody);
+}
 export function signin(username, teamdomain, password) {
   return request
     .post(`${domain}/login`)
