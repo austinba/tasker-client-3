@@ -15,7 +15,8 @@ const getTasks = (getTaskAPICall, recentUsersSource) => () => dispatch => {
         R.map(R.prop(recentUsersSource)),
         R.groupWith(R.equals),
         R.sortBy(R.pipe(R.length, R.negate)),
-        R.map(R.head)
+        R.map(R.head),
+        R.reject(R.pipe(R.defaultTo(''), R.trim, R.isEmpty))
       )(data.tasks);
     dispatch({ type: 'RECEIVE_RECENT_USERS_LIST', recentUsers});
   }).catch(error => {

@@ -41,7 +41,7 @@ class Task extends React.Component {
     const { taskID, unboundActions, preset } = props;
     this.boundActions = bindAll(taskID)(unboundActions);
 
-    this.preset = {};
+    this.preset = {type: preset};
     if(preset === 'myTasks') {
       this.preset.myTasks = true;
       this.preset.assignmentLabel = 'Assigned From';
@@ -66,6 +66,17 @@ class Task extends React.Component {
     const actions     = this.boundActions;
     const level       = getEditField(4 , 'level')(task);
     const description = getEditField('', 'description')(task);
+    let submitTaskEdits;
+
+    if(currentUser && currentUser.userID) {
+      if(this.preset.type === 'myTasks') {
+        submitTaskEdits = actions.submitTaskEdits.bind(null, {assignedTo: currentUser.userID});
+      } else if(this.preset.type === 'tasksIveAssigned') {
+        submitTaskEdits = actions.submitTaskEdits.bind(null, {assignedFrom: currentUser.userID});
+      } else {
+        throw new Error('Task requires a preset');
+      }
+    }
 
     if(task.deleteDate) {
       return <InactiveTask label="DELETED"
@@ -83,7 +94,7 @@ class Task extends React.Component {
     }
 
     const toggleCheckIn = checkedIn ? actions.cancelCheckIn : actions.checkIn;
-
+    console.log(users);
     return (
       <div className="box task-container">
         <div className="main-task-box">
@@ -137,7 +148,7 @@ class Task extends React.Component {
                 editing={!!task.edit}
                 onChange={actions.editDescription}
                 cancelTaskEdit={actions.cancelTaskEdit}
-                submitTaskEdits={actions.submitTaskEdits} />
+                submitTaskEdits={submitTaskEdits} />
               <div className="task-assignment-text">
                 {this.preset.assignmentLabel}:
                 <ShowIf show={task.edit}>
@@ -164,7 +175,7 @@ class Task extends React.Component {
         <ShowIf show={task.error}>
           <div className="task-error">
             &nbsp;{task.error}&nbsp;
-            <a href="#nowhere"> (click here to report)</a>
+            {/*<a href="#nowhere"> (click here to report)</a>*/}
           </div>
         </ShowIf>
 
@@ -174,7 +185,7 @@ class Task extends React.Component {
                         cancelAddComment={actions.cancelAddComment}
                         startTaskEdit={actions.startTaskEdit}
                         cancelTaskEdit={actions.cancelTaskEdit}
-                        submitTaskEdits={actions.submitTaskEdits}
+                        submitTaskEdits={submitTaskEdits}
                         saveComment={actions.saveComment}
                         markDeleted={actions.markDeleted}
                         markComplete={actions.markComplete} />

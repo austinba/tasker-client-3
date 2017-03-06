@@ -27,7 +27,6 @@ export function prettyTimeElapsed(date){
 }
 
 /** isDateToday(date) */
-//////////// This is not used. Delete if not applicable anymore ////////////
 export const isDateToday = R.eqBy(date => (new Date(date)).toDateString(), Date.now());
 
 /** bindAll(id, objectOfFunctions) */

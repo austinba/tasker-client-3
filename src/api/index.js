@@ -96,11 +96,11 @@ export function cancelCheckIn(taskID) {
 }
 
 export function getMyTasks() {
-    return request
-      .post(`${domain}/tasks/get-my-tasks`)
-      .set('authorization', auth.getToken())
-      .send()
-      .then(getBody);
+  return request
+    .post(`${domain}/tasks/get-my-tasks`)
+    .set('authorization', auth.getToken())
+    .send()
+    .then(getBody);
 }
 
 export function getTasksIveAssigned() {

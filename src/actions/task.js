@@ -32,10 +32,11 @@ export const selectLevel = (taskID, level) => {
   return ({ type: 'EDIT_IS_LEVEL', level, taskID })
 };
 
-export const submitTaskEdits = (taskID, event) => (dispatch, getState) => {
+export const submitTaskEdits = (taskID, otherProps, event) => (dispatch, getState) => {
   event.preventDefault();
   const state = getState();
-  const task  = state.tasks[taskID];
+  const task  = R.merge(state.tasks[taskID], otherProps);
+
   dispatch({ type: 'TASK_UPDATING', taskID });
   if(taskID === 'adding-task') {
     api.editTask(taskID, task.edit).then(

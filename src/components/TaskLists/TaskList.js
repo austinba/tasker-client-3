@@ -20,6 +20,7 @@ class Tasks extends React.Component {
     } else {
       throw new Error('TaskList requires a preset');
     }
+    this.preset = preset;
   }
   componentWillUnmount() {
     this.props.actions.unmountList();
@@ -40,14 +41,17 @@ class Tasks extends React.Component {
                     addTask={actions.addTask} />
         <ShowIf show={taskCount === 0 }>
           <div className="no-tasks-message">
-            <div className="main-message">You have no tasks assigned to you</div>
+            <div className="main-message">
+              { this.preset === 'myTasks' ?
+                'You have no tasks assigned to you' :
+                'You have no tasks you\'ve assigned'
+              }
+            </div>
             <p>
               <a href="#nowhere" onClick={actions.addTask}>
-                <em>Create a task for yourself</em>
+                <em>Create a task</em>
               </a>
             </p>
-            <p>or</p>
-            <p><a href="#nowhere"><em>View tasks you've assigned</em></a></p>
           </div>
         </ShowIf>
         <SortedTasks tasks={tasks} sortBy={sorters.sortByProject} preset={preset}/>

@@ -4,6 +4,7 @@ import { dash } from '../../utilities';
 
 const UtilityBar = ({ isAddingTask, addTask }) =>
   <div className="sort-actions">
+{/*
     Sort by:
     &nbsp;&nbsp;
     <a href="#">Importance Severity</a>
@@ -11,9 +12,10 @@ const UtilityBar = ({ isAddingTask, addTask }) =>
     <a href="#">Goal</a>
     {dash}
     <a href="#">Project</a>
-    <div className="sm-right">
+    */}
+    <div className="REMOVE--sm-right">
       <ShowIf show={isAddingTask}>
-        <a href="#nowhere" onClick={addTask}>Add Task</a>
+        <a href="#nowhere" onClick={addTask}><em>Add Task</em></a>
       </ShowIf>
     </div>
   </div>
