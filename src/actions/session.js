@@ -33,7 +33,7 @@ export const signout = (event) => {
 export const getMyInfo = (token) => (dispatch) => {
   api.getMyInfo(token)
     .then(user => {
-      if(user.username && user.teamname && user.firstName && user.lastName) {
+      if(user.username) {
         dispatch({type: 'GET_MY_INFO_SUCCESS', user});
       } else {
         browserHistory.push('/signin');

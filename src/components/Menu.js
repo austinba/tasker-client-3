@@ -3,7 +3,8 @@ import { Link } from 'react-router';
 
 export const friendlyRouteNames = {
   '/my-tasks': 'My Tasks',
-  '/tasks-ive-assigned': `Tasks I've Assigned`
+  '/tasks-ive-assigned': `Tasks I've Assigned`,
+  '/invite': 'Invite Someone to Team'
 };
 
 const MenuLink = (onClick, {to, route, children}) => {
@@ -23,6 +24,9 @@ export const Menu = ({toggleMenuAction, route, signout}) => {
         </MLink>
         <MLink to="/tasks-ive-assigned" route={route}>
           {friendlyRouteNames['/tasks-ive-assigned']}
+        </MLink>
+        <MLink to="/invite" route={route}>
+          {friendlyRouteNames['/invite']}
         </MLink>
         <div>
           <a href="#nowhere" onClick={signout}>Sign out</a>

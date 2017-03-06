@@ -15,11 +15,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     if(auth.isSignedIn() && !props.session.user) {
-      sessionActions.getMyInfo(auth.getToken());
+      console.log(sessionActions);
     }
   }
   componentWillMount() {
     this.props.usersActions.getUsers();
+    this.props.sessionActions.getMyInfo(auth.getToken());
   }
   render() {
     if(!auth.isSignedIn()) browserHistory.push('/');

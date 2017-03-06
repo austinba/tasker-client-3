@@ -12,6 +12,7 @@ function sessionReducer(state = initialState, action) {
     // add to sessionStorage, set 'user' prop, set 'isSignedIn' prop
     case 'SIGN_IN_SUCCESS':
       const user = action.user;
+      console.log(user);
       return R.pipe(
         R.assoc('user', user),
         R.assoc('isSignedIn', auth.isSignedIn())

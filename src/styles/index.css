@@ -271,3 +271,9 @@ strong {
 .create-a-team-button{
   font-size: 18px;
 }
+
+.invite-box {
+  margin-top: 80px;
+  text-align: center;
+  font-size: 22px;
+}

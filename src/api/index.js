@@ -40,7 +40,7 @@ export function signin(username, teamdomain, password) {
 
 export function getMyInfo(jwtToken) {
   return request
-    .post(`${domain}/myinfo`)
+    .get(`${domain}/myinfo`)
     .set('authorization', auth.getToken())
     .send({jwtToken})
     .then(getBody)
