@@ -13,6 +13,18 @@ const parseJSON = text => JSON.parse(text, (key, value) => {
 })
 const getBody = R.pipe(R.prop('text'), parseJSON);
 
+export function login(username, teamdomain, password) {
+  .post(`${domain}/login`)
+  .send({username, teamdomain, password})
+  .then(getbody)
+}
+
+export function getMyInfo(jwtToken) {
+  .post(`${domain}/myinfo`)
+  .send({jwtToken})
+  .then(getbody)
+}
+
 export function checkIn(taskID) {
   return request
     .post(`${domain}/mockapi/checkin`)

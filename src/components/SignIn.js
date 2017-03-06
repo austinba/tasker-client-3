@@ -3,18 +3,22 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as signInPageActions from '../actions/signInPage';
+import * as sessionActions from '../actions/session';
 
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const {username, teamdomain, password} = this.props.signInProps;
+    const {username, teamdomain, password, error, signInPending} = this.props.signInProps;
     const {handleUpdate} = this.props.actions;
+    const {signin} = this.props.sessionActions;
     return (
       <div className="home-page-container signin-page">
         <div className="home-page-title">{`Don't waste your day...`}</div>
-        <form>
+        <form onSubmit={signin}>
+          {error}
+          {signInPending ? <span><br />Attempting to sign in ...</span> : ''}
           <input type="text" placeholder="Username" name='username' value={username || ''} onChange={handleUpdate} />
           <span className="at-sign">@</span>
           <input type="text" placeholder="Team" name='teamdomain' value={teamdomain || ''} onChange={handleUpdate} />
@@ -35,7 +39,8 @@ const mapStateToProps = (state) => ({
   signInProps: state.signInPage
 });
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(signInPageActions, dispatch)
+  actions: bindActionCreators(signInPageActions, dispatch),
+  sessionActions: bindActionCreators(sessionActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
