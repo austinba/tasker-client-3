@@ -75,8 +75,6 @@ class CreateATeamForm extends React.Component {
             className="create-a-team-email-submit" >
             Continue to Team Domain
           </button>
-          {teamAvailable && !pendingTeamLookup && 'Team Domain is available!!'}
-          {!teamAvailable && !pendingTeamLookup && 'Team Domain is already taken'}
         </ShowIf>
         <ShowIf show={this.props.page === 5}>
           <Field name="teamdomain" placeholder="Team Domain" fields={fields} autoFocus/>
