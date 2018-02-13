@@ -3,15 +3,15 @@
 # Overview
 QuarterStretch is a task management tool for teams with flexible reporting arrangements but still want the oversight and accountability between members and leaders in the group.
 
-A demo can be found here: http://www.quarterstretch.com
-
-Click the "sign in" link on the bottom of the "Create a Team" splash page
+A demo can be found here: http://www.quarterstretch.com. Click the "sign in" link on the bottom of the "Create a Team" splash page to log in the the demo account and use the credentials listed below.
 
 Usernames: ted, robin, marshall, lily, barney (pick one
 
 Domain: himym
 
 Password: password
+
+![QuarterStretch screenshot](https://github.com/austinba/tasker-client-3/blob/master/screenshot.png)
 
 # Key Components
 ## Importance / Severity Box
