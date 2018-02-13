@@ -11,8 +11,6 @@ Domain: himym
 
 Password: password
 
-![QuarterStretch screenshot](https://github.com/austinba/tasker-client-3/blob/master/screenshot.png | width=200)
-
 # Key Components
 ## Importance / Severity Box
 The upper left of each task indicates the importance or severity of the action.
@@ -36,3 +34,6 @@ Tasks can be edited, added, or commented on by clicking the respected links.
 
 ## Invite Someone To the Team
 In the menu is an option to invite someone to the team. This will send an email address with an invitation link, so that the person can create an account within the team. Someone who wants to create a new team can log out and go through the steps on the splash page
+
+# Screenshot
+![QuarterStretch screenshot](https://github.com/austinba/tasker-client-3/blob/master/screenshot.png)
