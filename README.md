@@ -11,7 +11,7 @@ Domain: himym
 
 Password: password
 
-![QuarterStretch screenshot](https://github.com/austinba/tasker-client-3/blob/master/screenshot.png = 150x)
+![QuarterStretch screenshot](https://github.com/austinba/tasker-client-3/blob/master/screenshot.png =150x)
 
 # Key Components
 ## Importance / Severity Box
