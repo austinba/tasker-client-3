@@ -3,7 +3,7 @@
 # Overview
 QuarterStretch is a task management tool for teams with flexible reporting arrangements but still want the oversight and accountability between members and leaders in the group.
 
-A video demo is here: https://youtu.be/RhTo3IDEXuo
+Video Walktrough: https://youtu.be/RhTo3IDEXuo
 
 To view a live demo go to http://www.quarterstretch.com. Click the "sign in" link on the bottom of the "Create a Team" splash page to log in the the demo account and use the credentials listed below.
 
