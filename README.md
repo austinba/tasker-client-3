@@ -4,9 +4,13 @@
 QuarterStretch is a task management tool for teams with flexible reporting arrangements but still want the oversight and accountability between members and leaders in the group.
 
 A demo can be found here: http://www.quarterstretch.com
+
 Click the "sign in" link on the bottom of the "Create a Team" splash page
-Usernames: ted, robin, marshall, lily, barney (pick one)
+
+Usernames: ted, robin, marshall, lily, barney (pick one
+
 Domain: himym
+
 Password: password
 
 # Key Components
@@ -14,6 +18,7 @@ Password: password
 The upper left of each task indicates the importance or severity of the action.
 
 The inner box being somewhere on the left side indicates HIGH SEVERITY - meaning not completing the action will be very costly to the organization
+
 The inner box being somewhere on the top indicates HIGH IMPORTANCE - meaning completion of the action will result in valuable gains to the orgnaization.
 
 The number in the box represents the number of days remaining.
