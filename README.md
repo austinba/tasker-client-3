@@ -14,6 +14,9 @@ Domain: himym
 Password: password
 
 # Key Components
+
+(note: scroll to the bottom for a screenshot)
+
 ## Importance / Severity Box
 The upper left of each task indicates the importance or severity of the action.
 
